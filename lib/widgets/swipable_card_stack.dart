@@ -3,10 +3,12 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+
+import 'package:laera/models/word.dart';
 import 'package:laera/widgets/word_card.dart';
 
 class SwipableCardStackWidget extends StatefulWidget {
-  final List<WordCardData> _cardsData;
+  final List<Word> _cardsData;
 
   SwipableCardStackWidget({@required cardsData}) : _cardsData = cardsData;
 
@@ -16,7 +18,7 @@ class SwipableCardStackWidget extends StatefulWidget {
 }
 
 class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
-  final List<WordCardData> _cardsData;
+  final List<Word> _cardsData;
 
   var _pos = 0;
 

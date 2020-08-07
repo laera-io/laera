@@ -3,14 +3,15 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/widgets/word_card.dart';
+
+import 'package:laera/models/word.dart';
 import 'package:laera/widgets/swipable_card_stack.dart';
 
 class FlowPage extends StatelessWidget {
   static const cardsData = [
-    const WordCardData("to run", "бежать"),
-    const WordCardData("to swipe", "провести"),
-    const WordCardData("a guitar", "гитара"),
+    const Word("to run", "бежать"),
+    const Word("to swipe", "провести"),
+    const Word("a guitar", "гитара"),
   ];
 
   @override

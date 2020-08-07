@@ -4,11 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-class WordCardData {
-  final String word, translation;
-
-  const WordCardData(this.word, this.translation);
-}
+import 'package:laera/models/word.dart';
 
 class WordCardWidget extends StatelessWidget {
   static const _textScale = 1.5;
@@ -16,11 +12,11 @@ class WordCardWidget extends StatelessWidget {
   static const _height = 500.0;
   static const _space = 20.0;
 
-  final WordCardData _word;
+  final Word _word;
 
   const WordCardWidget({
     Key key,
-    @required WordCardData word,
+    @required Word word,
   })  : _word = word,
         super(key: key);
 
