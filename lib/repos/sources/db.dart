@@ -7,12 +7,12 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-abstract class DB {
-  static Database _db;
+class DB {
+  static Future<Database> _db;
 
-  Future<Database> get db => _db = _db ?? _initDB;
+  static Future<Database> get db => _db = _db ?? _init();
 
-  Future<Database> _initDB() => getDatabasesPath().then(
+  static Future<Database> _init() => getDatabasesPath().then(
         (path) => openDatabase(
           join(path, 'laera.db'),
           version: 1,
