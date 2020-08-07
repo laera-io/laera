@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:laera/widgets/word_card.dart';
 import 'package:laera/widgets/swipable_card_stack.dart';
 
-class HomePage extends StatelessWidget {
+class FlowPage extends StatelessWidget {
   static const cardsData = [
     const WordCardData("to run", "бежать"),
     const WordCardData("to swipe", "провести"),
