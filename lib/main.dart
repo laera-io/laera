@@ -3,6 +3,13 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/app.dart';
+import 'package:laera/widgets/app.dart';
 
-void main() => runApp(AppWidget());
+void main() => runApp(
+      MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.lightGreen,
+        ),
+        home: AppWidget(),
+      ),
+    );
