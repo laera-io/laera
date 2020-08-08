@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 
 class WordCard extends StatelessWidget {
+  static const _height = 80.0;
+
   final Word _word;
   final Future<int> Function(int id) _delete;
 
@@ -14,13 +16,14 @@ class WordCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => LimitedBox(
-        maxHeight: 80,
+        maxHeight: _height,
         child: Card(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 height: 80,
+                padding: EdgeInsets.only(left: _height / 5),
                 child: Center(
                   child: Text(
                     _word.word,
