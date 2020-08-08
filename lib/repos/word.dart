@@ -14,14 +14,20 @@ class WordRepo {
 
   WordRepo(this._source);
 
-  Future<List<Word>> getAll() async =>
-      _source.then((repo) => repo.query(WordTable.NAME)).then((values) {
-        var result = List<Word>(values.length);
-        values.forEach((word) {
+  Future<List<Word>> getAll() =>
+      _source.then((db) => db.query(WordTable.NAME)).then((words) {
+        var result = List<Word>();
+        words.forEach((word) {
           var wordMap = jsonDecode(word[WordTable.COLUMN_DATA]);
           wordMap[WordTable.COLUMN_ID] = word[WordTable.COLUMN_ID];
           result.add(Word.fromJson(wordMap));
         });
         return result;
       });
+
+  Future<void> add() => _source.then((db) => db.execute(
+        "INSERT INTO ${WordTable.NAME} (${WordTable.COLUMN_DATA}) VALUES ("
+        "'{\"word\": \"to study\", \"translation\": \"учить\"}'"
+        ")",
+      ));
 }

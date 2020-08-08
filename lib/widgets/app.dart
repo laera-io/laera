@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 
 import 'package:laera/pages/flow.dart';
 import 'package:laera/pages/words.dart';
@@ -16,17 +15,26 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-  final Future<Database> _db;
+  final WordRepo _wordRepo;
 
   var _selectedIndex = 0;
 
-  _AppWidgetState() : _db = DB.db;
+  _AppWidgetState() : _wordRepo = WordRepo(DB.db);
 
   Widget _getSelectedWidget() {
     if (_selectedIndex == 1) {
-      return WordsPage(WordRepo(_db));
+      return Scaffold(
+        body: WordsPage(_wordRepo),
+        floatingActionButton: FloatingActionButton.extended(
+          icon: Icon(Icons.add, color: Colors.white),
+          label: Text("Add", style: TextStyle(color: Colors.white)),
+          onPressed: _wordRepo.add,
+        ),
+      );
     }
-    return FlowPage();
+    return Scaffold(
+      body: FlowPage(),
+    );
   }
 
   @override
