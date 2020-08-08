@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:laera/models/word.dart';
-import 'package:laera/widgets/word_card.dart';
+import 'package:laera/pages/flow/widgets/word_card.dart';
 
 class SwipableCardStackWidget extends StatefulWidget {
   final List<Word> _cardsData;

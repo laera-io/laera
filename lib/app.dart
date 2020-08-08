@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:laera/pages/flow.dart';
-import 'package:laera/pages/words.dart';
+import 'package:laera/pages/flow/flow.dart';
+import 'package:laera/pages/words/words.dart';
 import 'package:laera/repos/sources/db.dart';
 import 'package:laera/repos/word.dart';
 
