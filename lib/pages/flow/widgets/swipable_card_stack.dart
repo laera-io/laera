@@ -8,13 +8,13 @@ import 'package:laera/models/word.dart';
 import 'package:laera/pages/flow/widgets/word_card.dart';
 
 class SwipableCardStackWidget extends StatefulWidget {
-  final List<Word> _cardsData;
+  final List<Word> _words;
 
-  SwipableCardStackWidget({@required cardsData}) : _cardsData = cardsData;
+  SwipableCardStackWidget(this._words);
 
   @override
   _SwipableCardStackWidgetState createState() =>
-      _SwipableCardStackWidgetState(cardsData: _cardsData);
+      _SwipableCardStackWidgetState(_words);
 }
 
 class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
@@ -22,7 +22,7 @@ class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
 
   var _pos = 0;
 
-  _SwipableCardStackWidgetState({@required cardsData}) : _words = cardsData;
+  _SwipableCardStackWidgetState(this._words);
 
   int _getNextPos() => _pos >= _words.length - 1 ? 0 : _pos + 1;
 

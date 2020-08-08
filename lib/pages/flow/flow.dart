@@ -17,8 +17,6 @@ class FlowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => asyncBuild(
         future: _wordRepo.getAll(),
-        builder: (data) => SwipableCardStackWidget(
-          cardsData: data as List<Word> ?? [],
-        ),
+        builder: (data) => SwipableCardStackWidget(data as List<Word> ?? []),
       );
 }
