@@ -18,13 +18,16 @@ class SwipableCardStackWidget extends StatefulWidget {
 }
 
 class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
-  final List<Word> _cardsData;
+  final List<Word> _words;
 
   var _pos = 0;
 
-  _SwipableCardStackWidgetState({@required cardsData}) : _cardsData = cardsData;
+  _SwipableCardStackWidgetState({@required cardsData}) : _words = cardsData;
 
-  int _getNextPos() => _pos >= _cardsData.length - 1 ? 0 : _pos + 1;
+  int _getNextPos() => _pos >= _words.length - 1 ? 0 : _pos + 1;
+
+  Word _get(int pos) =>
+      _words.length == 0 ? Word("<No Words>", "<Add Some>") : _words[pos];
 
   _getTarget(Alignment alignment) => Align(
         alignment: alignment,
@@ -45,10 +48,9 @@ class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
               alignment: Alignment.center,
               children: <Widget>[
                 Draggable(
-                  child: WordCardWidget(word: _cardsData[_pos]),
-                  feedback: WordCardWidget(word: _cardsData[_pos]),
-                  childWhenDragging:
-                      WordCardWidget(word: _cardsData[_getNextPos()]),
+                  child: WordCardWidget(word: _get(_pos)),
+                  feedback: WordCardWidget(word: _get(_pos)),
+                  childWhenDragging: WordCardWidget(word: _get(_getNextPos())),
                   onDragCompleted: () => setState(() => _pos = _getNextPos()),
                 )
               ],
