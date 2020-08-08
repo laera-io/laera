@@ -4,17 +4,19 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:laera/common/async.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/pages/flow/widgets/swipable_card_stack.dart';
+import 'package:laera/repos/word.dart';
 
 class FlowPage extends StatelessWidget {
-  static const cardsData = [
-    const Word("to run", "бежать"),
-    const Word("to swipe", "провести"),
-    const Word("a guitar", "гитара"),
-  ];
+  final WordRepo _wordRepo;
+
+  FlowPage(this._wordRepo);
 
   @override
-  Widget build(BuildContext context) =>
-      SwipableCardStackWidget(cardsData: cardsData);
+  Widget build(BuildContext context) => asyncBuild(
+      future: _wordRepo.getAll(),
+      builder: (data) =>
+          SwipableCardStackWidget(cardsData: data as List<Word> ?? []));
 }

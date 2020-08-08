@@ -33,7 +33,7 @@ class _AppWidgetState extends State<AppWidget> {
       );
     }
     return Scaffold(
-      body: FlowPage(),
+      body: FlowPage(_wordRepo),
     );
   }
 

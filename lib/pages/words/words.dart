@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+
+import 'package:laera/common/async.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/repos/word.dart';
 
@@ -12,20 +14,14 @@ class WordsPage extends StatelessWidget {
   WordsPage(this._wordRepo);
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _wordRepo.getAll(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+  Widget build(BuildContext context) => asyncBuild(
+        future: _wordRepo.getAll(),
+        builder: (data) {
           var widgets = <Widget>[];
-          var words = snapshot.data as List<Word>;
-          words.forEach((word) {
+          (data as List<Word> ?? []).forEach((word) {
             widgets.add(Card(child: Text(word.word)));
           });
           return ListView(children: widgets);
-        }
-        return CircularProgressIndicator();
-      },
-    );
-  }
+        },
+      );
 }
