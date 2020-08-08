@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:laera/common/async.dart';
 import 'package:laera/models/word.dart';
+import 'package:laera/pages/words/widgets/word_card.dart';
 import 'package:laera/repos/word.dart';
 
 class WordsPage extends StatelessWidget {
@@ -19,7 +20,7 @@ class WordsPage extends StatelessWidget {
         builder: (data) {
           var widgets = <Widget>[];
           (data as List<Word> ?? []).forEach((word) {
-            widgets.add(Card(child: Text(word.word)));
+            widgets.add(WordCard(word, _wordRepo.delete));
           });
           return ListView(children: widgets);
         },

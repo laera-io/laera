@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:laera/models/word.dart';
 
 import 'package:laera/pages/flow/flow.dart';
 import 'package:laera/pages/words/words.dart';
@@ -28,7 +29,8 @@ class _AppWidgetState extends State<AppWidget> {
         floatingActionButton: FloatingActionButton.extended(
           icon: Icon(Icons.add, color: Colors.white),
           label: Text("Add", style: TextStyle(color: Colors.white)),
-          onPressed: _wordRepo.add,
+          // FIXME: Mock.
+          onPressed: () => _wordRepo.add(Word("to teach", "учить")),
         ),
       );
     }
