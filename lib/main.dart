@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/widgets/app.dart';
+import 'package:laera/app.dart';
 
 void main() => runApp(
       MaterialApp(
