@@ -12,7 +12,7 @@ import 'package:laera/repos/word.dart';
 class WordsPage extends StatelessWidget {
   final WordRepo _wordRepo;
 
-  WordsPage(this._wordRepo);
+  const WordsPage(this._wordRepo);
 
   @override
   Widget build(BuildContext context) => asyncBuild(

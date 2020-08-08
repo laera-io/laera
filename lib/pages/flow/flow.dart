@@ -12,7 +12,7 @@ import 'package:laera/repos/word.dart';
 class FlowPage extends StatelessWidget {
   final WordRepo _wordRepo;
 
-  FlowPage(this._wordRepo);
+  const FlowPage(this._wordRepo);
 
   @override
   Widget build(BuildContext context) => asyncBuild(

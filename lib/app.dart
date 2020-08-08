@@ -3,8 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/models/word.dart';
-
+import 'package:laera/pages/add/add.dart';
 import 'package:laera/pages/flow/flow.dart';
 import 'package:laera/pages/words/words.dart';
 import 'package:laera/repos/sources/db.dart';
@@ -16,28 +15,36 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-  final WordRepo _wordRepo;
+  final _routes = {
+    0: _Route(
+      child: FlowPage(WordRepo(DB.db)),
+      item: const BottomNavigationBarItem(
+        icon: Icon(Icons.all_inclusive),
+        title: Text("Flow"),
+      ),
+    ),
+    1: _Route(
+      child: AddPage(WordRepo(DB.db)),
+      item: const BottomNavigationBarItem(
+        icon: Icon(Icons.add),
+        title: Text("Add"),
+      ),
+    ),
+    2: _Route(
+      child: WordsPage(WordRepo(DB.db)),
+      item: const BottomNavigationBarItem(
+        icon: Icon(Icons.list),
+        title: Text("Words"),
+      ),
+    ),
+  };
+
+  static const _defaultIndex = 0;
 
   var _selectedIndex = 0;
 
-  _AppWidgetState() : _wordRepo = WordRepo(DB.db);
-
-  Widget _getSelectedWidget() {
-    if (_selectedIndex == 1) {
-      return Scaffold(
-        body: WordsPage(_wordRepo),
-        floatingActionButton: FloatingActionButton.extended(
-          icon: Icon(Icons.add, color: Colors.white),
-          label: Text("Add", style: TextStyle(color: Colors.white)),
-          // FIXME: Mock.
-          onPressed: () => _wordRepo.add(Word("to teach", "учить")),
-        ),
-      );
-    }
-    return Scaffold(
-      body: FlowPage(_wordRepo),
-    );
-  }
+  Widget _getSelectedWidget() =>
+      _routes[_selectedIndex].child ?? _routes[_defaultIndex].child;
 
   @override
   Widget build(BuildContext context) {
@@ -46,17 +53,18 @@ class _AppWidgetState extends State<AppWidget> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) => setState(() => _selectedIndex = index),
         currentIndex: _selectedIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.all_inclusive),
-            title: Text("Flow"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            title: Text("Words"),
-          ),
-        ],
+        items: [for (var route in _routes.values) route.item],
       ),
     );
   }
+}
+
+class _Route {
+  final Widget child;
+  final BottomNavigationBarItem item;
+
+  const _Route({
+    @required this.child,
+    @required this.item,
+  });
 }

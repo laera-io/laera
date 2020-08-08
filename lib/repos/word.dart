@@ -10,9 +10,9 @@ import 'package:laera/models/word.dart';
 import 'package:laera/repos/sources/db.dart';
 
 class WordRepo {
-  Future<Database> _source;
+  final Future<Database> _source;
 
-  WordRepo(this._source);
+  const WordRepo(this._source);
 
   Future<List<Word>> getAll() =>
       _source.then((db) => db.query(WordTable.NAME)).then(
