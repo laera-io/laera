@@ -27,7 +27,7 @@ class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
   int _getNextPos() => _pos >= _words.length - 1 ? 0 : _pos + 1;
 
   Word _get(int pos) =>
-      _words.length == 0 ? Word("<No Words>", "<Add Some>") : _words[pos];
+      _words.length == 0 ? Word('<No Words>', '<Add Some>') : _words[pos];
 
   _getTarget(Alignment alignment) => Align(
         alignment: alignment,

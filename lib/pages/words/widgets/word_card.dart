@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 
 class WordCard extends StatelessWidget {
+  static const _textScale = 1.5;
   static const _height = 80.0;
 
   final Word _word;
@@ -27,7 +28,7 @@ class WordCard extends StatelessWidget {
                 child: Center(
                   child: Text(
                     _word.word,
-                    textScaleFactor: 1.5,
+                    textScaleFactor: _textScale,
                   ),
                 ),
               ),

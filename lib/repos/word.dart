@@ -31,16 +31,16 @@ class WordRepo {
 
   Future<void> add(Word word) => _source.then(
         (db) => db.execute(
-          "INSERT INTO ${WordTable.NAME} (${WordTable.COLUMN_DATA}) VALUES ("
-          "'{\"word\": \"${word.word}\", \"translation\": \"${word.translation}\"}'"
-          ")",
+          'INSERT INTO ${WordTable.NAME} (${WordTable.COLUMN_DATA}) VALUES ('
+          '\'{"word": "${word.word}", "translation": "${word.translation}"}\''
+          ')',
         ),
       );
 
   Future<int> delete(int id) => _source.then(
         (db) => db.delete(
           WordTable.NAME,
-          where: "${WordTable.COLUMN_ID} = ?",
+          where: '${WordTable.COLUMN_ID} = ?',
           whereArgs: [id],
         ),
       );
