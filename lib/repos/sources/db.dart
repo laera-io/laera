@@ -18,9 +18,9 @@ class DB {
           version: 1,
           onCreate: (db, version) {
             return db.execute(
-              "CREATE TABLE ${WordTable.NAME} "
-              "(${WordTable.COLUMN_ID} INTEGER PRIMARY KEY, "
-              "${WordTable.COLUMN_DATA} TEXT)",
+              'CREATE TABLE ${WordTable.NAME} '
+              '(${WordTable.COLUMN_ID} INTEGER PRIMARY KEY, '
+              '${WordTable.COLUMN_DATA} TEXT)',
             );
           },
         ),
@@ -30,8 +30,8 @@ class DB {
 class WordTable {
   WordTable._();
 
-  static const NAME = "word";
+  static const NAME = 'word';
 
-  static const COLUMN_ID = "id";
-  static const COLUMN_DATA = "data";
+  static const COLUMN_ID = 'id';
+  static const COLUMN_DATA = 'data';
 }

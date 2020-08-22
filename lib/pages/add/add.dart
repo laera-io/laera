@@ -24,49 +24,69 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextFormField(
-            controller: _wordText,
-            decoration: const InputDecoration(
-              hintText: 'Enter word',
-            ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some word';
-              }
-              return null;
-            },
+    return Center(
+      child: Container(
+        width: 300,
+        height: 500,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: _wordText,
+                decoration: const InputDecoration(
+                  labelText: 'Word',
+                  icon: Icon(Icons.translate),
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please add some data';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _translationText,
+                decoration: const InputDecoration(
+                  labelText: 'Translation',
+                  icon: Icon(Icons.text_fields),
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please add some data';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      widget._wordRepo.add(
+                        Word(
+                          _wordText.value.text,
+                          _translationText.value.text,
+                        ),
+                      );
+                      _formKey.currentState?.reset();
+
+                      final snackBar = SnackBar(
+                        content: Text('Saved'),
+                      );
+                      Scaffold.of(context).showSnackBar(snackBar);
+                    }
+                  },
+                  child: Text('Save'),
+                ),
+              ),
+            ],
           ),
-          TextFormField(
-            controller: _translationText,
-            decoration: const InputDecoration(
-              hintText: 'Enter translation',
-            ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some translation';
-              }
-              return null;
-            },
-          ),
-          RaisedButton(
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                return widget._wordRepo.add(
-                  Word(
-                    _wordText.value.text,
-                    _translationText.value.text,
-                  ),
-                );
-              }
-            },
-            child: Text("Save"),
-          ),
-        ],
+        ),
       ),
     );
   }

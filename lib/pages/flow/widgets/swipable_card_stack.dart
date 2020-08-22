@@ -26,8 +26,7 @@ class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
 
   int _getNextPos() => _pos >= _words.length - 1 ? 0 : _pos + 1;
 
-  Word _get(int pos) =>
-      _words.length == 0 ? Word("<No Words>", "<Add Some>") : _words[pos];
+  Word _get(int pos) => _words[pos];
 
   _getTarget(Alignment alignment) => Align(
         alignment: alignment,
@@ -40,24 +39,31 @@ class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
       );
 
   @override
-  Widget build(BuildContext context) => Stack(
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Draggable(
-                  child: WordCardWidget(word: _get(_pos)),
-                  feedback: WordCardWidget(word: _get(_pos)),
-                  childWhenDragging: WordCardWidget(word: _get(_getNextPos())),
-                  onDragCompleted: () => setState(() => _pos = _getNextPos()),
-                )
-              ],
+  Widget build(BuildContext context) => _words.length > 0
+      ? Stack(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Draggable(
+                    child: WordCardWidget(word: _get(_pos)),
+                    feedback: WordCardWidget(word: _get(_pos)),
+                    childWhenDragging:
+                        WordCardWidget(word: _get(_getNextPos())),
+                    onDragCompleted: () => setState(() => _pos = _getNextPos()),
+                  )
+                ],
+              ),
             ),
-          ),
-          _getTarget(Alignment.centerLeft),
-          _getTarget(Alignment.centerRight),
-        ],
-      );
+            _getTarget(Alignment.centerLeft),
+            _getTarget(Alignment.centerRight),
+          ],
+        )
+      : Center(
+          child: Text(
+          "No words. Add some",
+          textScaleFactor: 1.5,
+        ));
 }

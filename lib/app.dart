@@ -20,21 +20,21 @@ class _AppWidgetState extends State<AppWidget> {
       child: FlowPage(WordRepo(DB.db)),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.all_inclusive),
-        title: Text("Flow"),
+        title: Text('Flow'),
       ),
     ),
     1: _Route(
       child: AddPage(WordRepo(DB.db)),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.add),
-        title: Text("Add"),
+        title: Text('Add'),
       ),
     ),
     2: _Route(
       child: WordsPage(WordRepo(DB.db)),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.list),
-        title: Text("Words"),
+        title: Text('Words'),
       ),
     ),
   };
