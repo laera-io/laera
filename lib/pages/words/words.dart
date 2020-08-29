@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'package:laera/common/async.dart';
 import 'package:laera/models/word.dart';
-import 'package:laera/pages/words/widgets/word_card.dart';
 import 'package:laera/repos/word.dart';
 
 class WordsPage extends StatefulWidget {
@@ -26,16 +25,28 @@ class _WordsPageState extends State<WordsPage> {
           var widgets = <Widget>[];
           (data as List<Word> ?? []).forEach((word) {
             widgets.add(
-              WordCard(word, widget._wordRepo.delete, () => setState(() {})),
+              ListTile(
+                title: Text(
+                  word.word,
+                  textScaleFactor: 1.3,
+                ),
+                subtitle: Text(word.translation),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  color: Colors.red,
+                  onPressed: () {
+                    widget._wordRepo.delete(word.id);
+                    setState(() {});
+                  },
+                ),
+              ),
             );
-            widgets.add(Divider());
           });
           return widgets.length > 0
               ? Center(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.9,
-                    heightFactor: 0.95,
-                    child: ListView(children: widgets),
+                  child: ListView(
+                    padding: EdgeInsets.only(top: 40),
+                    children: widgets,
                   ),
                 )
               : Center(
