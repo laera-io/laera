@@ -14,6 +14,7 @@ void main() {
     ));
 
     expect(find.text('Flow'), findsOneWidget);
+    expect(find.text('New'), findsOneWidget);
     expect(find.text('Words'), findsOneWidget);
   });
 }

@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/pages/add/add.dart';
+import 'package:laera/pages/new/new.dart';
 import 'package:laera/pages/flow/flow.dart';
 import 'package:laera/pages/words/words.dart';
 import 'package:laera/repos/sources/db.dart';
@@ -15,23 +15,34 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
+  static final _backgroundColor = Colors.grey[100];
+
   final _routes = {
     0: _Route(
-      child: FlowPage(WordRepo(DB.db)),
+      child: Container(
+        color: _backgroundColor,
+        child: FlowPage(WordRepo(DB.db)),
+      ),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.all_inclusive),
         title: Text('Flow'),
       ),
     ),
     1: _Route(
-      child: AddPage(WordRepo(DB.db)),
+      child: Container(
+        color: _backgroundColor,
+        child: NewPage(WordRepo(DB.db)),
+      ),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.add),
-        title: Text('Add'),
+        title: Text('New'),
       ),
     ),
     2: _Route(
-      child: WordsPage(WordRepo(DB.db)),
+      child: Container(
+        color: _backgroundColor,
+        child: WordsPage(WordRepo(DB.db)),
+      ),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.list),
         title: Text('Words'),
