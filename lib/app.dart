@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/pages/add/add.dart';
+import 'package:laera/pages/new/new.dart';
 import 'package:laera/pages/flow/flow.dart';
 import 'package:laera/pages/words/words.dart';
 import 'package:laera/repos/sources/db.dart';
@@ -31,11 +31,11 @@ class _AppWidgetState extends State<AppWidget> {
     1: _Route(
       child: Container(
         color: _backgroundColor,
-        child: AddPage(WordRepo(DB.db)),
+        child: NewPage(WordRepo(DB.db)),
       ),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.add),
-        title: Text('Add'),
+        title: Text('New'),
       ),
     ),
     2: _Route(

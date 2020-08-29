@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/repos/word.dart';
 
-class AddPage extends StatefulWidget {
+class NewPage extends StatefulWidget {
   final WordRepo _wordRepo;
 
-  const AddPage(this._wordRepo);
+  const NewPage(this._wordRepo);
 
   @override
-  _AddPageState createState() => _AddPageState();
+  _NewPageState createState() => _NewPageState();
 }
 
-class _AddPageState extends State<AddPage> {
+class _NewPageState extends State<NewPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _wordText = TextEditingController();
@@ -41,7 +41,7 @@ class _AddPageState extends State<AddPage> {
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please add some data';
+                    return 'Please input some data';
                   }
                   return null;
                 },
@@ -54,7 +54,7 @@ class _AddPageState extends State<AddPage> {
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Please add some data';
+                    return 'Please input some data';
                   }
                   return null;
                 },
@@ -83,7 +83,7 @@ class _AddPageState extends State<AddPage> {
                       Scaffold.of(context).showSnackBar(snackBar);
                     }
                   },
-                  child: Text('Save'),
+                  child: Text('Add'),
                 ),
               ),
             ],
