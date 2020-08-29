@@ -65,6 +65,8 @@ class _AddPageState extends State<AddPage> {
               SizedBox(
                 width: double.infinity,
                 child: RaisedButton(
+                  color: Colors.lightGreen,
+                  colorBrightness: Brightness.dark,
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       widget._wordRepo.add(
