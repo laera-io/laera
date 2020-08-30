@@ -5,4 +5,11 @@
 import 'package:flutter/material.dart';
 import 'package:laera/app.dart';
 
-void main() => runApp(AppWidget());
+void main() => runApp(
+      MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.lightGreen,
+        ),
+        home: AppWidget(),
+      ),
+    );
