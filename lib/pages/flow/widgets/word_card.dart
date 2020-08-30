@@ -26,25 +26,28 @@ class WordCardWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width * _widthFactor,
       height: MediaQuery.of(context).size.height * _heightFactor,
       child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              _word.word,
-              textScaleFactor: _textScale,
-            ),
-            Flexible(
-              child: FractionallySizedBox(
-                heightFactor: _spaceFactor,
+        child: FractionallySizedBox(
+          widthFactor: 0.9,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                _word.word,
+                textScaleFactor: _textScale,
               ),
-            ),
-            Text(
-              _word.translation,
-              textScaleFactor: _textScale,
-              style: TextStyle(color: Colors.grey[600]),
-            ),
-          ],
+              Flexible(
+                child: FractionallySizedBox(
+                  heightFactor: _spaceFactor,
+                ),
+              ),
+              Text(
+                _word.translation,
+                textScaleFactor: _textScale,
+                style: TextStyle(color: Colors.grey[600]),
+              ),
+            ],
+          ),
         ),
       ),
     );
