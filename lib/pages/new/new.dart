@@ -25,9 +25,8 @@ class _NewPageState extends State<NewPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: 300,
-        height: 500,
+      child: FractionallySizedBox(
+        widthFactor: 0.7,
         child: Form(
           key: _formKey,
           child: Column(
@@ -59,8 +58,10 @@ class _NewPageState extends State<NewPage> {
                   return null;
                 },
               ),
-              SizedBox(
-                height: 20,
+              Flexible(
+                child: FractionallySizedBox(
+                  heightFactor: 0.05,
+                ),
               ),
               SizedBox(
                 width: double.infinity,
@@ -78,7 +79,7 @@ class _NewPageState extends State<NewPage> {
                       _formKey.currentState?.reset();
 
                       final snackBar = SnackBar(
-                        content: Text('Saved'),
+                        content: Text('Word added'),
                       );
                       Scaffold.of(context).showSnackBar(snackBar);
                     }

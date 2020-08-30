@@ -8,9 +8,9 @@ import 'package:laera/models/word.dart';
 
 class WordCardWidget extends StatelessWidget {
   static const _textScale = 1.5;
-  static const _width = 350.0;
-  static const _height = 500.0;
-  static const _space = 20.0;
+  static const _widthFactor = 0.8;
+  static const _heightFactor = 0.7;
+  static const _spaceFactor = 0.1;
 
   final Word _word;
 
@@ -23,25 +23,31 @@ class WordCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: _width,
-      height: _height,
+      width: MediaQuery.of(context).size.width * _widthFactor,
+      height: MediaQuery.of(context).size.height * _heightFactor,
       child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              _word.word,
-              textScaleFactor: _textScale,
-            ),
-            SizedBox(
-              height: _space,
-            ),
-            Text(
-              _word.translation,
-              textScaleFactor: _textScale,
-            ),
-          ],
+        child: FractionallySizedBox(
+          widthFactor: 0.9,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                _word.word,
+                textScaleFactor: _textScale,
+              ),
+              Flexible(
+                child: FractionallySizedBox(
+                  heightFactor: _spaceFactor,
+                ),
+              ),
+              Text(
+                _word.translation,
+                textScaleFactor: _textScale,
+                style: TextStyle(color: Colors.grey[600]),
+              ),
+            ],
+          ),
         ),
       ),
     );

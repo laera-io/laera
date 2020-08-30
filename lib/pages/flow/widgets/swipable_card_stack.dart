@@ -18,6 +18,8 @@ class SwipableCardStackWidget extends StatefulWidget {
 }
 
 class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
+  static const _targetWidthFactor = 0.2;
+
   final List<Word> _words;
 
   var _pos = 0;
@@ -31,9 +33,10 @@ class _SwipableCardStackWidgetState extends State<SwipableCardStackWidget> {
   _getTarget(Alignment alignment) => Align(
         alignment: alignment,
         child: DragTarget(
-          builder: (context, candidateData, rejectedData) => Container(
-            width: 90,
-            height: double.infinity,
+          builder: (context, candidateData, rejectedData) =>
+              FractionallySizedBox(
+            widthFactor: _targetWidthFactor,
+            child: Container(),
           ),
         ),
       );
