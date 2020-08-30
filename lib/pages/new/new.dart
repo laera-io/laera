@@ -25,9 +25,8 @@ class _NewPageState extends State<NewPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: 300,
-        height: 500,
+      child: FractionallySizedBox(
+        widthFactor: 0.7,
         child: Form(
           key: _formKey,
           child: Column(
