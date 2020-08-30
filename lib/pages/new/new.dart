@@ -59,8 +59,10 @@ class _NewPageState extends State<NewPage> {
                   return null;
                 },
               ),
-              SizedBox(
-                height: 20,
+              Flexible(
+                child: FractionallySizedBox(
+                  heightFactor: 0.05,
+                ),
               ),
               SizedBox(
                 width: double.infinity,
