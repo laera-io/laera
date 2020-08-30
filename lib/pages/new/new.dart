@@ -78,7 +78,7 @@ class _NewPageState extends State<NewPage> {
                       _formKey.currentState?.reset();
 
                       final snackBar = SnackBar(
-                        content: Text('Saved'),
+                        content: Text('Word added'),
                       );
                       Scaffold.of(context).showSnackBar(snackBar);
                     }
