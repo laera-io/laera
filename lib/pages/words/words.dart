@@ -22,7 +22,9 @@ class _WordsPageState extends State<WordsPage> {
   Widget build(BuildContext context) => asyncBuild(
         future: widget._wordRepo.getAll(),
         builder: (data) {
-          var widgets = <Widget>[];
+          var widgets = <Widget>[
+            Container(height: MediaQuery.of(context).size.width * 0.05)
+          ];
           (data as List<Word> ?? []).forEach((word) {
             widgets.add(
               ListTile(
@@ -45,7 +47,6 @@ class _WordsPageState extends State<WordsPage> {
           return widgets.length > 0
               ? Center(
                   child: ListView(
-                    padding: EdgeInsets.only(top: 40),
                     children: widgets,
                   ),
                 )
