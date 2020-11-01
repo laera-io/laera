@@ -9,6 +9,8 @@ import 'package:laera/models/word.dart';
 import 'package:laera/repos/word.dart';
 
 class WordsPage extends StatefulWidget {
+  static const route = '/words';
+
   final WordRepo _wordRepo;
 
   const WordsPage(this._wordRepo);

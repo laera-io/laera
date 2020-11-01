@@ -10,6 +10,8 @@ import 'package:laera/pages/flow/widgets/swipable_card_stack.dart';
 import 'package:laera/repos/word.dart';
 
 class FlowPage extends StatelessWidget {
+  static const route = '/flow';
+
   final WordRepo _wordRepo;
 
   const FlowPage(this._wordRepo);
