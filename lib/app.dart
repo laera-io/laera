@@ -25,7 +25,7 @@ class _AppWidgetState extends State<AppWidget> {
       ),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.all_inclusive),
-        title: Text('Flow'),
+        label: 'Flow',
       ),
     ),
     1: _Route(
@@ -35,7 +35,7 @@ class _AppWidgetState extends State<AppWidget> {
       ),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.add),
-        title: Text('New'),
+        label: 'New',
       ),
     ),
     2: _Route(
@@ -45,7 +45,7 @@ class _AppWidgetState extends State<AppWidget> {
       ),
       item: const BottomNavigationBarItem(
         icon: Icon(Icons.list),
-        title: Text('Words'),
+        label: 'Words',
       ),
     ),
   };
