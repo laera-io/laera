@@ -3,20 +3,23 @@ description: Laera for Android.
 
 version: "0.1.0"
 
+publish_to: none
+
 environment:
-  sdk: ">=2.10.3 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
+  flutter: ^1.22.0
 
 dependencies:
   flutter:
     sdk: flutter
-  sqflite: ^1.3.1
-  path: ^1.7.0
   json_annotation: ^3.0.1
+  path: ^1.7.0
+  sqflite: ^1.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.7.3
+  flutter_launcher_icons: ^0.8.1
   build_runner: ^1.10.0
   json_serializable: ^3.3.0
 
@@ -25,5 +28,5 @@ flutter:
 
 # flutter pub run flutter_launcher_icons:main
 flutter_icons:
-  android: "launcher_icon"
-  image_path: "assets/icon/logo.png"
+  android: launcher_icon
+  image_path: assets/icon/logo.png
