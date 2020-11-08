@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
 import 'package:laera/models/word.dart';
 import 'package:laera/repos/word.dart';
 

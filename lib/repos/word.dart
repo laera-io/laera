@@ -3,9 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:convert';
-
 import 'package:sqflite/sqflite.dart';
-
 import 'package:laera/models/word.dart';
 import 'package:laera/repos/sources/db.dart';
 
