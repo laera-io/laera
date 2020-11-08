@@ -1,8 +1,6 @@
 name: Flutter
 
 on:
-  push:
-    branches: [ stable ]
   pull_request:
     branches: [ stable ]
 
