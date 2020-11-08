@@ -2,16 +2,12 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:laera/app.dart';
+import 'package:laera/main.dart';
 
 void main() {
   testWidgets('App loads fine', (WidgetTester tester) async {
-    await tester.pumpWidget(MediaQuery(
-      data: MediaQueryData(),
-      child: MaterialApp(home: AppWidget()),
-    ));
+    await tester.pumpWidget(App());
 
     expect(find.text('Flow'), findsOneWidget);
     expect(find.text('New'), findsOneWidget);

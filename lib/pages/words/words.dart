@@ -3,58 +3,64 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
-import 'package:laera/common/async.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/repos/word.dart';
+import 'package:laera/widgets/async.dart';
+import 'package:laera/widgets/no_data.dart';
 
 class WordsPage extends StatefulWidget {
   final WordRepo _wordRepo;
 
-  const WordsPage(this._wordRepo);
+  WordsPage(this._wordRepo);
 
   @override
   _WordsPageState createState() => _WordsPageState();
 }
 
 class _WordsPageState extends State<WordsPage> {
+  static const textScaleFactor = 1.3;
+  static const leadingSpaceScaleFactor = 0.05;
+
   @override
-  Widget build(BuildContext context) => asyncBuild(
-        future: widget._wordRepo.getAll(),
-        builder: (data) {
-          var widgets = <Widget>[
-            Container(height: MediaQuery.of(context).size.width * 0.05)
-          ];
-          (data as List<Word> ?? []).forEach((word) {
-            widgets.add(
-              ListTile(
-                title: Text(
-                  word.word,
-                  textScaleFactor: 1.3,
-                ),
-                subtitle: Text(word.translation),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  color: Colors.red,
-                  onPressed: () {
-                    widget._wordRepo.delete(word.id);
-                    setState(() {});
-                  },
-                ),
+  Widget build(BuildContext context) {
+    return Async(
+      future: widget._wordRepo.getAll(),
+      builder: (data) {
+        final words = data as List<Word> ?? [];
+        if (words.isEmpty) {
+          return const NoData();
+        }
+
+        var widgets = <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.width * leadingSpaceScaleFactor,
+          ),
+        ];
+        (words).forEach((word) {
+          widgets.add(
+            ListTile(
+              title: Text(
+                word.word,
+                textScaleFactor: textScaleFactor,
               ),
-            );
-          });
-          return widgets.length > 0
-              ? Center(
-                  child: ListView(
-                    children: widgets,
-                  ),
-                )
-              : Center(
-                  child: Text(
-                  "No words. Add some",
-                  textScaleFactor: 1.5,
-                ));
-        },
-      );
+              subtitle: Text(word.translation),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete),
+                color: Colors.red,
+                onPressed: () {
+                  widget._wordRepo.delete(word.id);
+                  setState(() => {});
+                },
+              ),
+            ),
+          );
+        });
+        return Center(
+          child: ListView(
+            children: widgets,
+          ),
+        );
+      },
+    );
+  }
 }
