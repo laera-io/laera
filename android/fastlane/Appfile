@@ -1,2 +1,2 @@
 package_name("io.laera")
-json_key_file("keys/google_play_api_key.json")
+json_key_file("fastlane/keys/google_play_api_key.json")
