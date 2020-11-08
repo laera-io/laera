@@ -3,22 +3,17 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
 import 'package:laera/models/word.dart';
 
-class WordCardWidget extends StatelessWidget {
+class WordCard extends StatelessWidget {
   static const _textScale = 1.5;
   static const _widthFactor = 0.8;
   static const _heightFactor = 0.7;
   static const _spaceFactor = 0.1;
 
-  final Word _word;
+  final Word word;
 
-  const WordCardWidget({
-    Key key,
-    @required Word word,
-  })  : _word = word,
-        super(key: key);
+  const WordCard({@required this.word});
 
   @override
   Widget build(BuildContext context) {
@@ -26,28 +21,25 @@ class WordCardWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width * _widthFactor,
       height: MediaQuery.of(context).size.height * _heightFactor,
       child: Card(
-        child: FractionallySizedBox(
-          widthFactor: 0.9,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                _word.word,
-                textScaleFactor: _textScale,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              word.word,
+              textScaleFactor: _textScale,
+            ),
+            const Flexible(
+              child: FractionallySizedBox(
+                heightFactor: _spaceFactor,
               ),
-              Flexible(
-                child: FractionallySizedBox(
-                  heightFactor: _spaceFactor,
-                ),
-              ),
-              Text(
-                _word.translation,
-                textScaleFactor: _textScale,
-                style: TextStyle(color: Colors.grey[600]),
-              ),
-            ],
-          ),
+            ),
+            Text(
+              word.translation,
+              textScaleFactor: _textScale,
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+          ],
         ),
       ),
     );

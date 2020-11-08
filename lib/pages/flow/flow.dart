@@ -29,7 +29,7 @@ class FlowPage extends StatelessWidget {
           );
         }
         return Swipable(
-          children: [for (final word in words) WordCardWidget(word: word)],
+          children: [for (final word in words) WordCard(word: word)],
         );
       },
     );
