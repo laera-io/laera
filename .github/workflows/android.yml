@@ -16,7 +16,7 @@ jobs:
           echo "${{ secrets.KEYSTORE_PROPERTIES_B64 }}" | base64 -D > android/fastlane/keys/keystore.properties
           echo "${{ secrets.GOOGLE_PLAY_API_KEY_JSON_B64 }}" | base64 -D > android/fastlane/keys/google_play_api_key.json
 
-      - uses: maierj/fastlane-action@v1
+      - uses: maierj/fastlane-action@v1.4.0
         with:
           lane: 'alpha'
           subdirectory: 'android'
