@@ -41,7 +41,6 @@ class _NavbarState extends State<Navbar> {
 class NavbarElement {
   final Widget page;
   final BottomNavigationBarItem item;
-  final Color backgroundColor;
 
   static const materialGrey100 = Color(0xFFF5F5F5);
 
@@ -49,7 +48,7 @@ class NavbarElement {
     @required Widget page,
     @required IconData icon,
     @required String label,
-    this.backgroundColor = materialGrey100,
+    Color backgroundColor = materialGrey100,
   })  : page = Container(
           color: backgroundColor,
           child: page,
