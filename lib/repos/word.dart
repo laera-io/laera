@@ -3,14 +3,14 @@
 // found in the LICENSE file.
 
 import 'dart:convert';
-import 'package:sqflite/sqflite.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/repos/sources/db.dart';
+import 'package:sqflite/sqflite.dart';
 
 class WordRepo {
   final Future<Database> _source;
 
-  const WordRepo(this._source);
+  WordRepo(this._source);
 
   Future<List<Word>> getAll() =>
       _source.then((db) => db.query(WordTable.NAME)).then(

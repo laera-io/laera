@@ -9,7 +9,7 @@ import 'package:laera/repos/word.dart';
 class NewPage extends StatefulWidget {
   final WordRepo _wordRepo;
 
-  const NewPage(this._wordRepo);
+  NewPage(this._wordRepo);
 
   @override
   _NewPageState createState() => _NewPageState();
