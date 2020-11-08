@@ -47,9 +47,10 @@ class _WordsPageState extends State<WordsPage> {
               trailing: IconButton(
                 icon: const Icon(Icons.delete),
                 color: Colors.red,
-                onPressed: () => setState(
-                  () => widget._wordRepo.delete(word.id),
-                ),
+                onPressed: () {
+                  widget._wordRepo.delete(word.id);
+                  setState(() => {});
+                },
               ),
             ),
           );
