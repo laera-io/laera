@@ -49,7 +49,7 @@ class _SwipableState extends State<Swipable> {
             ],
           ),
         ),
-        ...widget.targets,
+        ...?widget.targets,
       ],
     );
   }

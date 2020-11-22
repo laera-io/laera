@@ -12,8 +12,8 @@ class Navbar extends StatefulWidget {
   Navbar({
     @required List<NavbarElement> elements,
     this.defaultElementIndex = 0,
-  })  : pages = [for (final element in elements ?? []) element.page],
-        items = [for (final element in elements ?? []) element.item];
+  })  : pages = [for (final e in elements ?? []) e.page],
+        items = [for (final e in elements ?? []) e.item];
 
   Widget pageAt(int index) =>
       index < pages.length ? pages[index] : pages[defaultElementIndex];
