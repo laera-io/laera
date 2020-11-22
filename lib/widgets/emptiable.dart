@@ -4,6 +4,22 @@
 
 import 'package:flutter/material.dart';
 
+class Emptiable extends StatelessWidget {
+  final List data;
+  final Widget Function(List) builder;
+  final Widget onEmpty;
+
+  const Emptiable({
+    @required List data,
+    @required this.builder,
+    this.onEmpty = const NoData(),
+  })  : assert(builder != null),
+        this.data = data ?? const [];
+
+  @override
+  Widget build(BuildContext context) => data.isEmpty ? onEmpty : builder(data);
+}
+
 class NoData extends StatelessWidget {
   final String label;
   final double textScaleFactor;
