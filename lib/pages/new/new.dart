@@ -6,18 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/repos/word.dart';
 
-class NewPage extends StatefulWidget {
+class NewPage extends StatelessWidget {
   final WordRepo _wordRepo;
 
   NewPage(this._wordRepo);
 
-  @override
-  _NewPageState createState() => _NewPageState();
-}
-
-class _NewPageState extends State<NewPage> {
   final _formKey = GlobalKey<FormState>();
-
   final _wordText = TextEditingController();
   final _translationText = TextEditingController();
 
@@ -37,12 +31,7 @@ class _NewPageState extends State<NewPage> {
                   labelText: 'Word',
                   icon: Icon(Icons.translate),
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please input some data';
-                  }
-                  return null;
-                },
+                validator: _validateInput,
               ),
               TextFormField(
                 controller: _translationText,
@@ -50,33 +39,13 @@ class _NewPageState extends State<NewPage> {
                   labelText: 'Translation',
                   icon: Icon(Icons.text_fields),
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please input some data';
-                  }
-                  return null;
-                },
+                validator: _validateInput,
               ),
               Container(height: 20),
               SizedBox(
                 width: double.infinity,
                 child: RaisedButton(
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      widget._wordRepo.add(
-                        Word(
-                          _wordText.value.text,
-                          _translationText.value.text,
-                        ),
-                      );
-                      _formKey.currentState?.reset();
-
-                      final snackBar = SnackBar(
-                        content: Text('Word added'),
-                      );
-                      Scaffold.of(context).showSnackBar(snackBar);
-                    }
-                  },
+                  onPressed: _add(context),
                   child: Text('Add'),
                 ),
               ),
@@ -86,4 +55,23 @@ class _NewPageState extends State<NewPage> {
       ),
     );
   }
+
+  String _validateInput(String value) =>
+      value?.isEmpty ?? true ? 'Please input some data' : null;
+
+  Function() _add(BuildContext context) => () {
+        if (!(_formKey.currentState?.validate() ?? false)) return;
+        _wordRepo.add(
+          Word(
+            _wordText.value.text,
+            _translationText.value.text,
+          ),
+        );
+        _formKey.currentState?.reset();
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Word added'),
+          ),
+        );
+      };
 }
