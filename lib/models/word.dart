@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 // flutter pub run build_runner build
 part 'word.g.dart';
@@ -12,7 +13,12 @@ class Word {
   final int id;
   final String word, translation;
 
-  const Word(this.word, this.translation, {this.id});
+  const Word({
+    @required this.word,
+    @required this.translation,
+    this.id,
+  })  : assert(word != null),
+        assert(translation != null);
 
   factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
 

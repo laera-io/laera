@@ -7,19 +7,22 @@ import 'package:laera/models/word.dart';
 import 'package:laera/repos/word.dart';
 
 class NewPage extends StatelessWidget {
-  final WordRepo _wordRepo;
-
   NewPage(this._wordRepo);
+
+  final WordRepo _wordRepo;
 
   final _formKey = GlobalKey<FormState>();
   final _wordText = TextEditingController();
   final _translationText = TextEditingController();
 
+  static const widthFactor = 0.7;
+  static const addButtonIndent = 20.0;
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: FractionallySizedBox(
-        widthFactor: 0.7,
+        widthFactor: widthFactor,
         child: Form(
           key: _formKey,
           child: Column(
@@ -41,7 +44,7 @@ class NewPage extends StatelessWidget {
                 ),
                 validator: _validateInput,
               ),
-              Container(height: 20),
+              Container(height: addButtonIndent),
               SizedBox(
                 width: double.infinity,
                 child: RaisedButton(
@@ -56,15 +59,15 @@ class NewPage extends StatelessWidget {
     );
   }
 
-  String _validateInput(String value) =>
+  static String _validateInput(String value) =>
       value?.isEmpty ?? true ? 'Please input some data' : null;
 
   Function() _add(BuildContext context) => () {
         if (!(_formKey.currentState?.validate() ?? false)) return;
         _wordRepo.add(
           Word(
-            _wordText.value.text,
-            _translationText.value.text,
+            word: _wordText.value.text,
+            translation: _translationText.value.text,
           ),
         );
         _formKey.currentState?.reset();
