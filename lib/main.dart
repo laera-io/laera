@@ -18,6 +18,14 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
+        buttonTheme: ButtonThemeData(
+          textTheme: ButtonTextTheme.accent,
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+                primary: Colors.lightGreen,
+                secondary: Colors.white,
+              ),
+        ),
+        scaffoldBackgroundColor: Colors.grey[100],
       ),
       home: Navbar(
         elements: [

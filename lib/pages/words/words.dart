@@ -46,7 +46,7 @@ class _WordsPageState extends State<WordsPage> {
               subtitle: Text(word.translation),
               trailing: IconButton(
                 icon: const Icon(Icons.delete),
-                color: Colors.red,
+                color: Theme.of(context).errorColor,
                 onPressed: () {
                   widget._wordRepo.delete(word.id);
                   setState(() => {});

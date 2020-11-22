@@ -42,18 +42,11 @@ class NavbarElement {
   final Widget page;
   final BottomNavigationBarItem item;
 
-  static const materialGrey100 = Color(0xFFF5F5F5);
-
   NavbarElement({
-    @required Widget page,
+    @required this.page,
     @required IconData icon,
     @required String label,
-    Color backgroundColor = materialGrey100,
-  })  : page = Container(
-          color: backgroundColor,
-          child: page,
-        ),
-        item = BottomNavigationBarItem(
+  }) : item = BottomNavigationBarItem(
           icon: Icon(icon),
           label: label,
         );

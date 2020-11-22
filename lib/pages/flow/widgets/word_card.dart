@@ -37,7 +37,7 @@ class WordCard extends StatelessWidget {
             Text(
               word.translation,
               textScaleFactor: _textScale,
-              style: TextStyle(color: Colors.grey[600]),
+              style: TextStyle(color: Theme.of(context).hintColor),
             ),
           ],
         ),
