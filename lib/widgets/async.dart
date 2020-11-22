@@ -5,17 +5,17 @@
 import 'package:flutter/material.dart';
 
 class Async extends StatelessWidget {
-  final Future future;
-  final Widget Function(dynamic data) builder;
-  final Widget onProgress;
-  final Widget Function(Object error) onError;
-
   const Async({
     @required this.future,
     @required this.builder,
     this.onProgress = const CircularProgressIndicator(),
     this.onError = _onError,
   });
+
+  final Future future;
+  final Widget Function(dynamic data) builder;
+  final Widget onProgress;
+  final Widget Function(Object error) onError;
 
   @override
   Widget build(BuildContext context) {

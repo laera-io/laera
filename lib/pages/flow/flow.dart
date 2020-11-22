@@ -11,9 +11,9 @@ import 'package:laera/widgets/emptiable.dart';
 import 'package:laera/widgets/swipable.dart';
 
 class FlowPage extends StatelessWidget {
-  final WordRepo _wordRepo;
-
   const FlowPage(this._wordRepo);
+
+  final WordRepo _wordRepo;
 
   @override
   Widget build(BuildContext context) {

@@ -5,21 +5,21 @@
 import 'package:flutter/material.dart';
 
 class Navbar extends StatefulWidget {
-  final List<Widget> pages;
-  final List<BottomNavigationBarItem> items;
-  final int defaultElementIndex;
-
   Navbar({
     @required List<NavbarElement> elements,
     this.defaultElementIndex = 0,
   })  : pages = [for (final e in elements ?? []) e.page],
         items = [for (final e in elements ?? []) e.item];
 
-  Widget pageAt(int index) =>
-      index < pages.length ? pages[index] : pages[defaultElementIndex];
+  final List<Widget> pages;
+  final List<BottomNavigationBarItem> items;
+  final int defaultElementIndex;
 
   @override
   _NavbarState createState() => _NavbarState();
+
+  Widget pageAt(int index) =>
+      index < pages.length ? pages[index] : pages[defaultElementIndex];
 }
 
 class _NavbarState extends State<Navbar> {
@@ -39,9 +39,6 @@ class _NavbarState extends State<Navbar> {
 }
 
 class NavbarElement {
-  final Widget page;
-  final BottomNavigationBarItem item;
-
   NavbarElement({
     @required this.page,
     @required IconData icon,
@@ -50,4 +47,7 @@ class NavbarElement {
           icon: Icon(icon),
           label: label,
         );
+
+  final Widget page;
+  final BottomNavigationBarItem item;
 }

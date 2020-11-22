@@ -9,9 +9,9 @@ import 'package:laera/widgets/async.dart';
 import 'package:laera/widgets/emptiable.dart';
 
 class WordsPage extends StatefulWidget {
-  final WordRepo _wordRepo;
+  const WordsPage(this._wordRepo);
 
-  WordsPage(this._wordRepo);
+  final WordRepo _wordRepo;
 
   @override
   _WordsPageState createState() => _WordsPageState();

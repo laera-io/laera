@@ -9,9 +9,8 @@ import 'package:sqflite/sqflite.dart';
 class DB {
   DB._();
 
-  static Future<Database> _db;
-
   static Future<Database> get db => _db = _db ?? _init();
+  static Future<Database> _db;
 
   static Future<Database> _init() => getDatabasesPath().then(
         (path) => openDatabase(
