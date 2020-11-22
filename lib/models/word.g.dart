@@ -8,8 +8,8 @@ part of 'word.dart';
 
 Word _$WordFromJson(Map<String, dynamic> json) {
   return Word(
-    json['word'] as String,
-    json['translation'] as String,
+    word: json['word'] as String,
+    translation: json['translation'] as String,
     id: json['id'] as int,
   );
 }

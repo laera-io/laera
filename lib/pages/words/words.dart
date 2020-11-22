@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/repos/word.dart';
 import 'package:laera/widgets/async.dart';
-import 'package:laera/widgets/no_data.dart';
+import 'package:laera/widgets/emptiable.dart';
 
 class WordsPage extends StatefulWidget {
-  final WordRepo _wordRepo;
+  const WordsPage(this._wordRepo);
 
-  WordsPage(this._wordRepo);
+  final WordRepo _wordRepo;
 
   @override
   _WordsPageState createState() => _WordsPageState();
@@ -25,42 +25,37 @@ class _WordsPageState extends State<WordsPage> {
   Widget build(BuildContext context) {
     return Async(
       future: widget._wordRepo.getAll(),
-      builder: (data) {
-        final words = data as List<Word> ?? [];
-        if (words.isEmpty) {
-          return const NoData();
-        }
-
-        var widgets = <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.width * leadingSpaceScaleFactor,
-          ),
-        ];
-        (words).forEach((word) {
-          widgets.add(
-            ListTile(
-              title: Text(
-                word.word,
-                textScaleFactor: textScaleFactor,
-              ),
-              subtitle: Text(word.translation),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete),
-                color: Colors.red,
-                onPressed: () {
-                  widget._wordRepo.delete(word.id);
-                  setState(() => {});
-                },
-              ),
-            ),
-          );
-        });
-        return Center(
+      builder: (words) => Emptiable(
+        data: words as List<Word>,
+        builder: (words) => Center(
           child: ListView(
-            children: widgets,
+            children: <Widget>[
+              Container(
+                height:
+                    MediaQuery.of(context).size.width * leadingSpaceScaleFactor,
+              ),
+              ...[
+                for (final word in words)
+                  ListTile(
+                    title: Text(
+                      word.word,
+                      textScaleFactor: textScaleFactor,
+                    ),
+                    subtitle: Text(word.translation),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () {
+                        widget._wordRepo.delete(word.id);
+                        setState(() => {});
+                      },
+                    ),
+                  )
+              ],
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

@@ -6,20 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 
 class WordCard extends StatelessWidget {
-  static const _textScale = 1.5;
-  static const _widthFactor = 0.8;
-  static const _heightFactor = 0.7;
-  static const _spaceFactor = 0.1;
+  const WordCard({@required this.word});
 
   final Word word;
 
-  const WordCard({@required this.word});
+  static const textScale = 1.5;
+  static const widthFactor = 0.8;
+  static const heightFactor = 0.7;
+  static const spaceFactor = 0.1;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * _widthFactor,
-      height: MediaQuery.of(context).size.height * _heightFactor,
+      width: MediaQuery.of(context).size.width * widthFactor,
+      height: MediaQuery.of(context).size.height * heightFactor,
       child: Card(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,17 +27,17 @@ class WordCard extends StatelessWidget {
           children: [
             Text(
               word.word,
-              textScaleFactor: _textScale,
+              textScaleFactor: textScale,
             ),
             const Flexible(
               child: FractionallySizedBox(
-                heightFactor: _spaceFactor,
+                heightFactor: spaceFactor,
               ),
             ),
             Text(
               word.translation,
-              textScaleFactor: _textScale,
-              style: TextStyle(color: Colors.grey[600]),
+              textScaleFactor: textScale,
+              style: TextStyle(color: Theme.of(context).hintColor),
             ),
           ],
         ),

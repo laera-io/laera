@@ -8,9 +8,9 @@ import 'package:laera/repos/sources/db.dart';
 import 'package:sqflite/sqflite.dart';
 
 class WordRepo {
-  final Future<Database> _source;
+  const WordRepo(this._source);
 
-  WordRepo(this._source);
+  final Future<Database> _source;
 
   Future<List<Word>> getAll() =>
       _source.then((db) => db.query(WordTable.NAME)).then(

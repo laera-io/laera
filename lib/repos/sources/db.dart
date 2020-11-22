@@ -7,9 +7,10 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DB {
-  static Future<Database> _db;
+  DB._();
 
   static Future<Database> get db => _db = _db ?? _init();
+  static Future<Database> _db;
 
   static Future<Database> _init() => getDatabasesPath().then(
         (path) => openDatabase(

@@ -5,10 +5,7 @@
 import 'package:flutter/material.dart';
 
 class Swipable extends StatefulWidget {
-  final List<Widget> children;
-  final List<Widget> targets;
-
-  Swipable({
+  const Swipable({
     @required this.children,
     this.targets = const [
       VerticalTarget(alignment: Alignment.centerLeft),
@@ -16,13 +13,16 @@ class Swipable extends StatefulWidget {
     ],
   });
 
+  final List<Widget> children;
+  final List<Widget> targets;
+
+  @override
+  _SwipableState createState() => _SwipableState();
+
   Widget at(int index) =>
       index < children.length ? children[index] : children[0];
 
   int getNextIndex(int index) => index < children.length - 1 ? index + 1 : 0;
-
-  @override
-  _SwipableState createState() => _SwipableState();
 }
 
 class _SwipableState extends State<Swipable> {
@@ -49,20 +49,20 @@ class _SwipableState extends State<Swipable> {
             ],
           ),
         ),
-        ...widget.targets,
+        ...?widget.targets,
       ],
     );
   }
 }
 
 class VerticalTarget extends StatelessWidget {
-  final Alignment alignment;
-  final double widthFactor;
-
   const VerticalTarget({
     @required this.alignment,
     this.widthFactor = 0.2,
   });
+
+  final Alignment alignment;
+  final double widthFactor;
 
   @override
   Widget build(BuildContext context) {

@@ -5,21 +5,21 @@
 import 'package:flutter/material.dart';
 
 class Navbar extends StatefulWidget {
+  Navbar({
+    @required List<NavbarElement> elements,
+    this.defaultElementIndex = 0,
+  })  : pages = [for (final e in elements ?? []) e.page],
+        items = [for (final e in elements ?? []) e.item];
+
   final List<Widget> pages;
   final List<BottomNavigationBarItem> items;
   final int defaultElementIndex;
 
-  Navbar({
-    @required List<NavbarElement> elements,
-    this.defaultElementIndex = 0,
-  })  : pages = [for (final element in elements ?? []) element.page],
-        items = [for (final element in elements ?? []) element.item];
+  @override
+  _NavbarState createState() => _NavbarState();
 
   Widget pageAt(int index) =>
       index < pages.length ? pages[index] : pages[defaultElementIndex];
-
-  @override
-  _NavbarState createState() => _NavbarState();
 }
 
 class _NavbarState extends State<Navbar> {
@@ -39,22 +39,15 @@ class _NavbarState extends State<Navbar> {
 }
 
 class NavbarElement {
-  final Widget page;
-  final BottomNavigationBarItem item;
-
-  static const materialGrey100 = Color(0xFFF5F5F5);
-
   NavbarElement({
-    @required Widget page,
+    @required this.page,
     @required IconData icon,
     @required String label,
-    Color backgroundColor = materialGrey100,
-  })  : page = Container(
-          color: backgroundColor,
-          child: page,
-        ),
-        item = BottomNavigationBarItem(
+  }) : item = BottomNavigationBarItem(
           icon: Icon(icon),
           label: label,
         );
+
+  final Widget page;
+  final BottomNavigationBarItem item;
 }

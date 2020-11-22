@@ -6,26 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/repos/word.dart';
 
-class NewPage extends StatefulWidget {
-  final WordRepo _wordRepo;
-
+class NewPage extends StatelessWidget {
   NewPage(this._wordRepo);
 
-  @override
-  _NewPageState createState() => _NewPageState();
-}
+  final WordRepo _wordRepo;
 
-class _NewPageState extends State<NewPage> {
   final _formKey = GlobalKey<FormState>();
-
   final _wordText = TextEditingController();
   final _translationText = TextEditingController();
+
+  static const widthFactor = 0.7;
+  static const addButtonIndent = 20.0;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: FractionallySizedBox(
-        widthFactor: 0.7,
+        widthFactor: widthFactor,
         child: Form(
           key: _formKey,
           child: Column(
@@ -37,12 +34,7 @@ class _NewPageState extends State<NewPage> {
                   labelText: 'Word',
                   icon: Icon(Icons.translate),
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please input some data';
-                  }
-                  return null;
-                },
+                validator: _validateInput,
               ),
               TextFormField(
                 controller: _translationText,
@@ -50,35 +42,13 @@ class _NewPageState extends State<NewPage> {
                   labelText: 'Translation',
                   icon: Icon(Icons.text_fields),
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please input some data';
-                  }
-                  return null;
-                },
+                validator: _validateInput,
               ),
-              Container(height: 20),
+              Container(height: addButtonIndent),
               SizedBox(
                 width: double.infinity,
                 child: RaisedButton(
-                  color: Colors.lightGreen,
-                  colorBrightness: Brightness.dark,
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      widget._wordRepo.add(
-                        Word(
-                          _wordText.value.text,
-                          _translationText.value.text,
-                        ),
-                      );
-                      _formKey.currentState?.reset();
-
-                      final snackBar = SnackBar(
-                        content: Text('Word added'),
-                      );
-                      Scaffold.of(context).showSnackBar(snackBar);
-                    }
-                  },
+                  onPressed: _add(context),
                   child: Text('Add'),
                 ),
               ),
@@ -88,4 +58,23 @@ class _NewPageState extends State<NewPage> {
       ),
     );
   }
+
+  static String _validateInput(String value) =>
+      value?.isEmpty ?? true ? 'Please input some data' : null;
+
+  Function() _add(BuildContext context) => () {
+        if (!(_formKey.currentState?.validate() ?? false)) return;
+        _wordRepo.add(
+          Word(
+            word: _wordText.value.text,
+            translation: _translationText.value.text,
+          ),
+        );
+        _formKey.currentState?.reset();
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Word added'),
+          ),
+        );
+      };
 }
