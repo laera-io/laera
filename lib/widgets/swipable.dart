@@ -30,7 +30,6 @@ class _SwipableState extends State<Swipable> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // TODO: make target areas fully allowed
         ...widget.targets,
         Center(
           child: Stack(
@@ -39,8 +38,12 @@ class _SwipableState extends State<Swipable> {
               Draggable(
                 child: widget.at(_currentIndex),
                 feedback: widget.at(_currentIndex),
-                childWhenDragging: widget.at(
-                  widget.getNextIndex(_currentIndex),
+                // IgnorePointer allows targets to accept the draggable even if
+                // there's some widget.
+                childWhenDragging: IgnorePointer(
+                  child: widget.at(
+                    widget.getNextIndex(_currentIndex),
+                  ),
                 ),
                 onDragCompleted: () => setState(
                   () => _currentIndex = widget.getNextIndex(_currentIndex),
@@ -87,7 +90,7 @@ class VerticalTarget extends StatefulWidget {
   const VerticalTarget({
     @required this.alignment,
     @required this.decoration,
-    this.widthFactor = 0.4,
+    this.widthFactor = 0.35,
   });
 
   final Alignment alignment;
@@ -105,19 +108,17 @@ class _VerticalTargetState extends State<VerticalTarget> {
   Widget build(BuildContext context) {
     return Align(
       alignment: widget.alignment,
-      child: Container(
-        decoration: decoration,
-        child: DragTarget(
-          onWillAccept: (data) {
-            setState(() => decoration = widget.decoration);
-            return true;
-          },
-          onAcceptWithDetails: (details) => setState(() => decoration = null),
-          onLeave: (data) => setState(() => decoration = null),
-          builder: (context, candidateData, rejectedData) =>
-              FractionallySizedBox(
-            widthFactor: widget.widthFactor,
-            child: Container(),
+      child: DragTarget(
+        onWillAccept: (_) {
+          setState(() => decoration = widget.decoration);
+          return true;
+        },
+        onAccept: (_) => setState(() => decoration = null),
+        onLeave: (_) => setState(() => decoration = null),
+        builder: (_, __, ___) => FractionallySizedBox(
+          widthFactor: widget.widthFactor,
+          child: Container(
+            decoration: decoration,
           ),
         ),
       ),
