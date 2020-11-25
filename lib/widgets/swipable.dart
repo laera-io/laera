@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 
 class Swipable extends StatefulWidget {
   const Swipable({
-    @required this.children,
-    this.targets = const [
-      VerticalTarget(alignment: Alignment.centerLeft),
-      VerticalTarget(alignment: Alignment.centerRight),
-    ],
-  });
+    @required children,
+    List<Widget> targets,
+  })  : this.children = children ?? const [],
+        this.targets = targets ?? const [];
 
   final List<Widget> children;
   final List<Widget> targets;
@@ -32,6 +30,7 @@ class _SwipableState extends State<Swipable> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        ...widget.targets,
         Center(
           child: Stack(
             alignment: Alignment.center,
@@ -39,8 +38,12 @@ class _SwipableState extends State<Swipable> {
               Draggable(
                 child: widget.at(_currentIndex),
                 feedback: widget.at(_currentIndex),
-                childWhenDragging: widget.at(
-                  widget.getNextIndex(_currentIndex),
+                // IgnorePointer allows targets to accept the draggable even if
+                // there's some widget.
+                childWhenDragging: IgnorePointer(
+                  child: widget.at(
+                    widget.getNextIndex(_currentIndex),
+                  ),
                 ),
                 onDragCompleted: () => setState(
                   () => _currentIndex = widget.getNextIndex(_currentIndex),
@@ -49,29 +52,45 @@ class _SwipableState extends State<Swipable> {
             ],
           ),
         ),
-        ...?widget.targets,
       ],
     );
   }
 }
 
-class VerticalTarget extends StatelessWidget {
+class VerticalTarget extends StatefulWidget {
   const VerticalTarget({
     @required this.alignment,
-    this.widthFactor = 0.2,
+    @required this.decoration,
+    this.widthFactor = 0.35,
   });
 
   final Alignment alignment;
+  final Decoration decoration;
   final double widthFactor;
+
+  @override
+  _VerticalTargetState createState() => _VerticalTargetState();
+}
+
+class _VerticalTargetState extends State<VerticalTarget> {
+  Decoration _decoration;
 
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: alignment,
+      alignment: widget.alignment,
       child: DragTarget(
-        builder: (context, candidateData, rejectedData) => FractionallySizedBox(
-          widthFactor: widthFactor,
-          child: Container(),
+        onWillAccept: (_) {
+          setState(() => _decoration = widget.decoration);
+          return true;
+        },
+        onAccept: (_) => setState(() => _decoration = null),
+        onLeave: (_) => setState(() => _decoration = null),
+        builder: (_, __, ___) => FractionallySizedBox(
+          widthFactor: widget.widthFactor,
+          child: Container(
+            decoration: _decoration,
+          ),
         ),
       ),
     );

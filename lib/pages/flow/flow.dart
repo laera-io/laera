@@ -15,6 +15,9 @@ class FlowPage extends StatelessWidget {
 
   final WordRepo _wordRepo;
 
+  static const acceptTargetColor = Color(0xFFF1F8E9); // Colors.lightGreen[50]
+  static const rejectTargetColor = Color(0xFFFFEBEE); // Colors.red[50]
+
   @override
   Widget build(BuildContext context) {
     return Async(
@@ -23,6 +26,34 @@ class FlowPage extends StatelessWidget {
         data: words as List<Word>,
         builder: (words) => Swipable(
           children: [for (final word in words) WordCard(word: word)],
+          targets: [
+            VerticalTarget(
+              alignment: Alignment.centerRight,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Theme.of(context).scaffoldBackgroundColor,
+                    acceptTargetColor,
+                  ],
+                ),
+              ),
+            ),
+            VerticalTarget(
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerRight,
+                  end: Alignment.centerLeft,
+                  colors: [
+                    Theme.of(context).scaffoldBackgroundColor,
+                    rejectTargetColor,
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
