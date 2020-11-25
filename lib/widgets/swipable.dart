@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class Swipable extends StatefulWidget {
   const Swipable({
     @required children,
-    List<Widget> targets = const [rejectTarget, acceptTarget],
+    List<Widget> targets,
   })  : this.children = children ?? const [],
         this.targets = targets ?? const [];
 
@@ -57,35 +57,6 @@ class _SwipableState extends State<Swipable> {
   }
 }
 
-// TODO: refactor colors
-const acceptTarget = VerticalTarget(
-  alignment: Alignment.centerRight,
-  decoration: BoxDecoration(
-    gradient: LinearGradient(
-      begin: Alignment.centerLeft,
-      end: Alignment.centerRight,
-      colors: [
-        Color(0xFFF5F5F5), // Colors.grey[100]
-        Color(0xFFDCEDC8), // Colors.lightGreen[100]
-      ],
-    ),
-  ),
-);
-
-const rejectTarget = VerticalTarget(
-  alignment: Alignment.centerLeft,
-  decoration: BoxDecoration(
-    gradient: LinearGradient(
-      begin: Alignment.centerRight,
-      end: Alignment.centerLeft,
-      colors: [
-        Color(0xFFF5F5F5), // Colors.grey[100]
-        Color(0xFFFFCDD2), // Colors.red[100]
-      ],
-    ),
-  ),
-);
-
 class VerticalTarget extends StatefulWidget {
   const VerticalTarget({
     @required this.alignment,
@@ -102,7 +73,7 @@ class VerticalTarget extends StatefulWidget {
 }
 
 class _VerticalTargetState extends State<VerticalTarget> {
-  Decoration decoration;
+  Decoration _decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -110,15 +81,15 @@ class _VerticalTargetState extends State<VerticalTarget> {
       alignment: widget.alignment,
       child: DragTarget(
         onWillAccept: (_) {
-          setState(() => decoration = widget.decoration);
+          setState(() => _decoration = widget.decoration);
           return true;
         },
-        onAccept: (_) => setState(() => decoration = null),
-        onLeave: (_) => setState(() => decoration = null),
+        onAccept: (_) => setState(() => _decoration = null),
+        onLeave: (_) => setState(() => _decoration = null),
         builder: (_, __, ___) => FractionallySizedBox(
           widthFactor: widget.widthFactor,
           child: Container(
-            decoration: decoration,
+            decoration: _decoration,
           ),
         ),
       ),
