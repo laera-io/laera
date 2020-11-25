@@ -7,17 +7,7 @@ import 'package:flutter/material.dart';
 class Swipable extends StatefulWidget {
   const Swipable({
     @required children,
-    targets = const [
-      VerticalTarget(
-        alignment: Alignment.centerLeft,
-        // TODO: refactor colors
-        color: Color(0x99DCFFC8),
-      ),
-      VerticalTarget(
-        alignment: Alignment.centerRight,
-        color: Color(0x88FFDDDD),
-      ),
-    ],
+    List<Widget> targets = const [rejectTarget, acceptTarget],
   })  : this.children = children ?? const [],
         this.targets = targets ?? const [];
 
@@ -64,15 +54,44 @@ class _SwipableState extends State<Swipable> {
   }
 }
 
+// TODO: refactor colors
+const acceptTarget = VerticalTarget(
+  alignment: Alignment.centerRight,
+  decoration: BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: [
+        Color(0xFFF5F5F5), // Colors.grey[100]
+        Color(0xFFDCEDC8), // Colors.lightGreen[100]
+      ],
+    ),
+  ),
+);
+
+const rejectTarget = VerticalTarget(
+  alignment: Alignment.centerLeft,
+  decoration: BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment.centerRight,
+      end: Alignment.centerLeft,
+      colors: [
+        Color(0xFFF5F5F5), // Colors.grey[100]
+        Color(0xFFFFCDD2), // Colors.red[100]
+      ],
+    ),
+  ),
+);
+
 class VerticalTarget extends StatefulWidget {
   const VerticalTarget({
     @required this.alignment,
-    @required this.color,
-    this.widthFactor = 0.3,
+    @required this.decoration,
+    this.widthFactor = 0.4,
   });
 
   final Alignment alignment;
-  final Color color;
+  final Decoration decoration;
   final double widthFactor;
 
   @override
@@ -80,25 +99,21 @@ class VerticalTarget extends StatefulWidget {
 }
 
 class _VerticalTargetState extends State<VerticalTarget> {
-  var color = Colors.transparent;
+  Decoration decoration;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: widget.alignment,
-      child: ColoredBox(
-        color: color,
+      child: Container(
+        decoration: decoration,
         child: DragTarget(
           onWillAccept: (data) {
-            setState(() => color = widget.color);
+            setState(() => decoration = widget.decoration);
             return true;
           },
-          onAcceptWithDetails: (details) {
-            setState(() => color = Colors.transparent);
-          },
-          onLeave: (data) {
-            setState(() => color = Colors.transparent);
-          },
+          onAcceptWithDetails: (details) => setState(() => decoration = null),
+          onLeave: (data) => setState(() => decoration = null),
           builder: (context, candidateData, rejectedData) =>
               FractionallySizedBox(
             widthFactor: widget.widthFactor,
