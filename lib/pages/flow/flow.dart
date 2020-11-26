@@ -15,8 +15,8 @@ class FlowPage extends StatelessWidget {
 
   final WordRepo _wordRepo;
 
-  static const acceptTargetColor = Color(0xFFF1F8E9); // Colors.lightGreen[50]
-  static const rejectTargetColor = Color(0xFFFFEBEE); // Colors.red[50]
+  static const acceptTargetColor = Color(0xFFDCEDC8); // Colors.lightGreen[100]
+  static const rejectTargetColor = Color(0xFFD6D6D6); // Colors.grey[350]
 
   @override
   Widget build(BuildContext context) {

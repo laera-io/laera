@@ -61,7 +61,7 @@ class VerticalTarget extends StatefulWidget {
   const VerticalTarget({
     @required this.alignment,
     @required this.decoration,
-    this.widthFactor = 0.35,
+    this.widthFactor = 0.4,
   });
 
   final Alignment alignment;
