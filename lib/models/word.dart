@@ -5,7 +5,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
-// flutter pub run build_runner build
 part 'word.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)

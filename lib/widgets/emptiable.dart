@@ -22,7 +22,7 @@ class Emptiable extends StatelessWidget {
 
 class NoData extends StatelessWidget {
   const NoData({
-    this.label = "Nothing here 🥺",
+    this.label = 'Nothing here 🥺',
     this.textScaleFactor = 1.5,
   });
 

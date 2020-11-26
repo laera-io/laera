@@ -1,5 +1,5 @@
 name: laera
-description: Laera for Android.
+description: Laera is the Android application for words learning
 
 version: "0.1.1"
 
@@ -26,7 +26,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-# flutter pub run flutter_launcher_icons:main
 flutter_icons:
   android: launcher_icon
   image_path: assets/icon/logo.png
