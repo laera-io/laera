@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          # `0` means fetch all commits, tags, etc
           fetch-depth: 0
       
       - uses: subosito/flutter-action@v1
@@ -24,6 +25,6 @@ jobs:
 
       - uses: maierj/fastlane-action@v1.4.0
         with:
-          lane: 'alpha'
+          lane: 'release_alpha'
           subdirectory: 'android'
           skip-tracking: true

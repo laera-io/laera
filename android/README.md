@@ -42,7 +42,7 @@ base64 -w 0 <file_name>
 
 ## Helpful links
 
-* [Flutter cd][flutter_cd]
+* [Flutter CD][flutter_cd]
 * [Fastlane recipe][fastlane_recipe]
 * [Creating google play api key docs][google_play_api_key_docs]
 * [Signing Android app][signing]
