@@ -2,7 +2,11 @@ name: Android
 
 on:
   push:
-    tags: [ 'v*' ]
+    tags: [ v* ]
+
+env:
+  FLUTTER_VERSION: 1.22.x
+  PUB_CACHE: .pub-cache
 
 jobs:
   publish:
@@ -10,14 +14,34 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          # `0` means fetch all commits, tags, etc
-          fetch-depth: 0
-      
+          fetch-depth: 0 # fetch all commits, tags, etc
+
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '1.22'
+          flutter-version: ${{ env.FLUTTER_VERSION }}
 
-      - run: |
+      - name: Get Ruby dependencies from cache
+        uses: actions/cache@v2
+        with:
+          path: android/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+
+      - name: Get Flutter dependencies from cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PUB_CACHE }}
+          key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
+
+      - run: make ci-before
+
+      - name: Install Flutter dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: flutter pub get
+
+      - name: Install secrets
+        run: |
           mkdir -p android/fastlane/keys
           echo "${{ secrets.KEYSTORE_JKS_B64 }}" | base64 -d > android/fastlane/keys/keystore.jks
           echo "${{ secrets.KEYSTORE_PROPERTIES_B64 }}" | base64 -d > android/fastlane/keys/keystore.properties
@@ -25,6 +49,7 @@ jobs:
 
       - uses: maierj/fastlane-action@v1.4.0
         with:
-          lane: 'release_alpha'
-          subdirectory: 'android'
+          lane: release_alpha
+          subdirectory: android
+          bundle-install-path: vendor/bundle
           skip-tracking: true

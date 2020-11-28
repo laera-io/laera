@@ -4,13 +4,31 @@ on:
   pull_request:
     branches: [ stable ]
 
+env:
+  FLUTTER_VERSION: 1.22.x
+  PUB_CACHE: .pub-cache
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: '1.22'
-    - run: flutter pub get
-    - run: flutter test
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Get Flutter dependencies from cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PUB_CACHE }}
+          key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
+
+      - run: make ci-before
+
+      - name: Install Flutter dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: flutter pub get
+
+      - run: flutter test

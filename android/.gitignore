@@ -9,3 +9,5 @@ GeneratedPluginRegistrant.java
 /fastlane/README.md
 /fastlane/report.xml
 /fastlane/keys/
+/vendor/
+/.bundle/
