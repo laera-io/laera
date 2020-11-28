@@ -8,9 +8,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: '1.22'
-    - run: flutter pub get
-    - run: flutter test
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: 1.22.x
+
+      - name: Disable analytics and run tests
+        run: |
+          pre-ci
+          #
+          flutter pub get
+          flutter test

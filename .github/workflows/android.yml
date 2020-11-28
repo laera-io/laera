@@ -2,7 +2,7 @@ name: Android
 
 on:
   push:
-    tags: [ 'v*' ]
+    tags: [ v* ]
 
 jobs:
   publish:
@@ -10,14 +10,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          # `0` means fetch all commits, tags, etc
-          fetch-depth: 0
-      
+          fetch-depth: 0 # fetch all commits, tags, etc
+
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '1.22'
+          flutter-version: 1.22.x
 
-      - run: |
+      - uses: actions/cache@v2
+        with:
+          path: android/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Disable analytics and install secrets
+        run: |
+          make pre-ci
+          #
           mkdir -p android/fastlane/keys
           echo "${{ secrets.KEYSTORE_JKS_B64 }}" | base64 -d > android/fastlane/keys/keystore.jks
           echo "${{ secrets.KEYSTORE_PROPERTIES_B64 }}" | base64 -d > android/fastlane/keys/keystore.properties
@@ -25,6 +34,7 @@ jobs:
 
       - uses: maierj/fastlane-action@v1.4.0
         with:
-          lane: 'release_alpha'
-          subdirectory: 'android'
+          lane: release_alpha
+          subdirectory: android
+          bundle-install-path: vendor/bundle
           skip-tracking: true
