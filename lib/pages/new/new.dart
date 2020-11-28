@@ -13,6 +13,7 @@ class NewPage extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
   final _wordText = TextEditingController();
+  final _wordsFocus = FocusNode();
   final _translationText = TextEditingController();
 
   static const widthFactor = 0.7;
@@ -30,6 +31,7 @@ class NewPage extends StatelessWidget {
             children: [
               TextFormField(
                 controller: _wordText,
+                focusNode: _wordsFocus,
                 decoration: const InputDecoration(
                   labelText: 'Word',
                   icon: Icon(Icons.translate),
@@ -71,6 +73,7 @@ class NewPage extends StatelessWidget {
           ),
         );
         _formKey.currentState?.reset();
+        _wordsFocus.requestFocus();
         Scaffold.of(context).showSnackBar(
           SnackBar(
             content: Text('Word added'),
