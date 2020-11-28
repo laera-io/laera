@@ -72,7 +72,8 @@ class NewPage extends StatelessWidget {
             translation: _translationText.value.text,
           ),
         );
-        _formKey.currentState?.reset();
+        _wordText.clear();
+        _translationText.clear();
         _wordsFocus.requestFocus();
         Scaffold.of(context).showSnackBar(
           SnackBar(
