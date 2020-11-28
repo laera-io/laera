@@ -5,7 +5,8 @@ on:
     branches: [ stable ]
 
 env:
-  flutter_version: 1.22.x
+  FLUTTER_VERSION: 1.22.x
+  PUB_CACHE: .pub-cache
 
 jobs:
   test:
@@ -15,14 +16,14 @@ jobs:
 
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: ${{ env.flutter_version }}
+          flutter-version: ${{ env.FLUTTER_VERSION }}
 
       - name: Get Flutter dependencies from cache
         uses: actions/cache@v2
         with:
-          path: ~/.pub-cache
-          key: ${{ runner.os }}-${{ env.flutter_version }}-pub-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: ${{ runner.os }}-${{ env.flutter_version }}-pub-
+          path: ${{ env.PUB_CACHE }}
+          key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
 
       - run: make ci-before
 
