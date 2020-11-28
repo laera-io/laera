@@ -1,0 +1,1 @@
+0.2.1 - small visual changes and bug fixes on adding new word page
