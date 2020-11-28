@@ -31,7 +31,3 @@ disable-analytics:
 .PHONY: ci-before
 ci-before: disable-analytics
 	flutter --version
-
-ci-test:
-	flutter pub get
-	flutter test
