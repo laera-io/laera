@@ -14,9 +14,5 @@ jobs:
         with:
           flutter-version: 1.22.x
 
-      - name: Disable analytics and run tests
-        run: |
-          pre-ci
-          #
-          flutter pub get
-          flutter test
+      - run: make ci-before
+      - run: make ci-test

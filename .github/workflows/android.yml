@@ -23,10 +23,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: Disable analytics and install secrets
+      - run: make ci-before
+      - name: Install secrets
         run: |
-          make pre-ci
-          #
           mkdir -p android/fastlane/keys
           echo "${{ secrets.KEYSTORE_JKS_B64 }}" | base64 -d > android/fastlane/keys/keystore.jks
           echo "${{ secrets.KEYSTORE_PROPERTIES_B64 }}" | base64 -d > android/fastlane/keys/keystore.properties

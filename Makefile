@@ -28,6 +28,10 @@ disable-analytics:
 	dart --disable-analytics
 	flutter config --suppress-analytics --no-analytics
 
-.PHONY: pre-ci
-pre-ci: disable-analytics
+.PHONY: ci-before
+ci-before: disable-analytics
 	flutter --version
+
+ci-test:
+	flutter pub get
+	flutter test
