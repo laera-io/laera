@@ -3,12 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/repos/word.dart';
 
 class AssestsPage extends StatelessWidget {
-  const AssestsPage(this._wordRepo);
-
-  final WordRepo _wordRepo;
+  const AssestsPage();
 
   @override
   Widget build(BuildContext context) {

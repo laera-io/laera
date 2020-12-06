@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-class Async extends StatelessWidget {
+class Async<T> extends StatelessWidget {
   const Async({
     @required this.future,
     @required this.builder,
@@ -12,8 +12,8 @@ class Async extends StatelessWidget {
     this.onError = _onError,
   });
 
-  final Future future;
-  final Widget Function(dynamic data) builder;
+  final Future<T> future;
+  final Widget Function(T data) builder;
   final Widget onProgress;
   final Widget Function(Object error) onError;
 

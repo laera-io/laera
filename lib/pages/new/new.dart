@@ -4,12 +4,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:laera/pages/new/widgets/adding_form.dart';
-import 'package:laera/repos/word.dart';
 
 class NewPage extends StatelessWidget {
-  NewPage(this._wordRepo);
-
-  final WordRepo _wordRepo;
+  const NewPage();
 
   static const widthFactor = 0.7;
 
@@ -18,7 +15,7 @@ class NewPage extends StatelessWidget {
     return Center(
       child: FractionallySizedBox(
         widthFactor: widthFactor,
-        child: AddingForm(_wordRepo),
+        child: AddingForm(),
       ),
     );
   }

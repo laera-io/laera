@@ -4,16 +4,16 @@
 
 import 'package:flutter/material.dart';
 
-class Emptiable extends StatelessWidget {
+class Emptiable<T> extends StatelessWidget {
   const Emptiable({
-    @required List data,
+    @required List<T> data,
     @required this.builder,
     this.onEmpty = const NoData(),
   })  : assert(builder != null),
         this.data = data ?? const [];
 
-  final List data;
-  final Widget Function(List) builder;
+  final List<T> data;
+  final Widget Function(List<T>) builder;
   final Widget onEmpty;
 
   @override

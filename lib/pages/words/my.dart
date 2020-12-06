@@ -3,50 +3,40 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:laera/models/word.dart';
-import 'package:laera/repos/word.dart';
 import 'package:laera/widgets/async.dart';
-import 'package:laera/widgets/emptiable.dart';
 
-class MyWordsPage extends StatefulWidget {
-  const MyWordsPage(this._wordRepo);
+class MyWordsPage extends StatelessWidget {
+  const MyWordsPage();
 
-  final WordRepo _wordRepo;
-
-  @override
-  _WordsListStatePage createState() => _WordsListStatePage();
-}
-
-class _WordsListStatePage extends State<MyWordsPage> {
   static const textScaleFactor = 1.3;
+  static const myWordsBoxName = 'my_words';
 
   @override
   Widget build(BuildContext context) {
     return Async(
-      future: widget._wordRepo.getAll(),
-      builder: (words) => Emptiable(
-        data: words as List<Word>,
-        builder: (words) => Center(
-          child: ListView(
-            children: <Widget>[
-              for (final word in words)
-                ListTile(
-                  title: Text(
-                    word.word,
-                    textScaleFactor: textScaleFactor,
-                  ),
-                  subtitle: Text(word.translation),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    color: Theme.of(context).errorColor,
-                    onPressed: () {
-                      widget._wordRepo.delete(word.id);
-                      setState(() => {});
-                    },
-                  ),
-                ),
-            ],
-          ),
+      future: Hive.openBox<Word>(myWordsBoxName),
+      builder: (Box<Word> myWordsBox) => ValueListenableBuilder(
+        valueListenable: myWordsBox.listenable(),
+        builder: (_, __, ___) => ListView.builder(
+          itemCount: myWordsBox.length,
+          itemBuilder: (context, listIndex) {
+            final word = myWordsBox.getAt(listIndex);
+            return ListTile(
+              title: Text(
+                word.word,
+                textScaleFactor: textScaleFactor,
+              ),
+              subtitle: Text(word.translation),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete),
+                color: Theme.of(context).errorColor,
+                onPressed: () => myWordsBox.deleteAt(listIndex),
+              ),
+            );
+          },
         ),
       ),
     );
