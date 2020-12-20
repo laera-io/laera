@@ -13,7 +13,8 @@ class Store<T> extends StatelessWidget {
   Store.myWords({
     @required StoreBuilder<T> builder,
     bool listenable = false,
-  })  : name = "my_words",
+  })  : assert(builder != null),
+        name = "my_words",
         this.builder = listenable ? _listenable(builder) : builder;
 
   final String name;
@@ -22,7 +23,7 @@ class Store<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Async(
-      // TODO: Sometimes box must be closed.
+      // TODO: Sometimes box must be closed manually.
       future: Hive.openBox<T>(name),
       builder: (Box<T> box) => builder(CycleStore(box)),
     );
