@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:laera/widgets/store.dart';
 
 class Swipable<T> extends StatefulWidget {
   const Swipable({
@@ -14,6 +14,7 @@ class Swipable<T> extends StatefulWidget {
         assert(builder != null),
         this.targets = targets ?? const [];
 
+  // TODO: Is it ok to have store here?
   final CycleStore<T> store;
   final Widget Function(T) builder;
   final List<Widget> targets;
@@ -55,17 +56,6 @@ class _SwipableState extends State<Swipable> {
       ],
     );
   }
-}
-
-// TODO: move `CycleStore` to separate file
-class CycleStore<T> {
-  const CycleStore(this.box);
-
-  final Box<T> box;
-
-  T at(int index) => index < box.length ? box.getAt(index) : box.getAt(0);
-  T next(int index) => at(nextIndex(index));
-  int nextIndex(int index) => index < box.length - 1 ? index + 1 : 0;
 }
 
 class VerticalTarget extends StatefulWidget {

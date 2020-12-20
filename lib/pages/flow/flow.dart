@@ -3,10 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/pages/flow/widgets/word_card.dart';
-import 'package:laera/widgets/async.dart';
+import 'package:laera/widgets/store.dart';
 import 'package:laera/widgets/swipable.dart';
 
 class FlowPage extends StatelessWidget {
@@ -14,14 +13,12 @@ class FlowPage extends StatelessWidget {
 
   static const acceptTargetColor = Color(0xFFDCEDC8); // Colors.lightGreen[100]
   static const rejectTargetColor = Color(0xFFD6D6D6); // Colors.grey[350]
-  static const myWordsBoxName = 'my_words';
 
   @override
   Widget build(BuildContext context) {
-    return Async(
-      future: Hive.openBox<Word>(myWordsBoxName),
-      builder: (Box<Word> myWordsBox) => Swipable(
-        store: CycleStore(myWordsBox),
+    return Store.myWords(
+      builder: (CycleStore<Word> store) => Swipable(
+        store: store,
         builder: (Word word) => WordCard(word: word),
         targets: [
           VerticalTarget(

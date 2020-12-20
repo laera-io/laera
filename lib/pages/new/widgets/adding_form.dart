@@ -3,9 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:laera/models/word.dart';
-import 'package:laera/widgets/async.dart';
+import 'package:laera/widgets/store.dart';
 
 class AddingForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -20,9 +19,8 @@ class AddingForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Async(
-      future: Hive.openBox<Word>(myWordsBoxName),
-      builder: (Box<Word> myWordsBox) => Form(
+    return Store.myWords(
+      builder: (CycleStore<Word> store) => Form(
         key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +48,7 @@ class AddingForm extends StatelessWidget {
               child: RaisedButton(
                 onPressed: () {
                   if (!(_formKey.currentState?.validate() ?? false)) return;
-                  myWordsBox.add(
+                  store.add(
                     Word(
                       word: _wordText.value.text,
                       translation: _translationText.value.text,
