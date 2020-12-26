@@ -12,9 +12,13 @@ import 'package:laera/pages/words/words.dart';
 import 'package:laera/widgets/navbar.dart';
 
 void main() async {
+  registerHive();
+  runApp(App());
+}
+
+void registerHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(WordAdapter());
-  runApp(App());
 }
 
 class App extends StatelessWidget {
