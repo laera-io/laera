@@ -1,3 +1,10 @@
+.PHONY: all
+all: test
+
+.PHONY: test
+test:
+	flutter test
+
 .PHONY: deps
 deps:
 	(cd android && bundle config path vendor/bundle)

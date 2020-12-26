@@ -12,11 +12,11 @@ import 'package:laera/pages/words/words.dart';
 import 'package:laera/widgets/navbar.dart';
 
 void main() async {
-  registerHive();
+  await registerHive();
   runApp(App());
 }
 
-void registerHive() async {
+Future<void> registerHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(WordAdapter());
 }
