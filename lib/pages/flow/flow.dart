@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/pages/flow/widgets/word_card.dart';
+import 'package:laera/widgets/emptiable.dart';
 import 'package:laera/widgets/store.dart';
 import 'package:laera/widgets/swipable.dart';
 
@@ -17,37 +18,41 @@ class FlowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Store.myWords(
-      builder: (CycleStore<Word> store) => Swipable(
+      // TODO: Move Emptiable using to Store.
+      builder: (CycleStore<Word> store) => Emptiable(
         store: store,
-        builder: (Word word) => WordCard(word: word),
-        targets: [
-          VerticalTarget(
-            alignment: Alignment.centerRight,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  Theme.of(context).scaffoldBackgroundColor,
-                  acceptTargetColor,
-                ],
+        builder: (CycleStore<Word> store) => Swipable(
+          store: store,
+          builder: (Word word) => WordCard(word: word),
+          targets: [
+            VerticalTarget(
+              alignment: Alignment.centerRight,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Theme.of(context).scaffoldBackgroundColor,
+                    acceptTargetColor,
+                  ],
+                ),
               ),
             ),
-          ),
-          VerticalTarget(
-            alignment: Alignment.centerLeft,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerRight,
-                end: Alignment.centerLeft,
-                colors: [
-                  Theme.of(context).scaffoldBackgroundColor,
-                  rejectTargetColor,
-                ],
+            VerticalTarget(
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerRight,
+                  end: Alignment.centerLeft,
+                  colors: [
+                    Theme.of(context).scaffoldBackgroundColor,
+                    rejectTargetColor,
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

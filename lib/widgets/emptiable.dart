@@ -3,21 +3,24 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:laera/widgets/store.dart';
 
 class Emptiable<T> extends StatelessWidget {
   const Emptiable({
-    @required List<T> data,
+    @required this.store,
     @required this.builder,
     this.onEmpty = const NoData(),
-  })  : assert(builder != null),
-        this.data = data ?? const [];
+  })  : assert(store != null),
+        assert(builder != null);
 
-  final List<T> data;
-  final Widget Function(List<T>) builder;
+  final CycleStore<T> store;
+  final Widget Function(CycleStore<T>) builder;
   final Widget onEmpty;
 
   @override
-  Widget build(BuildContext context) => data.isEmpty ? onEmpty : builder(data);
+  Widget build(BuildContext context) => isEmpty ? onEmpty : builder(store);
+
+  bool get isEmpty => store.length == 0;
 }
 
 class NoData extends StatelessWidget {

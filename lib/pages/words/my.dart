@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
+import 'package:laera/widgets/emptiable.dart';
 import 'package:laera/widgets/store.dart';
 
 class MyWordsPage extends StatelessWidget {
@@ -15,23 +16,26 @@ class MyWordsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Store.myWords(
       listenable: true,
-      builder: (CycleStore<Word> store) => ListView.builder(
-        itemCount: store.length,
-        itemBuilder: (context, listIndex) {
-          final word = store.at(listIndex);
-          return ListTile(
-            title: Text(
-              word.word,
-              textScaleFactor: textScaleFactor,
-            ),
-            subtitle: Text(word.translation),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete),
-              color: Theme.of(context).errorColor,
-              onPressed: () => store.delete(listIndex),
-            ),
-          );
-        },
+      builder: (CycleStore<Word> store) => Emptiable(
+        store: store,
+        builder: (CycleStore<Word> store) => ListView.builder(
+          itemCount: store.length,
+          itemBuilder: (context, listIndex) {
+            final word = store.at(listIndex);
+            return ListTile(
+              title: Text(
+                word.word,
+                textScaleFactor: textScaleFactor,
+              ),
+              subtitle: Text(word.translation),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete),
+                color: Theme.of(context).errorColor,
+                onPressed: () => store.delete(listIndex),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

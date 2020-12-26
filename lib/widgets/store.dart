@@ -9,6 +9,8 @@ import 'package:laera/widgets/async.dart';
 
 typedef StoreBuilder<T> = Widget Function(CycleStore<T> store);
 
+// TODO: Support LazyBox.
+
 class Store<T> extends StatelessWidget {
   Store.myWords({
     @required StoreBuilder<T> builder,
