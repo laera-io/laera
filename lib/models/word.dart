@@ -2,15 +2,23 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 part 'word.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
+@HiveType(typeId: 0)
 class Word {
+  @HiveField(0)
   final int id;
-  final String word, translation;
+
+  @HiveField(1)
+  final String word;
+
+  @HiveField(2)
+  final String translation;
 
   const Word({
     @required this.word,

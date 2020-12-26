@@ -7,6 +7,7 @@ import 'package:laera/main.dart';
 
 void main() {
   testWidgets('App loads fine', (WidgetTester tester) async {
+    await registerHive();
     await tester.pumpWidget(App());
 
     expect(find.text('Flow'), findsOneWidget);

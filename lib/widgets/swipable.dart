@@ -3,28 +3,31 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:laera/widgets/store.dart';
 
-class Swipable extends StatefulWidget {
+class Swipable<T> extends StatefulWidget {
   const Swipable({
-    @required children,
+    @required this.store,
+    @required this.builder,
     List<Widget> targets,
-  })  : this.children = children ?? const [],
+  })  : assert(store != null),
+        assert(builder != null),
         this.targets = targets ?? const [];
 
-  final List<Widget> children;
+  // TODO: Is it ok to have store here?
+  final CycleStore<T> store;
+  final Widget Function(T) builder;
   final List<Widget> targets;
+
+  Widget at(int index) => builder(store.at(index));
+  Widget next(int index) => builder(store.next(index));
 
   @override
   _SwipableState createState() => _SwipableState();
-
-  Widget at(int index) =>
-      index < children.length ? children[index] : children[0];
-
-  int getNextIndex(int index) => index < children.length - 1 ? index + 1 : 0;
 }
 
 class _SwipableState extends State<Swipable> {
-  var _currentIndex = 0;
+  var _index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +39,15 @@ class _SwipableState extends State<Swipable> {
             alignment: Alignment.center,
             children: [
               Draggable(
-                child: widget.at(_currentIndex),
-                feedback: widget.at(_currentIndex),
+                child: widget.at(_index),
+                feedback: widget.at(_index),
                 // IgnorePointer allows targets to accept the draggable even if
                 // there's some widget.
                 childWhenDragging: IgnorePointer(
-                  child: widget.at(
-                    widget.getNextIndex(_currentIndex),
-                  ),
+                  child: widget.next(_index),
                 ),
                 onDragCompleted: () => setState(
-                  () => _currentIndex = widget.getNextIndex(_currentIndex),
+                  () => _index = widget.store.nextIndex(_index),
                 ),
               )
             ],

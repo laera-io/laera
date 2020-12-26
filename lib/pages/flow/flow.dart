@@ -5,27 +5,25 @@
 import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/pages/flow/widgets/word_card.dart';
-import 'package:laera/repos/word.dart';
-import 'package:laera/widgets/async.dart';
 import 'package:laera/widgets/emptiable.dart';
+import 'package:laera/widgets/store.dart';
 import 'package:laera/widgets/swipable.dart';
 
 class FlowPage extends StatelessWidget {
-  const FlowPage(this._wordRepo);
-
-  final WordRepo _wordRepo;
+  const FlowPage();
 
   static const acceptTargetColor = Color(0xFFDCEDC8); // Colors.lightGreen[100]
   static const rejectTargetColor = Color(0xFFD6D6D6); // Colors.grey[350]
 
   @override
   Widget build(BuildContext context) {
-    return Async(
-      future: _wordRepo.getAll(),
-      builder: (words) => Emptiable(
-        data: words as List<Word>,
-        builder: (words) => Swipable(
-          children: [for (final word in words) WordCard(word: word)],
+    return Store.myWords(
+      // TODO: Move Emptiable using to Store.
+      builder: (CycleStore<Word> store) => Emptiable(
+        store: store,
+        builder: (CycleStore<Word> store) => Swipable(
+          store: store,
+          builder: (Word word) => WordCard(word: word),
           targets: [
             VerticalTarget(
               alignment: Alignment.centerRight,
