@@ -29,8 +29,6 @@ class FlowPage extends StatelessWidget {
               alignment: Alignment.centerRight,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
                   colors: [
                     Theme.of(context).scaffoldBackgroundColor,
                     acceptTargetColor,

@@ -58,12 +58,10 @@ class AddingForm extends StatelessWidget {
                   _translationText.clear();
                   _wordsFocus.requestFocus();
                   Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Word added'),
-                    ),
+                    const SnackBar(content: Text('Word added')),
                   );
                 },
-                child: Text('Add'),
+                child: const Text('Add'),
               ),
             ),
           ],

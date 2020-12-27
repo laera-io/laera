@@ -9,7 +9,7 @@ env:
   PUB_CACHE: .pub-cache
 
 jobs:
-  test:
+  lint-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,9 +26,4 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
 
       - run: make ci-before
-
-      - name: Install Flutter dependencies
-        if: steps.node-cache.outputs.cache-hit != 'true'
-        run: flutter pub get
-
-      - run: flutter test
+      - run: make ci

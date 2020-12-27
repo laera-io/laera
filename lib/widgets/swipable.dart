@@ -12,9 +12,8 @@ class Swipable<T> extends StatefulWidget {
     List<Widget> targets,
   })  : assert(store != null),
         assert(builder != null),
-        this.targets = targets ?? const [];
+        targets = targets ?? const [];
 
-  // TODO: Is it ok to have store here?
   final CycleStore<T> store;
   final Widget Function(T) builder;
   final List<Widget> targets;
@@ -23,10 +22,10 @@ class Swipable<T> extends StatefulWidget {
   Widget next(int index) => builder(store.next(index));
 
   @override
-  _SwipableState createState() => _SwipableState();
+  _SwipableState<T> createState() => _SwipableState();
 }
 
-class _SwipableState extends State<Swipable> {
+class _SwipableState<T> extends State<Swipable> {
   var _index = 0;
 
   @override
@@ -38,8 +37,7 @@ class _SwipableState extends State<Swipable> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Draggable(
-                child: widget.at(_index),
+              Draggable<T>(
                 feedback: widget.at(_index),
                 // IgnorePointer allows targets to accept the draggable even if
                 // there's some widget.
@@ -49,6 +47,7 @@ class _SwipableState extends State<Swipable> {
                 onDragCompleted: () => setState(
                   () => _index = widget.store.nextIndex(_index),
                 ),
+                child: widget.at(_index),
               )
             ],
           ),
@@ -80,7 +79,7 @@ class _VerticalTargetState extends State<VerticalTarget> {
   Widget build(BuildContext context) {
     return Align(
       alignment: widget.alignment,
-      child: DragTarget(
+      child: DragTarget<Widget>(
         onWillAccept: (_) {
           setState(() => _decoration = widget.decoration);
           return true;

@@ -11,7 +11,7 @@ import 'package:laera/pages/new/new.dart';
 import 'package:laera/pages/words/words.dart';
 import 'package:laera/widgets/navbar.dart';
 
-void main() async {
+Future<void> main() async {
   await registerHive();
   runApp(App());
 }
@@ -42,7 +42,7 @@ class App extends StatelessWidget {
           NavbarElement(
             label: 'Flow',
             icon: Icons.all_inclusive,
-            page: FlowPage(),
+            page: const FlowPage(),
           ),
           NavbarElement(
             label: 'New',
