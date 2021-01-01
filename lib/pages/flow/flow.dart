@@ -21,11 +21,12 @@ class FlowPage extends StatelessWidget {
       // TODO: Move Emptiable using to Store.
       builder: (CycleStore<Word> store) => Emptiable(
         store: store,
-        builder: (CycleStore<Word> store) => Swipable(
+        // Swipable doesn't work as expected without explicitly specifying generic types ¯\_(ツ)_/¯.
+        builder: (CycleStore<Word> store) => Swipable<Word, WordCard>(
           store: store,
           builder: (Word word) => WordCard(word: word),
           targets: [
-            VerticalTarget(
+            VerticalTarget<WordCard>(
               alignment: Alignment.centerRight,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -36,7 +37,7 @@ class FlowPage extends StatelessWidget {
                 ),
               ),
             ),
-            VerticalTarget(
+            VerticalTarget<WordCard>(
               alignment: Alignment.centerLeft,
               decoration: BoxDecoration(
                 gradient: LinearGradient(

@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:laera/widgets/store.dart';
 
-class Swipable<T> extends StatefulWidget {
+class Swipable<M, W extends Widget> extends StatefulWidget {
   const Swipable({
     @required this.store,
     @required this.builder,
@@ -14,18 +14,18 @@ class Swipable<T> extends StatefulWidget {
         assert(builder != null),
         targets = targets ?? const [];
 
-  final CycleStore<T> store;
-  final Widget Function(T) builder;
+  final CycleStore<M> store;
+  final W Function(M) builder;
   final List<Widget> targets;
 
-  Widget at(int index) => builder(store.at(index));
-  Widget next(int index) => builder(store.next(index));
+  W at(int index) => builder(store.at(index));
+  W next(int index) => builder(store.next(index));
 
   @override
-  _SwipableState<T> createState() => _SwipableState();
+  _SwipableState<M, W> createState() => _SwipableState();
 }
 
-class _SwipableState<T> extends State<Swipable> {
+class _SwipableState<M, W extends Widget> extends State<Swipable<M, W>> {
   var _index = 0;
 
   @override
@@ -37,7 +37,7 @@ class _SwipableState<T> extends State<Swipable> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Draggable<T>(
+              Draggable<W>(
                 feedback: widget.at(_index),
                 // IgnorePointer allows targets to accept the draggable even if
                 // there's some widget.
@@ -57,7 +57,7 @@ class _SwipableState<T> extends State<Swipable> {
   }
 }
 
-class VerticalTarget extends StatefulWidget {
+class VerticalTarget<T> extends StatefulWidget {
   const VerticalTarget({
     @required this.alignment,
     @required this.decoration,
@@ -69,17 +69,17 @@ class VerticalTarget extends StatefulWidget {
   final double widthFactor;
 
   @override
-  _VerticalTargetState createState() => _VerticalTargetState();
+  _VerticalTargetState<T> createState() => _VerticalTargetState();
 }
 
-class _VerticalTargetState extends State<VerticalTarget> {
+class _VerticalTargetState<T> extends State<VerticalTarget> {
   Decoration _decoration;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: widget.alignment,
-      child: DragTarget<Widget>(
+      child: DragTarget<T>(
         onWillAccept: (_) {
           setState(() => _decoration = widget.decoration);
           return true;
