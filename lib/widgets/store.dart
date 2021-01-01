@@ -16,8 +16,8 @@ class Store<T> extends StatelessWidget {
     @required StoreBuilder<T> builder,
     bool listenable = false,
   })  : assert(builder != null),
-        name = "my_words",
-        this.builder = listenable ? _listenable(builder) : builder;
+        name = 'my_words',
+        builder = listenable ? _listenable(builder) : builder;
 
   final String name;
   final StoreBuilder<T> builder;
@@ -32,7 +32,7 @@ class Store<T> extends StatelessWidget {
   }
 
   static StoreBuilder<T> _listenable<T>(StoreBuilder<T> builder) =>
-      (CycleStore<T> store) => ValueListenableBuilder(
+      (CycleStore<T> store) => ValueListenableBuilder<Box<T>>(
             valueListenable: store._box.listenable(),
             builder: (_, __, ___) => builder(store),
           );
@@ -49,7 +49,7 @@ class CycleStore<T> {
   T next(int index) => at(nextIndex(index));
   int nextIndex(int index) => index < _box.length - 1 ? index + 1 : 0;
 
-  add(T value) => _box.add(value);
+  Future<int> add(T value) => _box.add(value);
 
-  delete(int index) => _box.deleteAt(index);
+  Future<void> delete(int index) => _box.deleteAt(index);
 }

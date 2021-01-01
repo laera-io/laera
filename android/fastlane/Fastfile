@@ -6,9 +6,6 @@ platform :android do
   lane :build_aab do
     build_number = number_of_commits()
     Dir.chdir "../.." do
-      sh("flutter", "pub", "get")
-      sh("flutter", "test")
-      sh("flutter", "clean")
       sh("flutter", "build", "appbundle", "--build-number=#{build_number}")
     end
   end
@@ -16,9 +13,6 @@ platform :android do
   lane :build_apk do
     build_number = number_of_commits()
     Dir.chdir "../.." do
-      sh("flutter", "pub", "get")
-      sh("flutter", "test")
-      sh("flutter", "clean")
       sh("flutter", "build", "apk", "--build-number=#{build_number}")
     end
   end

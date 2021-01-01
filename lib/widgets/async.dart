@@ -19,7 +19,7 @@ class Async<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<T>(
       future: future,
       builder: (context, snapshot) {
         if (snapshot.hasError) {

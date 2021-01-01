@@ -35,10 +35,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
 
       - run: make ci-before
-
-      - name: Install Flutter dependencies
-        if: steps.node-cache.outputs.cache-hit != 'true'
-        run: flutter pub get
+      - run: make ci
 
       - name: Install secrets
         run: |

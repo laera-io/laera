@@ -1,0 +1,9 @@
+include: package:lint/analysis_options.yaml
+
+analyzer:
+  exclude: 
+    - build/**
+    - '*.g.dart'
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false

@@ -10,8 +10,8 @@ class AssestsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Implement.
-    return Center(
-      child: Text("under development 👷", textScaleFactor: 1.5),
+    return const Center(
+      child: Text('under development 👷', textScaleFactor: 1.5),
     );
   }
 }
