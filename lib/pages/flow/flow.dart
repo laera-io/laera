@@ -7,7 +7,7 @@ import 'package:laera/models/word.dart';
 import 'package:laera/pages/flow/widgets/word_card.dart';
 import 'package:laera/widgets/emptiable.dart';
 import 'package:laera/widgets/store.dart';
-import 'package:laera/widgets/swipable.dart';
+import 'package:laera/widgets/swipeable.dart';
 
 class FlowPage extends StatelessWidget {
   const FlowPage();
@@ -22,7 +22,7 @@ class FlowPage extends StatelessWidget {
       builder: (CycleStore<Word> store) => Emptiable(
         store: store,
         // Swipable doesn't work as expected without explicitly specifying generic types ¯\_(ツ)_/¯.
-        builder: (CycleStore<Word> store) => Swipable<Word, WordCard>(
+        builder: (CycleStore<Word> store) => Swipeable<Word, WordCard>(
           store: store,
           builder: (Word word) => WordCard(word: word),
           targets: [
