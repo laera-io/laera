@@ -15,7 +15,7 @@
 
 ## Contributing
 
-Read the [CONTRIBUTING.md file](CONTRIBUTING.md).
+Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 [lint_badge_url]: https://pub.dev/packages/lint
 [lint_badge_img]: https://img.shields.io/badge/style-lint-blue
