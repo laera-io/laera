@@ -11,7 +11,7 @@ analyze:
 
 .PHONY: test
 test:
-	flutter test
+	flutter test --coverage
 
 .PHONY: clean
 clean:
