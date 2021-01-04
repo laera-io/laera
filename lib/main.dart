@@ -28,6 +28,9 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         primaryColorBrightness: Brightness.dark,
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          foregroundColor: Colors.white,
+        ),
         buttonTheme: ButtonThemeData(
           textTheme: ButtonTextTheme.accent,
           colorScheme: Theme.of(context).colorScheme.copyWith(

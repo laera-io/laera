@@ -45,6 +45,8 @@ class CycleStore<T> {
 
   int get length => _box.length;
 
+  Iterable<T> get values => _box.values;
+
   T at(int index) => index < length ? _box.getAt(index) : _box.getAt(0);
   T next(int index) => at(nextIndex(index));
   int nextIndex(int index) => index < _box.length - 1 ? index + 1 : 0;
