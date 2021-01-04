@@ -15,7 +15,7 @@ class WordsPage extends StatelessWidget {
     return Tabbar(
       elements: const [
         TabbarElement(label: 'My Words', page: MyWordsPage()),
-        TabbarElement(label: 'Assets', page: AssestsPage()),
+        TabbarElement(label: 'Assets', page: AssetsPage()),
       ],
     );
   }

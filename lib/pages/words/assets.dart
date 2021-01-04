@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 
-class AssestsPage extends StatelessWidget {
-  const AssestsPage();
+class AssetsPage extends StatelessWidget {
+  const AssetsPage();
 
   @override
   Widget build(BuildContext context) {
