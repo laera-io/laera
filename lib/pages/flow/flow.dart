@@ -17,14 +17,13 @@ class FlowPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Store.myWords(
+    return Store<Word>.myWords(
       // TODO: Move Emptiable using to Store.
-      builder: (CycleStore<Word> store) => Emptiable(
+      builder: (store) => Emptiable<Word>(
         store: store,
-        // Swipable doesn't work as expected without explicitly specifying generic types ¯\_(ツ)_/¯.
-        builder: (CycleStore<Word> store) => Swipeable<Word, WordCard>(
+        builder: (store) => Swipeable<Word, WordCard>(
           store: store,
-          builder: (Word word) => WordCard(word: word),
+          builder: (word) => WordCard(word: word),
           targets: [
             VerticalTarget<WordCard>(
               alignment: Alignment.centerRight,

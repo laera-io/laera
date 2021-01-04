@@ -19,8 +19,8 @@ class AddingForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Store.myWords(
-      builder: (CycleStore<Word> store) => Form(
+    return Store<Word>.myWords(
+      builder: (store) => Form(
         key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
