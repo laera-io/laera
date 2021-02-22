@@ -5,21 +5,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class FileSystem {
   FileSystem._();
 
-  static Future<String> get newMyAssetPath async {
-    return '${await myAssetsDir}/${DateTime.now().millisecondsSinceEpoch}.json';
-  }
-
   static Future<String> get myAssetsDir async {
-    return '${await assetsDir}/my';
+    return join(await assetsDir, 'my');
   }
 
   static Future<String> get assetsDir async {
     final appDir = await getApplicationDocumentsDirectory();
-    return '${appDir.path}/assets';
+    return join(appDir.path, 'assets');
   }
 
   static Future<void> write(

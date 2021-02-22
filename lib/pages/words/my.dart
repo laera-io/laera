@@ -2,8 +2,8 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/pages/words/fs.dart';
 import 'package:laera/widgets/emptiable.dart';
@@ -22,11 +22,15 @@ class MyWordsPage extends StatelessWidget {
         store: store,
         builder: (store) => Scaffold(
           floatingActionButton: FloatingActionButton.extended(
-            onPressed: () async => FileSystem.write(
-              context,
-              await FileSystem.newMyAssetPath,
-              jsonEncode(store.values.toList()),
-            ),
+            onPressed: () async {
+              // TODO: Refactor using of pure Hive box.
+              final box = await Hive.openBox<Word>(
+                "${DateTime.now().millisecondsSinceEpoch}",
+                path: await FileSystem.myAssetsDir,
+              );
+              box.addAll(store.values);
+              box.close();
+            },
             label: const Text('Backup'),
             icon: const Icon(Icons.file_copy),
           ),

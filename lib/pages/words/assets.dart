@@ -2,6 +2,7 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:laera/pages/words/fs.dart';
 import 'package:laera/widgets/async.dart';
@@ -11,7 +12,7 @@ class AssetsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: update widget data
+    // TODO: Update widget data.
     return Async<String>(
       future: FileSystem.myAssetsDir,
       builder: (dir) => ListView(
@@ -19,6 +20,15 @@ class AssetsPage extends StatelessWidget {
           for (final i in FileSystem.listFiles(dir))
             ListTile(
               title: Text(i),
+              // TODO: Do refactor?
+              trailing: IconButton(
+                icon: const Icon(Icons.delete),
+                color: Theme.of(context).errorColor,
+                onPressed: () async {
+                  final file = File(i);
+                  file.delete();
+                },
+              ),
             )
         ],
       ),
