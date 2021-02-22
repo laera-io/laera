@@ -28,7 +28,7 @@ class MyWordsPage extends StatelessWidget {
                 "${DateTime.now().millisecondsSinceEpoch}",
                 path: await FileSystem.myAssetsDir,
               );
-              box.addAll(store.values);
+              box.addAll(store.all);
               box.close();
             },
             label: const Text('Backup'),

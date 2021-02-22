@@ -44,14 +44,16 @@ class CycleStore<T> {
   final Box<T> _box;
 
   int get length => _box.length;
-
-  Iterable<T> get values => _box.values;
+  Iterable<T> get all => _box.values;
+  Iterable<dynamic> get keys => _box.keys;
 
   T at(int index) => index < length ? _box.getAt(index) : _box.getAt(0);
   T next(int index) => at(nextIndex(index));
   int nextIndex(int index) => index < _box.length - 1 ? index + 1 : 0;
 
   Future<int> add(T value) => _box.add(value);
-
+  Future<Iterable<int>> addAll(Iterable<T> values) => _box.addAll(values);
   Future<void> delete(int index) => _box.deleteAt(index);
+  Future<void> deleteAll() => _box.deleteAll(_box.keys);
+  Future<void> deleteBox() => _box.deleteFromDisk();
 }

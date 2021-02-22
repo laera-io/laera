@@ -32,8 +32,11 @@ class FileSystem {
     );
   }
 
-  // TODO: Add some async?
+  // TODO: Do add some async?
   static List<String> listFiles(String path) {
-    return [for (final p in Directory(path).listSync()) p.path];
+    return [
+      for (final p in Directory(path).listSync())
+        basenameWithoutExtension(p.path),
+    ];
   }
 }
