@@ -3,22 +3,15 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive/hive.dart';
-import 'package:laera/models/word.dart';
 import 'package:laera/pages/flow/flow.dart';
 import 'package:laera/pages/new/new.dart';
-import 'package:laera/pages/words/words.dart';
+import 'package:laera/pages/assets/assets.dart';
 import 'package:laera/widgets/navbar.dart';
+import 'package:laera/widgets/store.dart';
 
 Future<void> main() async {
-  await registerHive();
+  await CycleStore.init();
   runApp(App());
-}
-
-Future<void> registerHive() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(WordAdapter());
 }
 
 class App extends StatelessWidget {
@@ -28,6 +21,9 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         primaryColorBrightness: Brightness.dark,
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          foregroundColor: Colors.white,
+        ),
         buttonTheme: ButtonThemeData(
           textTheme: ButtonTextTheme.accent,
           colorScheme: Theme.of(context).colorScheme.copyWith(
@@ -45,14 +41,14 @@ class App extends StatelessWidget {
             page: const FlowPage(),
           ),
           NavbarElement(
-            label: 'New',
-            icon: Icons.add,
+            label: 'New Word',
+            icon: Icons.post_add_outlined,
             page: const NewPage(),
           ),
           NavbarElement(
-            label: 'Words',
-            icon: Icons.list,
-            page: const WordsPage(),
+            label: 'Assets',
+            icon: Icons.list_alt,
+            page: const AssetsPage(),
           ),
         ],
       ),
