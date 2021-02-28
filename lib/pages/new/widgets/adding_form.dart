@@ -19,7 +19,7 @@ class AddingForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Store<Word>.myWords(
+    return StoreBuilder.flow(
       builder: (store) => Form(
         key: _formKey,
         child: Column(

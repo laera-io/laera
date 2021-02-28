@@ -4,14 +4,15 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:laera/main.dart';
+import 'package:laera/widgets/store.dart';
 
 void main() {
   testWidgets('App loads fine', (WidgetTester tester) async {
-    await registerHive();
+    await CycleStore.init();
     await tester.pumpWidget(App());
 
     expect(find.text('Flow'), findsOneWidget);
-    expect(find.text('New'), findsOneWidget);
-    expect(find.text('Words'), findsOneWidget);
+    expect(find.text('New Word'), findsOneWidget);
+    expect(find.text('Assets'), findsOneWidget);
   });
 }

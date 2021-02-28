@@ -3,35 +3,32 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:laera/models/word.dart';
-import 'package:laera/pages/words/fs.dart';
 import 'package:laera/widgets/emptiable.dart';
 import 'package:laera/widgets/store.dart';
 
-class MyWordsPage extends StatelessWidget {
-  const MyWordsPage();
+class FlowAssetPage extends StatelessWidget {
+  const FlowAssetPage();
 
   static const textScaleFactor = 1.3;
 
   @override
   Widget build(BuildContext context) {
-    return Store<Word>.myWords(
+    return StoreBuilder.flow(
       listenable: true,
       builder: (store) => Emptiable<Word>(
         store: store,
         builder: (store) => Scaffold(
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () async {
-              // TODO: Refactor using of pure Hive box.
-              final box = await Hive.openBox<Word>(
-                "${DateTime.now().millisecondsSinceEpoch}",
-                path: await FileSystem.myAssetsDir,
+              await store.dumpToInternal();
+              Scaffold.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Successfully dumped'),
+                ),
               );
-              box.addAll(store.all);
-              box.close();
             },
-            label: const Text('Backup'),
+            label: const Text('Dump'),
             icon: const Icon(Icons.file_copy),
           ),
           body: ListView.builder(

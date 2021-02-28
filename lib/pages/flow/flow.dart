@@ -17,7 +17,7 @@ class FlowPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Store<Word>.myWords(
+    return StoreBuilder.flow(
       // TODO: Move Emptiable using to Store.
       builder: (store) => Emptiable<Word>(
         store: store,
