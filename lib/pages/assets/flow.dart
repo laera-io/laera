@@ -38,9 +38,15 @@ class FlowAssetPage extends StatelessWidget {
               return ListTile(
                 title: Text(
                   word.word,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   textScaleFactor: textScaleFactor,
                 ),
-                subtitle: Text(word.translation),
+                subtitle: Text(
+                  word.translation,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
                   color: Theme.of(context).errorColor,
