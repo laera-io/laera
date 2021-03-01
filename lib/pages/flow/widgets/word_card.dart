@@ -14,6 +14,7 @@ class WordCard extends StatelessWidget {
   static const widthFactor = 0.8;
   static const heightFactor = 0.7;
   static const spaceFactor = 0.1;
+  static const cardDataScaleFactor = 0.8;
 
   @override
   Widget build(BuildContext context) {
@@ -21,24 +22,27 @@ class WordCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width * widthFactor,
       height: MediaQuery.of(context).size.height * heightFactor,
       child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              word.word,
-              textScaleFactor: textScale,
-            ),
-            const Flexible(
-              child: FractionallySizedBox(
-                heightFactor: spaceFactor,
+        child: FractionallySizedBox(
+          widthFactor: cardDataScaleFactor,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                word.word,
+                textScaleFactor: textScale,
               ),
-            ),
-            Text(
-              word.translation,
-              textScaleFactor: textScale,
-              style: TextStyle(color: Theme.of(context).hintColor),
-            ),
-          ],
+              const Flexible(
+                child: FractionallySizedBox(
+                  heightFactor: spaceFactor,
+                ),
+              ),
+              Text(
+                word.translation,
+                textScaleFactor: textScale,
+                style: TextStyle(color: Theme.of(context).hintColor),
+              ),
+            ],
+          ),
         ),
       ),
     );

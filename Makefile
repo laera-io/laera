@@ -1,9 +1,12 @@
 .PHONY: all
-all: analyze test
+all: lint test
 
 .PHONY: deps
 deps:
 	flutter pub get
+
+.PHONY: lint
+lint: analyze
 
 .PHONY: analyze
 analyze:
