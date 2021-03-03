@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:laera/widgets/async.dart';
+import 'package:laera/widgets/emptiable.dart';
 import 'package:laera/widgets/store.dart';
 
 class InternalAssetsPage extends StatelessWidget {
@@ -13,37 +14,42 @@ class InternalAssetsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: Update widget data.
     return Async<List<String>>(
-      future: CycleStore.listInternals(),
-      builder: (internalNames) => ListView(
-        children: [
-          for (final internalName in internalNames)
-            ListTile(
-              // TODO: Pretify file names.
-              title: Text(internalName),
-              // TODO: Use drop down list of commands instead of leading+trailing buttons.
-              leading: IconButton(
-                icon: const Icon(Icons.file_upload),
-                onPressed: () async {
-                  // TODO: Ask to save current flow state.
-                  final flow = await CycleStore.openFlow();
-                  flow.restoreFromInternal(internalName);
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Successfully upload asset: $internalName'),
-                    ),
-                  );
-                },
+      future: Store.listInternals(),
+      builder: (internalNames) => Emptiable<String, List<String>>(
+        values: internalNames,
+        builder: (internalNames) => ListView(
+          children: [
+            for (final internalName in internalNames)
+              ListTile(
+                // TODO: Pretify file names.
+                title: Text(internalName),
+                // TODO: Use drop down list of commands instead of leading+trailing buttons.
+                leading: IconButton(
+                  icon: const Icon(Icons.file_upload),
+                  onPressed: () async {
+                    // TODO: Ask to save current flow state.
+                    final flow = await Store.openFlow();
+                    flow.restoreFromInternal(internalName);
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Successfully upload asset: $internalName',
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete),
+                  color: Theme.of(context).errorColor,
+                  onPressed: () async {
+                    final internal = await Store.openInternal(internalName);
+                    internal.deleteFully();
+                  },
+                ),
               ),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete),
-                color: Theme.of(context).errorColor,
-                onPressed: () async {
-                  final internal = await CycleStore.openInternal(internalName);
-                  internal.deleteFully();
-                },
-              ),
-            )
-        ],
+          ],
+        ),
       ),
     );
   }
