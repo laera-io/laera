@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:laera/widgets/store.dart';
 
-class Swipeable<M, W extends Widget> extends StatefulWidget {
+class Swipeable<T, W extends Widget> extends StatefulWidget {
   const Swipeable({
     @required this.store,
     @required this.builder,
@@ -14,18 +14,18 @@ class Swipeable<M, W extends Widget> extends StatefulWidget {
         assert(builder != null),
         targets = targets ?? const [];
 
-  final CycleStore<M> store;
-  final W Function(M) builder;
+  final Store<T> store;
+  final W Function(T) builder;
   final List<Widget> targets;
 
   W at(int index) => builder(store.at(index));
   W next(int index) => builder(store.next(index));
 
   @override
-  _SwipeableState<M, W> createState() => _SwipeableState();
+  _SwipeableState<T, W> createState() => _SwipeableState();
 }
 
-class _SwipeableState<M, W extends Widget> extends State<Swipeable<M, W>> {
+class _SwipeableState<T, W extends Widget> extends State<Swipeable<T, W>> {
   var _index = 0;
 
   @override

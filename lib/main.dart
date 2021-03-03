@@ -10,7 +10,7 @@ import 'package:laera/widgets/navbar.dart';
 import 'package:laera/widgets/store.dart';
 
 Future<void> main() async {
-  await CycleStore.init();
+  await Store.init();
   runApp(App());
 }
 

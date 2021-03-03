@@ -8,7 +8,7 @@ import 'package:laera/widgets/store.dart';
 
 void main() {
   testWidgets('App loads fine', (WidgetTester tester) async {
-    await CycleStore.init();
+    await Store.init();
     await tester.pumpWidget(App());
 
     expect(find.text('Flow'), findsOneWidget);
