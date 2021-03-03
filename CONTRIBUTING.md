@@ -25,9 +25,11 @@ Nothing special, start from [the official page][flutter_home] if you're newbie.
 
 ### Non-Flutter dependencies
 
-* Install `ruby` and `gem` into your OS;
+* Install `ruby`, `ruby-dev` and `gem` into your OS;
+* Install gem file dependencies by calling `make deps-ruby` in the project root directory;
 * Install `make` into your OS;
-* Install gem file dependencies by calling `make deps-ruby` in the project root directory.
+* Dart and Flutter analytics may be optionally disabled by calling `make disable-analytics`.
+* It may also require installing OpenJDK 1.8 with the dev package;
 
 ### Test and lint
 
