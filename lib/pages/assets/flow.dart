@@ -12,7 +12,7 @@ class FlowAssetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreBuilder.flow(
+    return StoreFactory.flowBuilder(
       emptiable: true,
       listenable: true,
       builder: (store) => Scaffold(

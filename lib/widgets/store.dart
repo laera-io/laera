@@ -25,21 +25,6 @@ class StoreBuilder<T> extends StatelessWidget {
         assert(builder != null),
         builder = _listenable(_emptiable(builder, emptiable), listenable);
 
-  // Dart does not currently support concretization of the generic constructors.
-  // ignore: prefer_constructors_over_static_methods
-  static StoreBuilder<Word> flow({
-    @required StoreBuilderFunc<Word> builder,
-    bool emptiable = false,
-    bool listenable = false,
-  }) {
-    return StoreBuilder._(
-      Store.openFlow(),
-      builder,
-      emptiable,
-      listenable,
-    );
-  }
-
   final StoreBuilderFunc<T> builder;
   final Future<Store<T>> _storeFuture;
 
@@ -85,15 +70,65 @@ class Store<T> extends Iterable<T> {
   // TODO: Support LazyBox.
   final Box<T> _box;
 
-  static Future<void> init() async {
-    // TODO: Do create directory tree?
+  T at(int index) => index < length ? _box.getAt(index) : _box.getAt(0);
+  T next(int index) => at(nextIndex(index));
+  int nextIndex(int index) => index < _box.length - 1 ? index + 1 : 0;
+
+  Iterable<T> get all => _box.values;
+  Iterable<dynamic> get keys => _box.keys;
+
+  Future<int> add(T value) => _box.add(value);
+  Future<Iterable<int>> addAll(Iterable<T> values) => _box.addAll(values);
+  Future<void> delete(int index) => _box.deleteAt(index);
+  Future<void> deleteAll() => _box.deleteAll(_box.keys);
+  Future<void> deleteFully() => _box.deleteFromDisk();
+  ValueListenable<Box<T>> listenable() => _box.listenable();
+  Future<void> close() => _box.close();
+
+  @override
+  int get length => _box.length;
+
+  @override
+  Iterator<T> get iterator => all.iterator;
+
+  Future<void> dumpToInternal() async {
+    final newAssetName = DateTime.now().millisecondsSinceEpoch.toString();
+    final internal = await StoreFactory.openInternal(newAssetName);
+    await internal.addAll(all.cast());
+    await internal.close();
+  }
+
+  Future<void> restoreFromInternal(String internalName) async {
+    final internal = await StoreFactory.openInternal(internalName);
+    deleteAll();
+    addAll(internal.all.cast());
+    internal.close();
+  }
+}
+
+class StoreFactory {
+  StoreFactory._();
+
+  static Future<void> initApp() async {
     await Hive.initFlutter();
     Hive.registerAdapter(WordAdapter());
     Directory(await _internalAssetsDir).create(recursive: true);
     Directory(await _externalAssetsDir).create(recursive: true);
   }
 
-  // TODO: Move `Word` store static methods to a separate class.
+  static StoreBuilder<Word> flowBuilder({
+    @required StoreBuilderFunc<Word> builder,
+    bool emptiable = false,
+    bool listenable = false,
+  }) {
+    return StoreBuilder._(
+      StoreFactory.openFlow(),
+      builder,
+      emptiable,
+      listenable,
+    );
+  }
+
   static Future<Store<Word>> openFlow() async {
     return _open<Word>('flow', await _assetsDir);
   }
@@ -123,6 +158,7 @@ class Store<T> extends Iterable<T> {
     if (!await dir.exists()) {
       return [];
     }
+    // TODO: Make watchable.
     return [
       await for (final p in dir.list()) basenameWithoutExtension(p.path),
     ];
@@ -134,39 +170,4 @@ class Store<T> extends Iterable<T> {
       join(await _assetsDir, 'internal');
   static Future<String> get _externalAssetsDir async =>
       join(await _assetsDir, 'external');
-
-  T at(int index) => index < length ? _box.getAt(index) : _box.getAt(0);
-  T next(int index) => at(nextIndex(index));
-  int nextIndex(int index) => index < _box.length - 1 ? index + 1 : 0;
-
-  Future<void> dumpToInternal() async {
-    final newAssetName = DateTime.now().millisecondsSinceEpoch.toString();
-    final internal = await openInternal(newAssetName);
-    await internal.addAll(all.cast());
-    await internal.close();
-  }
-
-  Future<void> restoreFromInternal(String internalName) async {
-    final internal = await openInternal(internalName);
-    deleteAll();
-    addAll(internal.all.cast());
-    internal.close();
-  }
-
-  Iterable<T> get all => _box.values;
-  Iterable<dynamic> get keys => _box.keys;
-
-  Future<int> add(T value) => _box.add(value);
-  Future<Iterable<int>> addAll(Iterable<T> values) => _box.addAll(values);
-  Future<void> delete(int index) => _box.deleteAt(index);
-  Future<void> deleteAll() => _box.deleteAll(_box.keys);
-  Future<void> deleteFully() => _box.deleteFromDisk();
-  ValueListenable<Box<T>> listenable() => _box.listenable();
-  Future<void> close() => _box.close();
-
-  @override
-  int get length => _box.length;
-
-  @override
-  Iterator<T> get iterator => all.iterator;
 }

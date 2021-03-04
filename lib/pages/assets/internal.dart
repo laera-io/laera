@@ -14,7 +14,7 @@ class InternalAssetsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: Update widget data.
     return Async<List<String>>(
-      future: Store.listInternals(),
+      future: StoreFactory.listInternals(),
       builder: (internalNames) => Emptiable<String, List<String>>(
         values: internalNames,
         builder: (internalNames) => ListView(
@@ -28,7 +28,7 @@ class InternalAssetsPage extends StatelessWidget {
                   icon: const Icon(Icons.file_upload),
                   onPressed: () async {
                     // TODO: Ask to save current flow state.
-                    final flow = await Store.openFlow();
+                    final flow = await StoreFactory.openFlow();
                     flow.restoreFromInternal(internalName);
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
@@ -43,7 +43,9 @@ class InternalAssetsPage extends StatelessWidget {
                   icon: const Icon(Icons.delete),
                   color: Theme.of(context).errorColor,
                   onPressed: () async {
-                    final internal = await Store.openInternal(internalName);
+                    final internal = await StoreFactory.openInternal(
+                      internalName,
+                    );
                     internal.deleteFully();
                   },
                 ),

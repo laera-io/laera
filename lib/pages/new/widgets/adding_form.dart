@@ -19,7 +19,7 @@ class AddingForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreBuilder.flow(
+    return StoreFactory.flowBuilder(
       builder: (store) => Form(
         key: _formKey,
         child: Column(
