@@ -16,7 +16,7 @@ class FlowPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreBuilder.flow(
+    return StoreFactory.flowBuilder(
       emptiable: true,
       builder: (store) => Swipeable<Word, WordCard>(
         store: store,
