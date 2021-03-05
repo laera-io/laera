@@ -68,16 +68,7 @@ class Store<T> extends Iterable<T> {
   // TODO: Support LazyBox.
   final Box<T> _box;
 
-  T at(int index) {
-    final i = index < length ? index : 0;
-    final value = _box.getAt(i);
-    if (value != null) {
-      return value;
-    }
-    // TODO: Throw an exception.
-    return first;
-  }
-
+  T at(int index) => _box.getAt(index < length ? index : 0)!;
   T next(int index) => at(nextIndex(index));
   int nextIndex(int index) => index < _box.length - 1 ? index + 1 : 0;
 
