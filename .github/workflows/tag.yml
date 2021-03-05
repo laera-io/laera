@@ -1,0 +1,67 @@
+name: Tag
+
+on:
+  push:
+    tags: [ v* ]
+
+env:
+  FLUTTER_VERSION: 2.0.x
+  RUBY_VERSION: '2.7'
+
+  ACTION_VERSION_CHECKOUT: v2
+  ACTION_VERSION_FLUTTER: v1
+  ACTION_VERSION_CACHE: v2
+  ACTION_VERSION_RUBY: v1
+  ACTION_VERSION_FASTLANE: v1.4.0
+
+jobs:
+  lint-test-and-release:
+    name: Lint, test, and release to Google Play
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Download Git sources
+        uses: actions/checkout@${{ env.ACTION_VERSION_CHECKOUT }}
+        with:
+          fetch-depth: 0 # fetch all commits, tags, etc
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@${{ env.ACTION_VERSION_FLUTTER }}
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Get Flutter dependencies from cache
+        uses: actions/cache@${{ env.ACTION_VERSION_CACHE }}
+        with:
+          path: .pub-cache
+          key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
+
+      - name: Run lint and tests
+        run: make ci-before ci
+
+      - name: Install secrets
+        run: |
+          mkdir -p android/fastlane/keys
+          echo "${{ secrets.KEYSTORE_JKS_B64 }}" | base64 -d > android/fastlane/keys/keystore.jks
+          echo "${{ secrets.KEYSTORE_PROPERTIES_B64 }}" | base64 -d > android/fastlane/keys/keystore.properties
+          echo "${{ secrets.GOOGLE_PLAY_API_KEY_JSON_B64 }}" | base64 -d > android/fastlane/keys/google_play_api_key.json
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@${{ env.ACTION_VERSION_RUBY }}
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+
+      - name: Get Ruby dependencies from cache
+        uses: actions/cache@${{ env.ACTION_VERSION_CACHE }}
+        with:
+          path: android/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+
+      - name: Build and release APK
+        uses: maierj/fastlane-action@${{ env.ACTION_VERSION_FASTLANE }}
+        with:
+          lane: release_alpha
+          subdirectory: android
+          bundle-install-path: vendor/bundle
+          skip-tracking: true

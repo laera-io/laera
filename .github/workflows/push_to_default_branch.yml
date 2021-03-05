@@ -1,22 +1,30 @@
-name: Pull request
+name: Push to default branch
 
-on: [ pull_request ]
+on:
+  push:
+    branches: [ $default-branch ]
 
 env:
   FLUTTER_VERSION: 2.0.x
+  RUBY_VERSION: '2.7'
 
   ACTION_VERSION_CHECKOUT: v2
   ACTION_VERSION_FLUTTER: v1
   ACTION_VERSION_CACHE: v2
   ACTION_VERSION_CODECOV: v1
+  ACTION_VERSION_RUBY: v1
+  ACTION_VERSION_FASTLANE: v2.0.1
+  ACTION_VERSION_ARTIFACT: v2
 
 jobs:
-  lint-and-test:
-    name: Lint and test
+  lint-test-and-build:
+    name: Lint, test, and build dev APK
     runs-on: ubuntu-20.04
     steps:
       - name: Download Git sources
         uses: actions/checkout@${{ env.ACTION_VERSION_CHECKOUT }}
+        with:
+          fetch-depth: 0 # fetch all commits, tags, etc
 
       - name: Set up Flutter
         uses: subosito/flutter-action@${{ env.ACTION_VERSION_FLUTTER }}
@@ -30,7 +38,7 @@ jobs:
           key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
 
-      - name: Run lint and tests
+      - name: Lint and test
         run: make ci-before ci
 
       - name: Upload coverage to codecov.io
@@ -41,3 +49,24 @@ jobs:
           verbose: true
           file: ./coverage/lcov.info
           flags: unittests
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@${{ env.ACTION_VERSION_RUBY }}
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+
+      - name: Get Ruby dependencies from cache
+        uses: actions/cache@${{ env.ACTION_VERSION_CACHE }}
+        with:
+          path: android/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+
+      - name: Build dev APK
+        uses: maierj/fastlane-action@${{ env.ACTION_VERSION_FASTLANE }}
+        run: make build-apk-dev
+
+      - name: Store built APK as an artifact
+        uses: actions/upload-artifact@${{ env.ACTION_VERSION_ARTIFACT }}
+        with:
+          path: build/app/outputs/flutter-apk/app-debug.apk
