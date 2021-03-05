@@ -6,11 +6,10 @@ import 'package:flutter/material.dart';
 
 class Emptiable<T, I extends Iterable<T>> extends StatelessWidget {
   const Emptiable({
-    @required this.values,
-    @required this.builder,
+    required this.values,
+    required this.builder,
     this.onEmpty = const NoData(),
-  })  : assert(values != null),
-        assert(builder != null);
+  });
 
   final I values;
   final Widget Function(I) builder;

@@ -4,7 +4,6 @@
 
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:meta/meta.dart';
 
 part 'word.g.dart';
 
@@ -12,20 +11,15 @@ part 'word.g.dart';
 @HiveType(typeId: 0)
 class Word {
   @HiveField(0)
-  final int id;
-
-  @HiveField(1)
   final String word;
 
-  @HiveField(2)
+  @HiveField(1)
   final String translation;
 
   const Word({
-    @required this.word,
-    @required this.translation,
-    this.id,
-  })  : assert(word != null),
-        assert(translation != null);
+    required this.word,
+    required this.translation,
+  });
 
   factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
 

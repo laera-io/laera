@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 class Navbar extends StatefulWidget {
   Navbar({
-    @required List<NavbarElement> elements,
+    required List<NavbarElement> elements,
     this.defaultElementIndex = 0,
-  })  : pages = elements?.map((e) => e.page)?.toList() ?? [],
-        items = elements?.map((e) => e.item)?.toList() ?? [];
+  })  : pages = [for (final e in elements) e.page],
+        items = [for (final e in elements) e.item];
 
   final List<Widget> pages;
   final List<BottomNavigationBarItem> items;
@@ -40,9 +40,9 @@ class _NavbarState extends State<Navbar> {
 
 class NavbarElement {
   NavbarElement({
-    @required this.page,
-    @required IconData icon,
-    @required String label,
+    required this.page,
+    required IconData icon,
+    required String label,
   }) : item = BottomNavigationBarItem(icon: Icon(icon), label: label);
 
   final Widget page;

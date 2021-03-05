@@ -5,9 +5,9 @@
 import 'package:flutter/material.dart';
 
 class Tabbar extends StatelessWidget {
-  Tabbar({@required List<TabbarElement> elements})
-      : pages = elements?.map((e) => e.page)?.toList() ?? [],
-        tabs = elements?.map((e) => Tab(text: e.label))?.toList() ?? [];
+  Tabbar({required List<TabbarElement> elements})
+      : pages = [for (final e in elements) e.page],
+        tabs = [for (final e in elements) Tab(text: e.label)];
 
   final List<Widget> pages;
   final List<Widget> tabs;
@@ -33,8 +33,8 @@ class Tabbar extends StatelessWidget {
 
 class TabbarElement {
   const TabbarElement({
-    @required this.label,
-    @required this.page,
+    required this.label,
+    required this.page,
   });
 
   final String label;

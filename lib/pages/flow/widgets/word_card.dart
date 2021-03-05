@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 
 class WordCard extends StatelessWidget {
-  const WordCard({@required this.word});
+  const WordCard({required this.word});
 
   final Word word;
 

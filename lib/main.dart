@@ -24,6 +24,7 @@ class App extends StatelessWidget {
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           foregroundColor: Colors.white,
         ),
+        // TODO: Fix the button theme.
         buttonTheme: ButtonThemeData(
           textTheme: ButtonTextTheme.accent,
           colorScheme: Theme.of(context).colorScheme.copyWith(
