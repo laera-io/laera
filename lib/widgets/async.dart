@@ -22,26 +22,6 @@ class Async<T> extends StatelessWidget {
     return FutureBuilder<T>(
       future: future,
       builder: (context, snapshot) {
-        // FIXME:
-        // ════════════════════════════════════════════════════════════════════════════════
-        // ...
-        // #4      MultiDragGestureRecognizer._handleEvent
-        // package:flutter/…/gestures/multidrag.dart:245
-        // #3      MultiDragPointerState._up
-        // package:flutter/…/gestures/multidrag.dart:144
-        // #2      _DragAvatar.end
-        // package:flutter/…/widgets/drag_target.dart:782
-        // #1      _DragAvatar.finishDrag
-        // package:flutter/…/widgets/drag_target.dart:864
-        // #0      _DragTargetState.didDrop
-        // package:flutter/…/widgets/drag_target.dart:702
-        // When the exception was thrown, this was the stack
-
-        // Null check operator used on a null value
-        // The following _CastError was thrown while routing a pointer event:
-
-        // ════════ Exception caught by gesture library ═══════════════════════════════════
-
         if (snapshot.error != null) {
           return onError(snapshot.error!);
         }

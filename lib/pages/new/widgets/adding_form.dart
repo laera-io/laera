@@ -47,7 +47,6 @@ class AddingForm extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: Refactor.
                   if (!(_formKey.currentState?.validate() ?? false)) return;
                   store.add(
                     Word(

@@ -32,22 +32,18 @@ class _SwipeableState<T, W extends Widget> extends State<Swipeable<T, W>> {
       children: [
         ...widget.targets,
         Center(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Draggable<W>(
-                feedback: widget.at(_index),
-                // IgnorePointer allows targets to accept the draggable even if
-                // there's some widget.
-                childWhenDragging: IgnorePointer(
-                  child: widget.next(_index),
-                ),
-                onDragCompleted: () => setState(
-                  () => _index = widget.store.nextIndex(_index),
-                ),
-                child: widget.at(_index),
-              )
-            ],
+          child: Draggable<W>(
+            feedback: widget.at(_index),
+            // IgnorePointer allows targets to accept the draggable even if
+            // there's some widget.
+            childWhenDragging: IgnorePointer(
+              child: widget.next(_index),
+            ),
+            onDragCompleted: () => setState(
+              () => _index = widget.store.nextIndex(_index),
+            ),
+            child: widget.at(_index),
+            data: widget.at(_index),
           ),
         ),
       ],
