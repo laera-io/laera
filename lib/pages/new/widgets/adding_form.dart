@@ -71,10 +71,7 @@ class AddingForm extends StatelessWidget {
   }
 
   static String? _validateInput(String? value) {
-    if (value == null) {
-      return null;
-    }
-    if (value.isEmpty) {
+    if (value == null || value.isEmpty) {
       return 'Please input some data';
     }
     if (value.length > 100) {
