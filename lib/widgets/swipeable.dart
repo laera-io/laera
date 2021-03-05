@@ -7,12 +7,10 @@ import 'package:laera/widgets/store.dart';
 
 class Swipeable<T, W extends Widget> extends StatefulWidget {
   const Swipeable({
-    @required this.store,
-    @required this.builder,
-    List<Widget> targets,
-  })  : assert(store != null),
-        assert(builder != null),
-        targets = targets ?? const [];
+    required this.store,
+    required this.builder,
+    required this.targets,
+  });
 
   final Store<T> store;
   final W Function(T) builder;
@@ -34,22 +32,18 @@ class _SwipeableState<T, W extends Widget> extends State<Swipeable<T, W>> {
       children: [
         ...widget.targets,
         Center(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Draggable<W>(
-                feedback: widget.at(_index),
-                // IgnorePointer allows targets to accept the draggable even if
-                // there's some widget.
-                childWhenDragging: IgnorePointer(
-                  child: widget.next(_index),
-                ),
-                onDragCompleted: () => setState(
-                  () => _index = widget.store.nextIndex(_index),
-                ),
-                child: widget.at(_index),
-              )
-            ],
+          child: Draggable<W>(
+            feedback: widget.at(_index),
+            // IgnorePointer allows targets to accept the draggable even if
+            // there's some widget.
+            childWhenDragging: IgnorePointer(
+              child: widget.next(_index),
+            ),
+            onDragCompleted: () => setState(
+              () => _index = widget.store.nextIndex(_index),
+            ),
+            child: widget.at(_index),
+            data: widget.at(_index),
           ),
         ),
       ],
@@ -57,10 +51,10 @@ class _SwipeableState<T, W extends Widget> extends State<Swipeable<T, W>> {
   }
 }
 
-class VerticalTarget<T> extends StatefulWidget {
+class VerticalTarget<T extends Object> extends StatefulWidget {
   const VerticalTarget({
-    @required this.alignment,
-    @required this.decoration,
+    required this.alignment,
+    required this.decoration,
     this.widthFactor = 0.4,
   });
 
@@ -72,8 +66,8 @@ class VerticalTarget<T> extends StatefulWidget {
   _VerticalTargetState<T> createState() => _VerticalTargetState();
 }
 
-class _VerticalTargetState<T> extends State<VerticalTarget> {
-  Decoration _decoration;
+class _VerticalTargetState<T extends Object> extends State<VerticalTarget> {
+  Decoration? _decoration;
 
   @override
   Widget build(BuildContext context) {

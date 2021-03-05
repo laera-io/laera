@@ -21,15 +21,9 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         primaryColorBrightness: Brightness.dark,
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          foregroundColor: Colors.white,
-        ),
-        buttonTheme: ButtonThemeData(
-          textTheme: ButtonTextTheme.accent,
-          colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: Colors.lightGreen,
-                secondary: Colors.white,
-              ),
+        iconTheme: const IconThemeData(color: Colors.white),
+        textTheme: TextTheme(
+          button: TextStyle(foreground: Paint()..color = Colors.white),
         ),
         scaffoldBackgroundColor: Colors.grey[100],
       ),

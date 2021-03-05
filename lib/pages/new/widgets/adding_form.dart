@@ -45,7 +45,7 @@ class AddingForm extends StatelessWidget {
             Container(height: addButtonIndent),
             SizedBox(
               width: double.infinity,
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   if (!(_formKey.currentState?.validate() ?? false)) return;
                   store.add(
@@ -57,7 +57,7 @@ class AddingForm extends StatelessWidget {
                   _wordText.clear();
                   _translationText.clear();
                   _wordsFocus.requestFocus();
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Word added')),
                   );
                 },
@@ -70,8 +70,8 @@ class AddingForm extends StatelessWidget {
     );
   }
 
-  static String _validateInput(String value) {
-    if (value?.isEmpty ?? true) {
+  static String? _validateInput(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please input some data';
     }
     if (value.length > 100) {

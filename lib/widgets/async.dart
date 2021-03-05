@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 class Async<T> extends StatelessWidget {
   const Async({
-    @required this.future,
-    @required this.builder,
+    required this.future,
+    required this.builder,
     this.onProgress = const CircularProgressIndicator(),
     this.onError = _onError,
   });
@@ -22,11 +22,11 @@ class Async<T> extends StatelessWidget {
     return FutureBuilder<T>(
       future: future,
       builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return onError(snapshot.error);
+        if (snapshot.error != null) {
+          return onError(snapshot.error!);
         }
         if (snapshot.connectionState == ConnectionState.done) {
-          return builder(snapshot.data);
+          return builder(snapshot.requireData);
         }
         return onProgress;
       },

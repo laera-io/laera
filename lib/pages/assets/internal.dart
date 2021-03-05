@@ -30,7 +30,7 @@ class InternalAssetsPage extends StatelessWidget {
                     // TODO: Ask to save current flow state.
                     final flow = await StoreFactory.openFlow();
                     flow.restoreFromInternal(internalName);
-                    Scaffold.of(context).showSnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
                           'Successfully upload asset: $internalName',

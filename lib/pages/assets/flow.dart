@@ -19,7 +19,7 @@ class FlowAssetPage extends StatelessWidget {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
             await store.dumpToInternal();
-            Scaffold.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Successfully dumped'),
               ),

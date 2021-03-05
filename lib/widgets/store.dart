@@ -21,9 +21,7 @@ class StoreBuilder<T> extends StatelessWidget {
     StoreBuilderFunc<T> builder,
     bool emptiable,
     bool listenable,
-  )   : assert(_storeFuture != null),
-        assert(builder != null),
-        builder = _listenable(_emptiable(builder, emptiable), listenable);
+  ) : builder = _listenable(_emptiable(builder, emptiable), listenable);
 
   final StoreBuilderFunc<T> builder;
   final Future<Store<T>> _storeFuture;
@@ -70,7 +68,7 @@ class Store<T> extends Iterable<T> {
   // TODO: Support LazyBox.
   final Box<T> _box;
 
-  T at(int index) => index < length ? _box.getAt(index) : _box.getAt(0);
+  T at(int index) => _box.getAt(index < length ? index : 0)!;
   T next(int index) => at(nextIndex(index));
   int nextIndex(int index) => index < _box.length - 1 ? index + 1 : 0;
 
@@ -117,7 +115,7 @@ class StoreFactory {
   }
 
   static StoreBuilder<Word> flowBuilder({
-    @required StoreBuilderFunc<Word> builder,
+    required StoreBuilderFunc<Word> builder,
     bool emptiable = false,
     bool listenable = false,
   }) {
