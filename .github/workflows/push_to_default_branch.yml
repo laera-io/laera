@@ -2,7 +2,7 @@ name: Push to default branch
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ stable ]
 
 env:
   FLUTTER_VERSION: 2.0.x
