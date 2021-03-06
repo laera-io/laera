@@ -53,7 +53,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-
 
       - name: Build and release APK
-        uses: maierj/fastlane-action@v1.4.0
+        uses: maierj/fastlane-action@v2.0.1
         with:
           lane: release_alpha
           subdirectory: android
