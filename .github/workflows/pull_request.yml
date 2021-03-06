@@ -1,34 +1,32 @@
-name: Pull Request
+name: Pull request
 
-on:
-  pull_request:
-    branches: [ stable ]
-  push:
-    branches: [ stable ]
+on: [ pull_request ]
 
 env:
   FLUTTER_VERSION: 2.0.x
-  PUB_CACHE: .pub-cache
 
 jobs:
   lint-and-test:
-    runs-on: ubuntu-latest
+    name: Lint and test
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - name: Download Git sources
+        uses: actions/checkout@v2
 
-      - uses: subosito/flutter-action@v1
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
 
       - name: Get Flutter dependencies from cache
         uses: actions/cache@v2
         with:
-          path: ${{ env.PUB_CACHE }}
+          path: .pub-cache
           key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
 
-      - run: make ci-before
-      - run: make ci
+      - name: Run lint and tests
+        run: make ci-before ci
 
       - name: Upload coverage to codecov.io
         uses: codecov/codecov-action@v1
