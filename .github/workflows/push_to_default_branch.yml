@@ -54,11 +54,13 @@ jobs:
           key: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-
 
-      - name: Set up Fastlane
-        uses: maierj/fastlane-action@v2.0.1
-
       - name: Build dev APK
-        run: make build-apk-dev
+        uses: maierj/fastlane-action@v2.0.1
+        with:
+          lane: build_apk_dev
+          subdirectory: android
+          bundle-install-path: vendor/bundle
+          skip-tracking: true
 
       - name: Store built APK as an artifact
         uses: actions/upload-artifact@v2
