@@ -5,26 +5,21 @@ on: [ pull_request ]
 env:
   FLUTTER_VERSION: 2.0.x
 
-  ACTION_VERSION_CHECKOUT: v2
-  ACTION_VERSION_FLUTTER: v1
-  ACTION_VERSION_CACHE: v2
-  ACTION_VERSION_CODECOV: v1
-
 jobs:
   lint-and-test:
     name: Lint and test
     runs-on: ubuntu-20.04
     steps:
       - name: Download Git sources
-        uses: actions/checkout@${{ env.ACTION_VERSION_CHECKOUT }}
+        uses: actions/checkout@v2
 
       - name: Set up Flutter
-        uses: subosito/flutter-action@${{ env.ACTION_VERSION_FLUTTER }}
+        uses: subosito/flutter-action@v1
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
 
       - name: Get Flutter dependencies from cache
-        uses: actions/cache@${{ env.ACTION_VERSION_CACHE }}
+        uses: actions/cache@v2
         with:
           path: .pub-cache
           key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
@@ -34,7 +29,7 @@ jobs:
         run: make ci-before ci
 
       - name: Upload coverage to codecov.io
-        uses: codecov/codecov-action@${{ env.ACTION_VERSION_CODECOV }}
+        uses: codecov/codecov-action@v1
         with:
           token: ${{secrets.CODECOV_TOKEN}}
           fail_ci_if_error: true

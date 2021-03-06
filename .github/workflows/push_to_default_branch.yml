@@ -8,31 +8,23 @@ env:
   FLUTTER_VERSION: 2.0.x
   RUBY_VERSION: '2.7'
 
-  ACTION_VERSION_CHECKOUT: v2
-  ACTION_VERSION_FLUTTER: v1
-  ACTION_VERSION_CACHE: v2
-  ACTION_VERSION_CODECOV: v1
-  ACTION_VERSION_RUBY: v1
-  ACTION_VERSION_FASTLANE: v2.0.1
-  ACTION_VERSION_ARTIFACT: v2
-
 jobs:
   lint-test-and-build:
     name: Lint, test, and build dev APK
     runs-on: ubuntu-20.04
     steps:
       - name: Download Git sources
-        uses: actions/checkout@${{ env.ACTION_VERSION_CHECKOUT }}
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0 # fetch all commits, tags, etc
 
       - name: Set up Flutter
-        uses: subosito/flutter-action@${{ env.ACTION_VERSION_FLUTTER }}
+        uses: subosito/flutter-action@v1
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
 
       - name: Get Flutter dependencies from cache
-        uses: actions/cache@${{ env.ACTION_VERSION_CACHE }}
+        uses: actions/cache@v2
         with:
           path: .pub-cache
           key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
@@ -42,7 +34,7 @@ jobs:
         run: make ci-before ci
 
       - name: Upload coverage to codecov.io
-        uses: codecov/codecov-action@${{ env.ACTION_VERSION_CODECOV }}
+        uses: codecov/codecov-action@v1
         with:
           token: ${{secrets.CODECOV_TOKEN}}
           fail_ci_if_error: true
@@ -51,22 +43,24 @@ jobs:
           flags: unittests
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@${{ env.ACTION_VERSION_RUBY }}
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
 
       - name: Get Ruby dependencies from cache
-        uses: actions/cache@${{ env.ACTION_VERSION_CACHE }}
+        uses: actions/cache@v2
         with:
           path: android/vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: ${{ runner.os }}-gems-
+          key: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-
+
+      - name: Set up Fastlane
+        uses: maierj/fastlane-action@v2.0.1
 
       - name: Build dev APK
-        uses: maierj/fastlane-action@${{ env.ACTION_VERSION_FASTLANE }}
         run: make build-apk-dev
 
       - name: Store built APK as an artifact
-        uses: actions/upload-artifact@${{ env.ACTION_VERSION_ARTIFACT }}
+        uses: actions/upload-artifact@v2
         with:
           path: build/app/outputs/flutter-apk/app-debug.apk
