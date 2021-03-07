@@ -2,11 +2,11 @@ name: Release
 
 on:
   release:
-    types: [ published ]
+    types: [published]
 
 env:
   FLUTTER_VERSION: 2.0.x
-  RUBY_VERSION: '2.7'
+  RUBY_VERSION: "2.7"
 
 jobs:
   lint-test-and-release:
@@ -59,3 +59,17 @@ jobs:
           subdirectory: android
           bundle-install-path: vendor/bundle
           skip-tracking: true
+
+      - name: Send built APK to Telegram dev chat
+        uses: appleboy/telegram-action@v0.1.0
+        with:
+          to: ${{ secrets.TELEGRAM_DEV_CHAT }}
+          token: ${{ secrets.TELEGRAM_DEV_BOT_TOKEN }}
+          format: markdown
+          message: |
+            [ release 🚀 ]
+            repo: `${{ github.repository }}`
+            workflow: `${{ github.workflow }}`
+            branch/tag: `${{ github.ref }}`
+            triggered by: `${{ github.actor }}`
+            build version: `${{ env.LAERA_BUILD_NUMBER }}`

@@ -2,14 +2,11 @@ name: Push to default branch
 
 on:
   push:
-    branches: [ stable ]
-  # TODO: Debug only. Remove before merging.
-  pull_request:
-    branches: [ stable ]
+    branches: [stable]
 
 env:
   FLUTTER_VERSION: 2.0.x
-  RUBY_VERSION: '2.7'
+  RUBY_VERSION: "2.7"
 
 jobs:
   lint-test-and-build:
@@ -80,7 +77,10 @@ jobs:
           document: build/app/outputs/flutter-apk/app-release.apk
           format: markdown
           message: |
+            [ dev 👷 🔨 ]
+            apk: below
             repo: `${{ github.repository }}`
             workflow: `${{ github.workflow }}`
             branch/tag: `${{ github.ref }}`
             triggered by: `${{ github.actor }}`
+            build version: `${{ env.LAERA_BUILD_NUMBER }}`
