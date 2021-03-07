@@ -57,6 +57,13 @@ jobs:
           key: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-
 
+      - name: Install secrets
+        run: |
+          mkdir -p android/fastlane/keys
+          echo "${{ secrets.KEYSTORE_JKS_B64 }}" | base64 -d > android/fastlane/keys/keystore.jks
+          echo "${{ secrets.KEYSTORE_PROPERTIES_B64 }}" | base64 -d > android/fastlane/keys/keystore.properties
+          echo "${{ secrets.GOOGLE_PLAY_API_KEY_JSON_B64 }}" | base64 -d > android/fastlane/keys/google_play_api_key.json
+
       - name: Build dev APK
         uses: maierj/fastlane-action@v2.0.1
         with:
