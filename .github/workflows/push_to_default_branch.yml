@@ -3,6 +3,9 @@ name: Push to default branch
 on:
   push:
     branches: [ stable ]
+  # TODO: Debug only. Remove before merging.
+  pull_request:
+    branches: [ stable ]
 
 env:
   FLUTTER_VERSION: 2.0.x
@@ -54,15 +57,14 @@ jobs:
           key: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-
 
-      - name: Build dev APK
-        uses: maierj/fastlane-action@v2.0.1
+      - name: Send built APK to Telegram dev chat
+        uses: appleboy/telegram-action@v0.1.0
         with:
-          lane: build_apk_dev
-          subdirectory: android
-          bundle-install-path: vendor/bundle
-          skip-tracking: true
-
-      - name: Store built APK as an artifact
-        uses: actions/upload-artifact@v2
-        with:
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          to: ${{ secrets.TELEGRAM_DEV_CHAT }}
+          token: ${{ secrets.TELEGRAM_DEV_BOT_TOKEN }}
+          document: build/app/outputs/flutter-apk/app-debug.apk
+          message: |
+            repo: `${{ github.repository }}`
+            workflow: `${{ github.workflow }}`
+            branch/tag: `${{ github.ref }}`
+            triggered by: `${{ github.actor }}`
