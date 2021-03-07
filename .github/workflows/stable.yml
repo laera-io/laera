@@ -72,6 +72,9 @@ jobs:
           bundle-install-path: vendor/bundle
           skip-tracking: true
 
+      - name: Set build version env
+        run: export LAERA_BUILD_VERSION=$(git rev-list HEAD --count)
+
       - name: Send built APK to Telegram dev chat
         uses: appleboy/telegram-action@v0.1.0
         with:
@@ -81,7 +84,7 @@ jobs:
           format: markdown
           message: |
             👷 stable build
-            ---
+
             repo: `${{ github.repository }}`
             workflow: `${{ github.workflow }}`
             branch/tag: `${{ github.ref }}`

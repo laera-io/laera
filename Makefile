@@ -46,7 +46,7 @@ build-apk-dev:
 	(cd android && bundle exec fastlane build_apk_dev)
 
 .PHONY: ci-before
-ci-before: disable-analytics set-build-version-env
+ci-before: disable-analytics
 	flutter --version
 
 .PHONY: ci
@@ -56,7 +56,3 @@ ci: deps analyze test
 disable-analytics:
 	dart --disable-analytics
 	flutter config --suppress-analytics --no-analytics
-
-.PHONY: set-build-version-env
-set-build-version-env:
-	export LAERA_BUILD_VERSION=$(git rev-list HEAD --count)
