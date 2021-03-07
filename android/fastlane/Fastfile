@@ -19,6 +19,7 @@ platform :android do
 
   lane :build_apk_dev do
     build_number = number_of_commits()
+    ENV["LAERA_BUILD_NUMBER"] = build_number
     Dir.chdir "../.." do
       sh("flutter", "build", "apk", "--debug", "--build-number=#{build_number}")
     end

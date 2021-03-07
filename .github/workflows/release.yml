@@ -2,11 +2,11 @@ name: Release
 
 on:
   release:
-    types: [ published ]
+    types: [published]
 
 env:
   FLUTTER_VERSION: 2.0.x
-  RUBY_VERSION: '2.7'
+  RUBY_VERSION: "2.7"
 
 jobs:
   lint-test-and-release:
@@ -33,13 +33,6 @@ jobs:
       - name: Run lint and tests
         run: make ci-before ci
 
-      - name: Install secrets
-        run: |
-          mkdir -p android/fastlane/keys
-          echo "${{ secrets.KEYSTORE_JKS_B64 }}" | base64 -d > android/fastlane/keys/keystore.jks
-          echo "${{ secrets.KEYSTORE_PROPERTIES_B64 }}" | base64 -d > android/fastlane/keys/keystore.properties
-          echo "${{ secrets.GOOGLE_PLAY_API_KEY_JSON_B64 }}" | base64 -d > android/fastlane/keys/google_play_api_key.json
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -52,6 +45,13 @@ jobs:
           key: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-
 
+      - name: Install secrets
+        run: |
+          mkdir -p android/fastlane/keys
+          echo "${{ secrets.KEYSTORE_JKS_B64 }}" | base64 -d > android/fastlane/keys/keystore.jks
+          echo "${{ secrets.KEYSTORE_PROPERTIES_B64 }}" | base64 -d > android/fastlane/keys/keystore.properties
+          echo "${{ secrets.GOOGLE_PLAY_API_KEY_JSON_B64 }}" | base64 -d > android/fastlane/keys/google_play_api_key.json
+
       - name: Build and release APK
         uses: maierj/fastlane-action@v2.0.1
         with:
@@ -59,3 +59,17 @@ jobs:
           subdirectory: android
           bundle-install-path: vendor/bundle
           skip-tracking: true
+
+      - name: Send built APK to Telegram dev chat
+        uses: appleboy/telegram-action@v0.1.0
+        with:
+          to: ${{ secrets.TELEGRAM_DEV_CHAT }}
+          token: ${{ secrets.TELEGRAM_DEV_BOT_TOKEN }}
+          format: markdown
+          message: |
+            [ release 🚀 ]
+            repo: `${{ github.repository }}`
+            workflow: `${{ github.workflow }}`
+            branch/tag: `${{ github.ref }}`
+            triggered by: `${{ github.actor }}`
+            build version: `${{ env.LAERA_BUILD_NUMBER }}`
