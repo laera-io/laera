@@ -1,4 +1,4 @@
-name: Release
+name: Release to Google Play
 
 on:
   release:
@@ -67,9 +67,10 @@ jobs:
           token: ${{ secrets.TELEGRAM_DEV_BOT_TOKEN }}
           format: markdown
           message: |
-            [ release 🚀 ]
+            🚀 release
+            ---
             repo: `${{ github.repository }}`
             workflow: `${{ github.workflow }}`
             branch/tag: `${{ github.ref }}`
             triggered by: `${{ github.actor }}`
-            build version: `${{ env.LAERA_BUILD_NUMBER }}`
+            build version: `${{ env.LAERA_BUILD_VERSION }}`
