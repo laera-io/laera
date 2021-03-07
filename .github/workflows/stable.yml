@@ -13,7 +13,7 @@ env:
 
 jobs:
   lint-test-and-build:
-    name: Lint, test, and build dev APK
+    name: Lint, test, and send APK to Telegram
     runs-on: ubuntu-20.04
     steps:
       - name: Download Git sources
@@ -89,4 +89,4 @@ jobs:
             workflow: `${{ github.workflow }}`
             branch/tag: `${{ github.ref }}`
             triggered by: `${{ github.actor }}`
-            build version: `${{ env.LAERA_BUILD_VERSION }}`
+            build version: `$LAERA_BUILD_VERSION`

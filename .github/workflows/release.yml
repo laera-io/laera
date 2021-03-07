@@ -76,4 +76,4 @@ jobs:
             workflow: `${{ github.workflow }}`
             branch/tag: `${{ github.ref }}`
             triggered by: `${{ github.actor }}`
-            build version: `${{ env.LAERA_BUILD_VERSION }}`
+            build version: `$env.LAERA_BUILD_VERSION`
