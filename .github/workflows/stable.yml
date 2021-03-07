@@ -3,9 +3,6 @@ name: Push to stable branch
 on:
   push:
     branches: [stable]
-  # TODO: Debug only. Remove before merge.
-  pull_request:
-    branches: [stable]
 
 env:
   FLUTTER_VERSION: 2.0.x
@@ -72,9 +69,6 @@ jobs:
           bundle-install-path: vendor/bundle
           skip-tracking: true
 
-      - name: Set build version env
-        run: export LAERA_BUILD_VERSION=$(git rev-list HEAD --count)
-
       - name: Send built APK to Telegram dev chat
         uses: appleboy/telegram-action@v0.1.0
         with:
@@ -89,4 +83,3 @@ jobs:
             workflow: `${{ github.workflow }}`
             branch/tag: `${{ github.ref }}`
             triggered by: `${{ github.actor }}`
-            build version: `$LAERA_BUILD_VERSION`
