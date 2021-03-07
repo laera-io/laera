@@ -1,4 +1,4 @@
-name: Push to default branch
+name: Push to stable branch
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
 
 jobs:
   lint-test-and-build:
-    name: Lint, test, and build dev APK
+    name: Lint, test, and send APK to Telegram
     runs-on: ubuntu-20.04
     steps:
       - name: Download Git sources
@@ -61,7 +61,7 @@ jobs:
           echo "${{ secrets.KEYSTORE_PROPERTIES_B64 }}" | base64 -d > android/fastlane/keys/keystore.properties
           echo "${{ secrets.GOOGLE_PLAY_API_KEY_JSON_B64 }}" | base64 -d > android/fastlane/keys/google_play_api_key.json
 
-      - name: Build dev APK
+      - name: Build APK
         uses: maierj/fastlane-action@v2.0.1
         with:
           lane: build_apk
@@ -77,10 +77,9 @@ jobs:
           document: build/app/outputs/flutter-apk/app-release.apk
           format: markdown
           message: |
-            [ dev 👷 🔨 ]
-            apk: below
+            👷 stable build
+
             repo: `${{ github.repository }}`
             workflow: `${{ github.workflow }}`
             branch/tag: `${{ github.ref }}`
             triggered by: `${{ github.actor }}`
-            build version: `${{ env.LAERA_BUILD_NUMBER }}`
