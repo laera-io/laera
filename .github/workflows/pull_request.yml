@@ -3,7 +3,7 @@ name: Pull request
 on: [pull_request]
 
 env:
-  FLUTTER_VERSION: 2.0.x
+  FLUTTER_VERSION: 2.2.x
 
 jobs:
   lint-and-test:

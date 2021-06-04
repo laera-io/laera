@@ -25,11 +25,12 @@ Nothing special, start from [the official page][flutter_home] if you're newbie.
 
 ### Non-Flutter dependencies
 
-* Install `ruby`, `ruby-dev` and `gem` into your OS;
+* Install Java 11 JDK dev package into your OS (for example `dnf install java-11-openjdk-devel` in Fedora);
+* Set `JAVA_HOME` environment variable to those SDK (for example `/usr/lib/jvm/java-11` in Fedora);
+* Install `ruby 2` dev package and `gem` into your OS (for example `dnf install ruby-devel rubygems` in Fedora);
 * Install gem file dependencies by calling `make deps-ruby` in the project root directory;
 * Install `make` into your OS;
 * Dart and Flutter analytics may be optionally disabled by calling `make disable-analytics`.
-* It may also require installing OpenJDK 1.8 with the dev package;
 
 ### Test and lint
 

@@ -1,15 +1,10 @@
 .PHONY: all
-all: lint test
+all: build-apk-dev lint test
 
-.PHONY: deps
-deps:
-	flutter pub get
+# ========== dev ==========
 
 .PHONY: lint
-lint: analyze
-
-.PHONY: analyze
-analyze:
+lint:
 	flutter analyze
 
 .PHONY: test
@@ -20,18 +15,17 @@ test:
 clean:
 	flutter clean
 
-.PHONY: deps-ruby
-deps-ruby:
-	(cd android && bundle config path vendor/bundle)
-	(cd android && bundle install --jobs 4 --retry 3)
+# ========== generators ==========
 
 .PHONY: generate
 generate:
 	flutter pub run build_runner build --delete-conflicting-outputs
 
-.PHONY: icon
-icon:
+.PHONY: generate-icon
+generate-icon:
 	flutter pub run flutter_launcher_icons:main
+
+# ========== build ========== 
 
 .PHONY: build-aab
 build-aab:
@@ -45,14 +39,27 @@ build-apk:
 build-apk-dev:
 	(cd android && bundle exec fastlane build_apk_dev)
 
+# ========== ci ==========
+
+.PHONY: ci
+ci: deps lint test
+
 .PHONY: ci-before
 ci-before: disable-analytics
 	flutter --version
-
-.PHONY: ci
-ci: deps analyze test
 
 .PHONY: disable-analytics
 disable-analytics:
 	dart --disable-analytics
 	flutter config --suppress-analytics --no-analytics
+
+# ========== dependencies ==========
+
+.PHONY: deps
+deps:
+	flutter pub get
+
+.PHONY: deps-ruby
+deps-ruby:
+	(cd android && bundle config path vendor/bundle)
+	(cd android && bundle install --jobs 4 --retry 3)
