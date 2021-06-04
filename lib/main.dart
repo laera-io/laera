@@ -18,15 +18,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.lightGreen,
-        primaryColorBrightness: Brightness.dark,
-        iconTheme: const IconThemeData(color: Colors.white),
-        textTheme: TextTheme(
-          button: TextStyle(foreground: Paint()..color = Colors.white),
-        ),
-        scaffoldBackgroundColor: Colors.grey[100],
-      ),
+      theme: _theme,
       home: Navbar(
         elements: [
           NavbarElement(
@@ -48,4 +40,20 @@ class App extends StatelessWidget {
       ),
     );
   }
+
+  final ThemeData _theme = ThemeData(
+    primarySwatch: Colors.lightGreen,
+    primaryColorBrightness: Brightness.dark,
+    iconTheme: const IconThemeData(color: Colors.white),
+    scaffoldBackgroundColor: Colors.grey[100],
+  ).copyWith(
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(foreground: Paint()..color = Colors.white),
+      ),
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      foregroundColor: Colors.white,
+    ),
+  );
 }

@@ -19,24 +19,17 @@ class InternalAssetsPage extends StatelessWidget {
         values: internalNames,
         builder: (internalNames) => ListView(
           children: [
-            for (final internalName in internalNames)
+            for (final assetName in internalNames)
               ListTile(
                 // TODO: Pretify file names.
-                title: Text(internalName),
+                title: Text(assetName),
                 // TODO: Use drop down list of commands instead of leading+trailing buttons.
                 leading: IconButton(
                   icon: const Icon(Icons.file_upload),
                   onPressed: () async {
-                    // TODO: Ask to save current flow state.
-                    final flow = await StoreFactory.openFlow();
-                    flow.restoreFromInternal(internalName);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Successfully upload asset: $internalName',
-                        ),
-                      ),
-                    );
+                    if (await _showRestoreAlert(context, assetName) ?? false) {
+                      _restore(context, assetName);
+                    }
                   },
                 ),
                 trailing: IconButton(
@@ -44,13 +37,52 @@ class InternalAssetsPage extends StatelessWidget {
                   color: Theme.of(context).errorColor,
                   onPressed: () async {
                     final internal = await StoreFactory.openInternal(
-                      internalName,
+                      assetName,
                     );
                     internal.deleteFully();
                   },
                 ),
               ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Future<bool?> _showRestoreAlert(
+    BuildContext context,
+    String assetName,
+  ) async {
+    return showDialog<bool?>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(
+          'Do you want to restore asset $assetName?',
+        ),
+        content: const Text(
+          'Restoring will delete all the curent words',
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _restore(BuildContext context, String assetName) async {
+    final flow = await StoreFactory.openFlow();
+    flow.restoreFromInternal(assetName);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Successfully upload asset: $assetName',
         ),
       ),
     );
