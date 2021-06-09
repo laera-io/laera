@@ -29,7 +29,6 @@ class StoreBuilder<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Async(
-      // TODO: Sometimes store must be closed manually.
       future: _storeFuture,
       builder: (Store<T> store) => builder(store),
     );
@@ -65,7 +64,6 @@ class StoreBuilder<T> extends StatelessWidget {
 class Store<T> extends Iterable<T> {
   const Store(this._box);
 
-  // TODO: Support LazyBox.
   final Box<T> _box;
 
   T at(int index) => _box.getAt(index < length ? index : 0)!;
@@ -89,15 +87,14 @@ class Store<T> extends Iterable<T> {
   @override
   Iterator<T> get iterator => all.iterator;
 
-  Future<void> dumpToInternal() async {
-    final newAssetName = DateTime.now().millisecondsSinceEpoch.toString();
-    final internal = await StoreFactory.openInternal(newAssetName);
+  Future<void> dumpToInternal(String name) async {
+    final internal = await StoreFactory.openInternal(name);
     await internal.addAll(all.cast());
     await internal.close();
   }
 
-  Future<void> restoreFromInternal(String internalName) async {
-    final internal = await StoreFactory.openInternal(internalName);
+  Future<void> restoreFromInternal(String name) async {
+    final internal = await StoreFactory.openInternal(name);
     deleteAll();
     addAll(internal.all.cast());
     internal.close();
@@ -156,7 +153,6 @@ class StoreFactory {
     if (!await dir.exists()) {
       return [];
     }
-    // TODO: Make watchable.
     return [
       await for (final p in dir.list()) basenameWithoutExtension(p.path),
     ];

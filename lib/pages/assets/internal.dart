@@ -12,7 +12,6 @@ class InternalAssetsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Update widget data.
     return Async<List<String>>(
       future: StoreFactory.listInternals(),
       builder: (internalNames) => Emptiable<String, List<String>>(
@@ -21,9 +20,7 @@ class InternalAssetsPage extends StatelessWidget {
           children: [
             for (final assetName in internalNames)
               ListTile(
-                // TODO: Pretify file names.
                 title: Text(assetName),
-                // TODO: Use drop down list of commands instead of leading+trailing buttons.
                 leading: IconButton(
                   icon: const Icon(Icons.file_upload),
                   onPressed: () async {
@@ -82,7 +79,7 @@ class InternalAssetsPage extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Successfully upload asset: $assetName',
+          'Successfully restore asset $assetName',
         ),
       ),
     );

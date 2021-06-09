@@ -18,7 +18,10 @@ class FlowAssetPage extends StatelessWidget {
       builder: (store) => Scaffold(
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
-            await store.dumpToInternal();
+            await store.dumpToInternal(
+              // TODO: Pretify file name.
+              DateTime.now().millisecondsSinceEpoch.toString(),
+            );
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Successfully dumped'),
