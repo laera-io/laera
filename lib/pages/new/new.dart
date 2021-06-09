@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/pages/new/forms/add_word.dart';
+import 'package:laera/pages/new/widgets/add_word_form.dart';
 
 class NewPage extends StatelessWidget {
   const NewPage();
