@@ -14,8 +14,8 @@ class InternalAssetsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Async<List<String>>(
       future: StoreFactory.listInternals(),
-      builder: (internalNames) => Emptiable<String, List<String>>(
-        values: internalNames,
+      builder: (internalAssetNames) => Emptiable<String, List<String>>(
+        values: internalAssetNames,
         builder: (internalNames) => ListView(
           children: [
             for (final assetName in internalNames)
@@ -23,21 +23,12 @@ class InternalAssetsPage extends StatelessWidget {
                 title: Text(assetName),
                 leading: IconButton(
                   icon: const Icon(Icons.file_upload),
-                  onPressed: () async {
-                    if (await _showRestoreAlert(context, assetName) ?? false) {
-                      _restore(context, assetName);
-                    }
-                  },
+                  onPressed: () => _onRestore(context, assetName),
                 ),
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
                   color: Theme.of(context).errorColor,
-                  onPressed: () async {
-                    final internal = await StoreFactory.openInternal(
-                      assetName,
-                    );
-                    internal.deleteFully();
-                  },
+                  onPressed: () => _onDelete(assetName),
                 ),
               ),
           ],
@@ -46,42 +37,54 @@ class InternalAssetsPage extends StatelessWidget {
     );
   }
 
-  Future<bool?> _showRestoreAlert(
-    BuildContext context,
-    String assetName,
-  ) async {
-    return showDialog<bool?>(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(
-          'Do you want to restore asset $assetName?',
-        ),
-        content: const Text(
-          'Restoring will delete all the curent words',
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('No'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Yes'),
-          ),
-        ],
+  static Future<void> _onRestore(BuildContext context, String assetName) async {
+    if (await _RestoreAlert(assetName).show(context) != true) {
+      return;
+    }
+
+    await Store.restoreFlowFromInternal(assetName);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Successfully restore asset $assetName'),
       ),
     );
   }
 
-  Future<void> _restore(BuildContext context, String assetName) async {
-    final flow = await StoreFactory.openFlow();
-    flow.restoreFromInternal(assetName);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Successfully restore asset $assetName',
-        ),
+  static Future<void> _onDelete(String assetName) async =>
+      (await StoreFactory.openInternal(assetName)).deleteFully();
+}
+
+class _RestoreAlert extends StatelessWidget {
+  const _RestoreAlert(this._assetName, {Key? key}) : super(key: key);
+
+  final String _assetName;
+
+  Future<bool?> show(BuildContext context) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (_) => this,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        'Do you want to restore asset $_assetName?',
       ),
+      content: const Text(
+        'Restoring will delete all the curent words',
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: const Text('No'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          child: const Text('Yes'),
+        ),
+      ],
     );
   }
 }

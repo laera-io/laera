@@ -87,17 +87,23 @@ class Store<T> extends Iterable<T> {
   @override
   Iterator<T> get iterator => all.iterator;
 
+  static Future<void> dumpFlowToInternal(String name) async =>
+      (await StoreFactory.openFlow()).dumpToInternal(name);
+
   Future<void> dumpToInternal(String name) async {
     final internal = await StoreFactory.openInternal(name);
     await internal.addAll(all.cast());
     await internal.close();
   }
 
+  static Future<void> restoreFlowFromInternal(String name) async =>
+      (await StoreFactory.openFlow()).restoreFromInternal(name);
+
   Future<void> restoreFromInternal(String name) async {
     final internal = await StoreFactory.openInternal(name);
-    deleteAll();
-    addAll(internal.all.cast());
-    internal.close();
+    await deleteAll();
+    await addAll(internal.all.cast());
+    await internal.close();
   }
 }
 
