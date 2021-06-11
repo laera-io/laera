@@ -87,6 +87,9 @@ class DumpAlert extends StatelessWidget {
 class _DumpAlertForm extends StatelessWidget {
   _DumpAlertForm({Key? key}) : super(key: key);
 
+  static const __textFormWidthFactor = 0.8;
+  static const _buttonsIndent = 15.0;
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -100,15 +103,20 @@ class _DumpAlertForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
-            controller: assetNameText,
-            decoration: const InputDecoration(
-              labelText: 'Asset name',
-              icon: Icon(Icons.align_horizontal_left),
+          FractionallySizedBox(
+            widthFactor: __textFormWidthFactor,
+            child: TextFormField(
+              controller: assetNameText,
+              decoration: const InputDecoration(
+                labelText: 'Asset name',
+                icon: Icon(Icons.assignment),
+              ),
+              validator: _validateInput,
             ),
-            validator: _validateInput,
           ),
+          Container(height: _buttonsIndent),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(null),
@@ -117,6 +125,7 @@ class _DumpAlertForm extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   if (_formKey.currentState?.validate() != true) return;
+                  // TODO: Check asset name existing.
                   Navigator.of(context).pop(assetNameText.text);
                 },
                 child: const Text('Save'),
