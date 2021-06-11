@@ -62,6 +62,12 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${variant.applicationId}_v${variant.versionName}_build${variant.versionCode}.apk"
+                }
+            }
         }
     }
 }

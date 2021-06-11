@@ -70,16 +70,20 @@ jobs:
           skip-tracking: true
 
       - name: Send built APK to Telegram dev chat
-        uses: appleboy/telegram-action@v0.1.0
-        with:
-          to: ${{ secrets.TELEGRAM_DEV_CHAT }}
-          token: ${{ secrets.TELEGRAM_DEV_BOT_TOKEN }}
-          document: build/app/outputs/flutter-apk/app-release.apk
-          format: markdown
-          message: |
-            👷 stable build
+        run: |
+          output_file_dir=build/app/outputs/apk/release
+          output_file_name=$(ls $output_file_dir | grep apk)
+          curl \
+            -F chat_id=${{ secrets.TELEGRAM_DEV_CHAT }} \
+            -F document=@$output_file_dir/$output_file_name \
+            -F parse_mode=MarkdownV2 \
+            -F caption='
+          👷 test build
 
-            repo: `${{ github.repository }}`
-            workflow: `${{ github.workflow }}`
-            branch/tag: `${{ github.ref }}`
-            triggered by: `${{ github.actor }}`
+          repo: `${{ github.repository }}`
+          workflow: `${{ github.workflow }}`
+          branch/tag: `${{ github.ref }}`
+          triggered by: `${{ github.actor }}`
+          commit hash: `${{ github.sha }}`
+          ' \
+            https://api.telegram.org/bot${{ secrets.TELEGRAM_DEV_BOT_TOKEN }}/sendDocument
