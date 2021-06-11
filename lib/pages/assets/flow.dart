@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/widgets/store.dart';
+import 'package:intl/intl.dart';
 
 class FlowAssetPage extends StatelessWidget {
   const FlowAssetPage();
@@ -94,9 +95,8 @@ class _DumpAlertForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Pretify default file name.
     final assetNameText = TextEditingController(
-      text: DateTime.now().millisecondsSinceEpoch.toString(),
+      text: DateFormat().format(DateTime.now()),
     );
 
     return Form(
@@ -125,7 +125,6 @@ class _DumpAlertForm extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   if (_formKey.currentState?.validate() != true) return;
-                  // TODO: Check asset name existing.
                   Navigator.of(context).pop(assetNameText.text);
                 },
                 child: const Text('Save'),
