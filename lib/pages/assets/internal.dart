@@ -22,11 +22,11 @@ class InternalAssetsPage extends StatelessWidget {
               ListTile(
                 title: Text(assetName),
                 leading: IconButton(
-                  icon: const Icon(Icons.file_upload),
+                  icon: const Icon(Icons.file_upload_outlined),
                   onPressed: () => _onRestore(context, assetName),
                 ),
                 trailing: IconButton(
-                  icon: const Icon(Icons.delete),
+                  icon: const Icon(Icons.delete_forever_outlined),
                   color: Theme.of(context).errorColor,
                   onPressed: () => _onDelete(assetName),
                 ),

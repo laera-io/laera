@@ -30,7 +30,7 @@ class AddWordForm extends StatelessWidget {
               focusNode: _wordsFocus,
               decoration: const InputDecoration(
                 labelText: 'Word',
-                icon: Icon(Icons.translate),
+                icon: Icon(Icons.translate_outlined),
               ),
               validator: _validateInput,
             ),
@@ -38,7 +38,7 @@ class AddWordForm extends StatelessWidget {
               controller: _translationText,
               decoration: const InputDecoration(
                 labelText: 'Translation',
-                icon: Icon(Icons.text_fields),
+                icon: Icon(Icons.text_fields_outlined),
               ),
               validator: _validateInput,
             ),

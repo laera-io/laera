@@ -23,7 +23,7 @@ class App extends StatelessWidget {
         elements: [
           NavbarElement(
             label: 'Flow',
-            icon: Icons.all_inclusive,
+            icon: Icons.all_inclusive_outlined,
             page: const FlowPage(),
           ),
           NavbarElement(
@@ -33,7 +33,7 @@ class App extends StatelessWidget {
           ),
           NavbarElement(
             label: 'Assets',
-            icon: Icons.list_alt,
+            icon: Icons.list_alt_outlined,
             page: const AssetsPage(),
           ),
         ],

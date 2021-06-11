@@ -20,7 +20,7 @@ class FlowAssetPage extends StatelessWidget {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => _onDump(context, store),
           label: const Text('Dump'),
-          icon: const Icon(Icons.file_copy),
+          icon: const Icon(Icons.file_copy_outlined),
         ),
         body: ListView.builder(
           itemCount: store.length,
@@ -39,7 +39,7 @@ class FlowAssetPage extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               trailing: IconButton(
-                icon: const Icon(Icons.delete),
+                icon: const Icon(Icons.delete_forever_outlined),
                 color: Theme.of(context).errorColor,
                 onPressed: () => store.delete(listIndex),
               ),
@@ -109,7 +109,7 @@ class _DumpAlertForm extends StatelessWidget {
               controller: assetNameText,
               decoration: const InputDecoration(
                 labelText: 'Asset name',
-                icon: Icon(Icons.assignment),
+                icon: Icon(Icons.assignment_outlined),
               ),
               validator: _validateInput,
             ),
