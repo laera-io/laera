@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/widgets/store.dart';
 
-class AddingForm extends StatelessWidget {
+class AddWordForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   final _wordText = TextEditingController();
@@ -30,7 +30,7 @@ class AddingForm extends StatelessWidget {
               focusNode: _wordsFocus,
               decoration: const InputDecoration(
                 labelText: 'Word',
-                icon: Icon(Icons.translate),
+                icon: Icon(Icons.translate_outlined),
               ),
               validator: _validateInput,
             ),
@@ -38,7 +38,7 @@ class AddingForm extends StatelessWidget {
               controller: _translationText,
               decoration: const InputDecoration(
                 labelText: 'Translation',
-                icon: Icon(Icons.text_fields),
+                icon: Icon(Icons.text_fields_outlined),
               ),
               validator: _validateInput,
             ),
@@ -47,11 +47,11 @@ class AddingForm extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (!(_formKey.currentState?.validate() ?? false)) return;
+                  if (_formKey.currentState?.validate() != true) return;
                   store.add(
                     Word(
-                      word: _wordText.value.text,
-                      translation: _translationText.value.text,
+                      word: _wordText.text,
+                      translation: _translationText.text,
                     ),
                   );
                   _wordText.clear();

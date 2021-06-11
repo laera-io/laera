@@ -85,3 +85,8 @@ deps-ruby:
 	@echo ========== $@ ==========
 	@(cd android && bundle config path vendor/bundle)
 	@(cd android && bundle install --jobs 4 --retry 3)
+
+.PHONY: deps-ruby-update
+deps-ruby-update:
+	@echo ========== $@ ==========
+	@(cd android && bundle update --jobs 4 --retry 3)

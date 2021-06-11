@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/pages/new/widgets/adding_form.dart';
+import 'package:laera/pages/new/widgets/add_word_form.dart';
 
 class NewPage extends StatelessWidget {
   const NewPage();
@@ -15,7 +15,7 @@ class NewPage extends StatelessWidget {
     return Center(
       child: FractionallySizedBox(
         widthFactor: widthFactor,
-        child: AddingForm(),
+        child: AddWordForm(),
       ),
     );
   }
