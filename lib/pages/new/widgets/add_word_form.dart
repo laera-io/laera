@@ -47,11 +47,11 @@ class AddWordForm extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (!(_formKey.currentState?.validate() ?? false)) return;
+                  if (_formKey.currentState?.validate() != true) return;
                   store.add(
                     Word(
-                      word: _wordText.value.text,
-                      translation: _translationText.value.text,
+                      word: _wordText.text,
+                      translation: _translationText.text,
                     ),
                   );
                   _wordText.clear();

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:laera/models/word.dart';
 import 'package:laera/widgets/store.dart';
 
 class FlowAssetPage extends StatelessWidget {
@@ -17,17 +18,7 @@ class FlowAssetPage extends StatelessWidget {
       listenable: true,
       builder: (store) => Scaffold(
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            await store.dumpToInternal(
-              // TODO: Pretify file name.
-              DateTime.now().millisecondsSinceEpoch.toString(),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Successfully dumped'),
-              ),
-            );
-          },
+          onPressed: () => _onDump(context, store),
           label: const Text('Dump'),
           icon: const Icon(Icons.file_copy),
         ),
@@ -57,5 +48,93 @@ class FlowAssetPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  static Future<void> _onDump(BuildContext context, Store<Word> store) async {
+    final newAssetName = await const DumpAlert().show(context);
+    if (newAssetName == null || newAssetName == '') {
+      return;
+    }
+
+    await store.dumpToInternal(newAssetName);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Successfully dumped'),
+      ),
+    );
+  }
+}
+
+class DumpAlert extends StatelessWidget {
+  const DumpAlert({Key? key}) : super(key: key);
+
+  Future<String?> show(BuildContext context) async {
+    return showDialog<String?>(
+      context: context,
+      builder: (_) => this,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Dump words as an asset'),
+      actions: <Widget>[_DumpAlertForm()],
+    );
+  }
+}
+
+class _DumpAlertForm extends StatelessWidget {
+  _DumpAlertForm({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: Pretify default file name.
+    final assetNameText = TextEditingController(
+      text: DateTime.now().millisecondsSinceEpoch.toString(),
+    );
+
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: assetNameText,
+            decoration: const InputDecoration(
+              labelText: 'Asset name',
+              icon: Icon(Icons.align_horizontal_left),
+            ),
+            validator: _validateInput,
+          ),
+          Row(
+            children: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(null),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (_formKey.currentState?.validate() != true) return;
+                  Navigator.of(context).pop(assetNameText.text);
+                },
+                child: const Text('Save'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  static String? _validateInput(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please input some data';
+    }
+    if (value.length > 100) {
+      return 'Too large';
+    }
+    return null;
   }
 }
