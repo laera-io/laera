@@ -1,7 +1,7 @@
 name: laera
 description: Laera is the Android application for words learning
 
-version: "0.3.0-alpha"
+version: "0.3.0"
 
 publish_to: none
 
