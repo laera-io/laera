@@ -1,0 +1,7 @@
+0.3.0:
+
+* Assets page added:
+  * You can dump your current words to asset;
+  * And you can restore words from previously dumped assets;
+* Light theme is replaced by dark one;
+* And other small UI changes
