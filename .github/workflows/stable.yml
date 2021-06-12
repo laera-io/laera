@@ -10,7 +10,7 @@ env:
 
 jobs:
   lint-test-and-build:
-    name: Lint, test, and send APK to Telegram
+    name: Lint, test, and send APK via Telegram
     runs-on: ubuntu-20.04
     steps:
       - name: Download Git sources

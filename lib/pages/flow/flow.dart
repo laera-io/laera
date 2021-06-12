@@ -11,8 +11,8 @@ import 'package:laera/widgets/swipeable.dart';
 class FlowPage extends StatelessWidget {
   const FlowPage();
 
-  static const acceptTargetColor = Color(0xFFDCEDC8); // Colors.lightGreen[100]
-  static const rejectTargetColor = Color(0xFFD6D6D6); // Colors.grey[350]
+  static const acceptTargetColor = Color(0xAA554821);
+  static const rejectTargetColor = Color(0xAA151515);
 
   @override
   Widget build(BuildContext context) {

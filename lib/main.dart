@@ -15,10 +15,25 @@ Future<void> main() async {
 }
 
 class App extends StatelessWidget {
+  static const primaryColor = Colors.amberAccent;
+  static const backgroundColor = Color(0xFF212121);
+  static const errorColor = Colors.deepOrange;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: _theme,
+      theme: ThemeData.dark().copyWith(
+        indicatorColor: primaryColor,
+        scaffoldBackgroundColor: backgroundColor,
+        canvasColor: backgroundColor,
+        errorColor: errorColor,
+        colorScheme: const ColorScheme.dark(
+          primary: primaryColor,
+          secondary: primaryColor,
+          onPrimary: backgroundColor,
+          onSecondary: backgroundColor,
+        ),
+      ),
       home: Navbar(
         elements: [
           NavbarElement(
@@ -40,20 +55,4 @@ class App extends StatelessWidget {
       ),
     );
   }
-
-  final ThemeData _theme = ThemeData(
-    primarySwatch: Colors.lightGreen,
-    primaryColorBrightness: Brightness.dark,
-    iconTheme: const IconThemeData(color: Colors.white),
-    scaffoldBackgroundColor: Colors.grey[100],
-  ).copyWith(
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(foreground: Paint()..color = Colors.white),
-      ),
-    ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      foregroundColor: Colors.white,
-    ),
-  );
 }
