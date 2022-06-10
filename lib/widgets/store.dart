@@ -6,12 +6,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive/hive.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/widgets/async.dart';
 import 'package:laera/widgets/emptiable.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 typedef StoreBuilderFunc<T> = Widget Function(Store<T> store);
 

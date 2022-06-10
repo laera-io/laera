@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:laera/pages/assets/assets.dart';
 import 'package:laera/pages/flow/flow.dart';
 import 'package:laera/pages/new/new.dart';
-import 'package:laera/pages/assets/assets.dart';
 import 'package:laera/widgets/navbar.dart';
 import 'package:laera/widgets/store.dart';
 
