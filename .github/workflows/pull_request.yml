@@ -3,12 +3,12 @@ name: Pull request
 on: [pull_request]
 
 env:
-  FLUTTER_VERSION: 2.2.x
+  FLUTTER_VERSION: 3.0.x
 
 jobs:
   lint-and-test:
     name: Lint and test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Download Git sources
         uses: actions/checkout@v2

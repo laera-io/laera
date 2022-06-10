@@ -5,13 +5,13 @@ on:
     branches: [stable]
 
 env:
-  FLUTTER_VERSION: 2.2.x
+  FLUTTER_VERSION: 3.0.x
   RUBY_VERSION: "2.7"
 
 jobs:
   lint-test-and-build:
     name: Lint, test, and send APK via Telegram
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Download Git sources
         uses: actions/checkout@v2
