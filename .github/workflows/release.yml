@@ -6,25 +6,28 @@ on:
 
 env:
   FLUTTER_VERSION: 3.0.x
-  RUBY_VERSION: "2.7"
+  RUBY_VERSION: "3.1"
 
 jobs:
   lint-test-and-release:
     name: Lint, test, and release to Google Play
     runs-on: ubuntu-22.04
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/android/Gemfile
     steps:
       - name: Download Git sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # fetch all commits, tags, etc
 
       - name: Set up Flutter
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
 
       - name: Get Flutter dependencies from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .pub-cache
           key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
@@ -37,13 +40,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
-
-      - name: Get Ruby dependencies from cache
-        uses: actions/cache@v2
-        with:
-          path: android/vendor/bundle
-          key: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: ${{ runner.os }}-${{ env.RUBY_VERSION }}-gems-
+          bundler-cache: true
 
       - name: Install secrets
         run: |
@@ -53,7 +50,7 @@ jobs:
           echo "${{ secrets.GOOGLE_PLAY_API_KEY_JSON_B64 }}" | base64 -d > android/fastlane/keys/google_play_api_key.json
 
       - name: Build and release APK
-        uses: maierj/fastlane-action@v2.0.1
+        uses: maierj/fastlane-action@v2.2.1
         with:
           lane: release_alpha
           subdirectory: android
