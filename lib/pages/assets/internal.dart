@@ -38,12 +38,14 @@ class InternalAssetsPage extends StatelessWidget {
   }
 
   static Future<void> _onRestore(BuildContext context, String assetName) async {
+    final messenger = ScaffoldMessenger.of(context);
+
     if (await _RestoreAlert(assetName).show(context) != true) {
       return;
     }
 
     await Store.restoreFlowFromInternal(assetName);
-    ScaffoldMessenger.of(context).showSnackBar(
+    messenger.showSnackBar(
       SnackBar(
         content: Text('Successfully restore asset $assetName'),
       ),

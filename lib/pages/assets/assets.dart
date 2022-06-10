@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:laera/widgets/tabbar.dart';
 import 'package:laera/pages/assets/flow.dart';
 import 'package:laera/pages/assets/internal.dart';
+import 'package:laera/widgets/tabbar.dart';
 
 class AssetsPage extends StatelessWidget {
   const AssetsPage();

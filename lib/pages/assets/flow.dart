@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:laera/models/word.dart';
 import 'package:laera/widgets/store.dart';
-import 'package:intl/intl.dart';
 
 class FlowAssetPage extends StatelessWidget {
   const FlowAssetPage();
@@ -52,13 +52,15 @@ class FlowAssetPage extends StatelessWidget {
   }
 
   static Future<void> _onDump(BuildContext context, Store<Word> store) async {
+    final messenger = ScaffoldMessenger.of(context);
+
     final newAssetName = await const DumpAlert().show(context);
     if (newAssetName == null || newAssetName == '') {
       return;
     }
 
     await store.dumpToInternal(newAssetName);
-    ScaffoldMessenger.of(context).showSnackBar(
+    messenger.showSnackBar(
       const SnackBar(
         content: Text('Successfully dumped'),
       ),
