@@ -41,6 +41,14 @@ app.*.map.json
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
+# Fastlane build tool
+/android/fastlane/README.md
+/android/fastlane/report.xml
+/android/fastlane/keys/
+/android/vendor/
+/android/.bundle/
+
+# Private Android app data
 key.properties
 keystore.properties
 *.jks
