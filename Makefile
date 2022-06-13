@@ -6,7 +6,7 @@ all: build-apk-dev lint test
 .PHONY: lint
 lint:
 	@echo ========== $@ ==========
-	@flutter analyze
+	@flutter analyze lib test
 
 .PHONY: test
 test:
