@@ -32,8 +32,12 @@
   * Download `commandlinetools-<platform>-<build>_latest.zip` file from [Android Studio download page][android_studio_download];
   * Unzip it and place content of the `cmdline-tools` (`bin` and `lib`) like `<your_path>/cmdline-tools/tools/bin` and `<your_path>/cmdline-tools/tools/lib` (for example `$HOME/android/cmdline-tools/tools`);
   * Add path to the `bin` directory to the `PATH` variable (for example add line `export PATH="$HOME/android/cmdline-tools/tools/bin:$PATH"` to the `.zshrc` file);
+  * Add path to the Android platform tools that will be installed later (for example add line `export PATH="$HOME/android/platform-tools:$PATH"` to the `.zshrc` file);
   * Set variable `ANDROID_HOME` (for example add line `export ANDROID_HOME="$HOME/android"` to the `~/.zshrc` file);
-  * Update shell config (for example `source ~/.zshrc`);
+  * Add plugdev group to your use to be able to run on the devices:
+    * Create plugdev group by running `groupadd plugdev`;
+    * Add your user to this group by running `usermod -aG plugdev $LOGNAME`;
+    * Log out and log in back;
   * Run `sdkmanager "platform-tools" "platforms;android-31" "build-tools;31.0.0" "system-images;android-31;default;x86_64"` and accept all licenses;
   * Accept remaining licenses by running `flutter doctor --android-licenses`;
   * Make sure `flutter doctor` command output has no red sections.
@@ -96,7 +100,7 @@ The result will be at `build/app/outputs/flutter-apk/app-debug.apk`.
 * Update some `.txt` files if needed at `android/fastlane/metadata/android/en-US/`;
 * Update screenshots and other graphic at `android/fastlane/metadata/android/en-US/images/`;
 * Commit all the changes;
-* Create GitHub release with `v` prefix. For example `v1.2.3`.
+* Create GitHub release with `v` prefix (for example `v1.2.3`).
 
 ### Manually
 
