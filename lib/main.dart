@@ -15,24 +15,13 @@ Future<void> main() async {
 }
 
 class App extends StatelessWidget {
-  static const primaryColor = Colors.amberAccent;
-  static const backgroundColor = Color(0xFF212121);
-  static const errorColor = Colors.deepOrange;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        indicatorColor: primaryColor,
-        scaffoldBackgroundColor: backgroundColor,
-        canvasColor: backgroundColor,
-        errorColor: errorColor,
-        colorScheme: const ColorScheme.dark(
-          primary: primaryColor,
-          secondary: primaryColor,
-          onPrimary: backgroundColor,
-          onSecondary: backgroundColor,
-        ),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.amber,
+        brightness: Brightness.dark,
       ),
       home: Navbar(
         elements: [

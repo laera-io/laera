@@ -12,7 +12,7 @@ class Navbar extends StatefulWidget {
         items = [for (final e in elements) e.item];
 
   final List<Widget> pages;
-  final List<BottomNavigationBarItem> items;
+  final List<Widget> items;
   final int defaultElementIndex;
 
   @override
@@ -29,10 +29,11 @@ class _NavbarState extends State<Navbar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.pageAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) => setState(() => _selectedIndex = index),
-        currentIndex: _selectedIndex,
-        items: widget.items,
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (index) =>
+            setState(() => _selectedIndex = index),
+        selectedIndex: _selectedIndex,
+        destinations: widget.items,
       ),
     );
   }
@@ -43,8 +44,8 @@ class NavbarElement {
     required this.page,
     required IconData icon,
     required String label,
-  }) : item = BottomNavigationBarItem(icon: Icon(icon), label: label);
+  }) : item = NavigationDestination(icon: Icon(icon), label: label);
 
   final Widget page;
-  final BottomNavigationBarItem item;
+  final NavigationDestination item;
 }

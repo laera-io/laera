@@ -12,6 +12,7 @@ jobs:
   lint-test-and-build:
     name: Lint, test, and send APK via Telegram
     runs-on: ubuntu-22.04
+    timeout-minutes: 15
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/android/Gemfile
     steps:

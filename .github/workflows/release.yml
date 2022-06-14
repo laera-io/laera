@@ -12,6 +12,7 @@ jobs:
   lint-test-and-release:
     name: Lint, test, and release to Google Play
     runs-on: ubuntu-22.04
+    timeout-minutes: 20
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/android/Gemfile
     steps:
