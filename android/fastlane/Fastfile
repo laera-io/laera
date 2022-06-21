@@ -17,13 +17,6 @@ platform :android do
     end
   end
 
-  lane :build_apk_dev do
-    build_number = number_of_commits()
-    Dir.chdir "../.." do
-      sh("flutter", "build", "apk", "--debug", "--build-number=#{build_number}")
-    end
-  end
-
   lane :release_alpha do
     build_aab
     upload_to_play_store(

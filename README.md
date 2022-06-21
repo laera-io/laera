@@ -4,14 +4,14 @@
 [![code lint style][lint_badge_img]][lint_badge_url]
 [![code coverage][coverage_badge_img]][coverage_badge_url]
 
-**Læra** (or **Laera**, [from Icelandic/Norwegian/Faroese][laera_word_wiki] - to learn) is the Android application for words learning.
+**Læra** ([Icelandic/Norwegian/Faroese][laera_word_wiki]: *to learn*) or **Laera** is the Android application for words learning.
 
-* [Contributing](#contributing)
+* [Dev Docs](#dev-docs)
 * [Screenshots](#screenshots)
 
-## Contributing
+## Dev Docs
 
-Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+See [development.md](docs/development.md) and [release.md](docs/release.md) files for more info.
 
 ## Screenshots
 

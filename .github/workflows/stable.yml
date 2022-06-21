@@ -12,7 +12,7 @@ jobs:
   lint-test-and-build:
     name: Lint, test, and send APK via Telegram
     runs-on: ubuntu-22.04
-    timeout-minutes: 15
+    timeout-minutes: 10
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/android/Gemfile
     steps:
@@ -35,7 +35,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
 
       - name: Lint and test
-        run: make ci-before ci
+        run: make ci
 
       - name: Upload coverage to codecov.io
         uses: codecov/codecov-action@v3
@@ -44,7 +44,7 @@ jobs:
           fail_ci_if_error: true
           verbose: true
           file: ./coverage/lcov.info
-          flags: unittests
+          flags: unit
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
