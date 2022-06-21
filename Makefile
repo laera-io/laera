@@ -30,7 +30,12 @@ generate-icon:
 	@echo ========== $@ ==========
 	@flutter pub run flutter_launcher_icons:main
 
-# ========== build ========== 
+# ========== build ==========
+
+.PHONY: build-apk-dev
+build-apk-dev:
+	@echo ========== $@ ==========
+	@flutter build apk --debug
 
 .PHONY: build-aab
 build-aab:
@@ -42,18 +47,13 @@ build-apk:
 	@echo ========== $@ ==========
 	@(cd android && bundle exec fastlane build_apk)
 
-.PHONY: build-apk-dev
-build-apk-dev:
-	@echo ========== $@ ==========
-	@(cd android && bundle exec fastlane build_apk_dev)
-
 # ========== ci ==========
 
 .PHONY: ci
-ci: deps lint test
+ci: .ci-before deps lint test
 
-.PHONY: ci-before
-ci-before: disable-analytics .version
+.PHONY: .ci-before
+.ci-before: disable-analytics .version
 
 .PHONY: disable-analytics
 disable-analytics: .disable-dart-analytics .disable-flutter-analytics

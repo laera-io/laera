@@ -35,7 +35,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
 
       - name: Run lint and tests
-        run: make ci-before ci
+        run: make ci
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
