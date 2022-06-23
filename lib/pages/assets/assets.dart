@@ -16,12 +16,6 @@ class AssetsPage extends StatelessWidget {
       elements: const [
         TabbarElement(label: 'Flow', page: FlowAssetPage()),
         TabbarElement(label: 'Internal', page: InternalAssetsPage()),
-        TabbarElement(
-          label: 'External',
-          page: Center(
-            child: Text('under development 👷', textScaleFactor: 1.5),
-          ),
-        ),
       ],
     );
   }
