@@ -15,14 +15,17 @@ Future<void> main() async {
 }
 
 class App extends StatelessWidget {
+  final colorScheme = ColorScheme.fromSeed(
+    brightness: Brightness.dark,
+    seedColor: Colors.cyan,
+    secondary: Colors.deepPurpleAccent[100],
+    error: Colors.deepPurpleAccent[100],
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.amber,
-        brightness: Brightness.dark,
-      ),
+      theme: themeData,
       home: Navbar(
         elements: [
           NavbarElement(
@@ -44,4 +47,12 @@ class App extends StatelessWidget {
       ),
     );
   }
+
+  ThemeData get themeData => ThemeData(
+        useMaterial3: true,
+        brightness: colorScheme.brightness,
+        colorSchemeSeed: colorScheme.primary,
+        errorColor: colorScheme.error,
+        indicatorColor: colorScheme.primary,
+      ).copyWith(colorScheme: colorScheme);
 }
