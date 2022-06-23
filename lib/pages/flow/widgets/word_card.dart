@@ -6,42 +6,52 @@ import 'package:flutter/material.dart';
 import 'package:laera/models/word.dart';
 
 class WordCard extends StatelessWidget {
-  const WordCard({required this.word});
+  const WordCard({
+    required this.word,
+    this.widthFactor = 0.75,
+    this.heightFactor = 0.75,
+    this.aspectRatio = 0.75,
+    this.textScale = 1.5,
+    this.translateSpaceFactor = 0.1,
+  });
 
   final Word word;
 
-  static const textScale = 1.5;
-  static const widthFactor = 0.8;
-  static const heightFactor = 0.7;
-  static const spaceFactor = 0.1;
-  static const cardDataScaleFactor = 0.8;
+  final double widthFactor;
+  final double heightFactor;
+  final double aspectRatio;
+  final double textScale;
+  final double translateSpaceFactor;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * widthFactor,
       height: MediaQuery.of(context).size.height * heightFactor,
-      child: Card(
-        child: FractionallySizedBox(
-          widthFactor: cardDataScaleFactor,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                word.word,
-                textScaleFactor: textScale,
-              ),
-              const Flexible(
-                child: FractionallySizedBox(
-                  heightFactor: spaceFactor,
+      child: Align(
+        child: AspectRatio(
+          aspectRatio: aspectRatio,
+          child: Card(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  word.word,
+                  textScaleFactor: textScale,
                 ),
-              ),
-              Text(
-                word.translation,
-                textScaleFactor: textScale,
-                style: TextStyle(color: Theme.of(context).hintColor),
-              ),
-            ],
+                Flexible(
+                  child: FractionallySizedBox(
+                    heightFactor: translateSpaceFactor,
+                  ),
+                ),
+                Text(
+                  word.translation,
+                  textScaleFactor: textScale,
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.tertiary),
+                ),
+              ],
+            ),
           ),
         ),
       ),
