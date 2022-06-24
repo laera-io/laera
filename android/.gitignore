@@ -11,3 +11,13 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+
+# Fastlane build tool
+fastlane/README.md
+fastlane/report.xml
+fastlane/keys/
+vendor/
+.bundle/
+
+# In case of the using only by building tool gem lock doesn't matter
+Gemfile.lock

@@ -1,0 +1,19 @@
+version: 3
+
+output: prefixed
+
+tasks:
+  default:
+    - task: build
+    - task: lint
+    - task: test
+
+  build: flutter build apk --debug
+
+  lint: flutter analyze
+
+  test: flutter test --coverage --reporter=expanded
+
+  generate: flutter pub run build_runner build --delete-conflicting-outputs
+
+  generate-icon: flutter pub run flutter_launcher_icons:main
