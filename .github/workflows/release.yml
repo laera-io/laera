@@ -26,6 +26,8 @@ jobs:
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
+
+      - name: Output Flutter version
         run: flutter --version
 
       - name: Get Flutter dependencies from cache
