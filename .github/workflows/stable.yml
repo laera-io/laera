@@ -27,6 +27,9 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
+      - name: Output Flutter version
+        run: flutter --version
+
       - name: Get Flutter dependencies from cache
         uses: actions/cache@v3
         with:
@@ -34,8 +37,11 @@ jobs:
           key: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: ${{ runner.os }}-${{ env.FLUTTER_VERSION }}-pub-
 
-      - name: Lint and test
-        run: make ci
+      - name: Install Task utility
+        uses: arduino/setup-task@v1
+
+      - name: Run linter and tests
+        run: task lint test
 
       - name: Upload coverage to codecov.io
         uses: codecov/codecov-action@v3

@@ -24,9 +24,12 @@
   * `google_play_api_key.json` - api key from `https://play.google.com/console/u/<user_id>/developers/<dev_id>/api-access`, [docs][google_play_api_key_docs];
   * `keystore.jks` - [signing key](#generate-new-jks-file);
   * `keystore.properties` - [properties for `keystore.jks`](#keystoreproperties-file);
-* Install Ruby dependencies as intended in [development.md file](development.md#ruby-optional);
-* Build `make build-aab`;
-* Upload to Google Play Console.
+* Install Ruby and dependencies:
+  * Install `ruby 3` dev package and `gem` (for example `dnf install ruby-devel rubygems` in Fedora 36);
+  * Install `g++` needed by some ruby dependencies (for example `dnf install gcc-c++` in Fedora 36);
+  * Install gem file dependencies by running `(cd android && bundle config path vendor/bundle && bundle install)` in the project root directory.
+* Build signed app by running `(cd android && bundle exec fastlane build_aab)` in the project root directory;
+* Upload result `.aab` file to Google Play Console.
 
 ## Signing
 
