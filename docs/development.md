@@ -4,6 +4,7 @@
   * [Flutter](#flutter)
   * [Automatization](#automatization)
   * [Android](#android)
+    * [Emulator (optional)](#emulator-optional)
   * [After Installation](#after-installation)
 * [Routine](#routine)
   * [Test & Lint](#test--lint)
@@ -31,13 +32,36 @@
   * Unzip it and place content of the `cmdline-tools` (`bin` and `lib`) like `<your_path>/cmdline-tools/tools/bin` and `<your_path>/cmdline-tools/tools/lib` (for example `$HOME/android/cmdline-tools/tools`);
   * Add path to the `bin` directory to the `PATH` variable (for example add line `export PATH="$HOME/android/cmdline-tools/tools/bin:$PATH"` to the `.zshrc` file);
   * Add path to the Android platform tools that will be installed later (for example add line `export PATH="$HOME/android/platform-tools:$PATH"` to the `.zshrc` file);
+  * Add path to the Android emulator that will be installed later (for example add line `export PATH="$HOME/android/emulator:$PATH"` to the `.zshrc` file);
   * Set variable `ANDROID_HOME` (for example add line `export ANDROID_HOME="$HOME/android"` to the `~/.zshrc` file);
   * Add plugdev group to your use to be able to run on the devices:
     * Create plugdev group by running `groupadd plugdev`;
     * Add your user to this group by running `usermod -aG plugdev $LOGNAME`;
     * Log out and log in back;
-  * Run `sdkmanager "platform-tools" "platforms;android-31" "build-tools;31.0.0" "system-images;android-31;default;x86_64"` and accept all licenses;
+  * Run this command and accept all licenses:
+
+    ```sh
+    sdkmanager \
+        "platform-tools" \
+        "emulator" \
+        "platforms;android-32" \
+        "build-tools;32.0.0" \
+        "system-images;android-32;google_apis;x86_64"
+    ```
+
   * Accept remaining licenses by running `flutter doctor --android-licenses`.
+
+#### Emulator (optional)
+
+To create/recreate emulator run:
+
+```sh
+avdmanager create avd \
+    --package 'system-images;android-32;google_apis;x86_64' \
+    --device 'pixel_5' \
+    --name 'laera_emulator' \
+    --force
+```
 
 ### After Installation
 
