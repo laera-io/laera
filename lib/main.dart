@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:laera/pages/assets/assets.dart';
+import 'package:laera/pages/flow/cubit/flow_cubit.dart';
 import 'package:laera/pages/flow/flow.dart';
 import 'package:laera/pages/new/new.dart';
 import 'package:laera/widgets/navbar.dart';
@@ -24,26 +26,29 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: themeData,
-      home: Navbar(
-        elements: [
-          NavbarElement(
-            label: 'Flow',
-            icon: Icons.all_inclusive_outlined,
-            page: const FlowPage(),
-          ),
-          NavbarElement(
-            label: 'New Word',
-            icon: Icons.post_add_outlined,
-            page: const NewPage(),
-          ),
-          NavbarElement(
-            label: 'Assets',
-            icon: Icons.list_alt_outlined,
-            page: const AssetsPage(),
-          ),
-        ],
+    return BlocProvider(
+      create: (context) => FlowCubit(),
+      child: MaterialApp(
+        theme: themeData,
+        home: Navbar(
+          elements: [
+            NavbarElement(
+              label: 'Flow',
+              icon: Icons.all_inclusive_outlined,
+              page: const FlowPage(),
+            ),
+            NavbarElement(
+              label: 'New Word',
+              icon: Icons.post_add_outlined,
+              page: const NewPage(),
+            ),
+            NavbarElement(
+              label: 'Assets',
+              icon: Icons.list_alt_outlined,
+              page: const AssetsPage(),
+            ),
+          ],
+        ),
       ),
     );
   }

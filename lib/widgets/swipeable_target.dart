@@ -8,12 +8,14 @@ class VerticalSwipeableTarget<T extends Widget> extends StatelessWidget {
   const VerticalSwipeableTarget({
     required this.child,
     required this.alignment,
+    required this.onAccept,
     this.widthFactor = 0.4,
     Key? key,
   }) : super(key: key);
 
   final Widget child;
   final Alignment alignment;
+  final void Function<T>(T data) onAccept;
   final double widthFactor;
 
   @override
@@ -22,7 +24,10 @@ class VerticalSwipeableTarget<T extends Widget> extends StatelessWidget {
       alignment: alignment,
       child: FractionallySizedBox(
         widthFactor: widthFactor,
-        child: SwipeableTarget<T>(child: child),
+        child: SwipeableTarget<T>(
+          onAccept: onAccept,
+          child: child,
+        ),
       ),
     );
   }
@@ -31,10 +36,12 @@ class VerticalSwipeableTarget<T extends Widget> extends StatelessWidget {
 class SwipeableTarget<T extends Widget> extends StatefulWidget {
   const SwipeableTarget({
     required this.child,
+    required this.onAccept,
     Key? key,
   }) : super(key: key);
 
   final Widget child;
+  final void Function<T>(T data) onAccept;
 
   @override
   State<SwipeableTarget> createState() => _SwipeableTargetState();
@@ -50,7 +57,10 @@ class _SwipeableTargetState<T extends Widget> extends State<SwipeableTarget> {
         setState(() => _visibility = true);
         return true;
       },
-      onAccept: (_) => setState(() => _visibility = false),
+      onAccept: (T data) => setState(() {
+        _visibility = false;
+        widget.onAccept(data);
+      }),
       onLeave: (_) => setState(() => _visibility = false),
       builder: (_, __, ___) => Visibility(
         visible: _visibility,

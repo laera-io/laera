@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:laera/models/word.dart';
+import 'package:laera/pages/flow/cubit/flow_cubit.dart';
 import 'package:laera/pages/flow/widgets/word_card.dart';
 import 'package:laera/widgets/store.dart';
 import 'package:laera/widgets/swipeable.dart';
@@ -22,6 +24,9 @@ class FlowPage extends StatelessWidget {
         targets: [
           VerticalSwipeableTarget<WordCard>(
             alignment: Alignment.centerRight,
+            onAccept: <WordCard>(_) {
+              context.read<FlowCubit>().accept();
+            },
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -35,6 +40,9 @@ class FlowPage extends StatelessWidget {
           ),
           VerticalSwipeableTarget<WordCard>(
             alignment: Alignment.centerLeft,
+            onAccept: <WordCard>(_) {
+              context.read<FlowCubit>().reject();
+            },
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(

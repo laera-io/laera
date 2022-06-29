@@ -12,4 +12,4 @@ coverage:
 
 # https://docs.codecov.com/docs/pull-request-comments
 comment:
-  layout: "files"
+  layout: files

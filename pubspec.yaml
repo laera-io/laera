@@ -1,12 +1,11 @@
 name: laera
-description: Laera is the Android application for words learning
 
-version: "0.3.0"
+version: '0.3.0'
 
 publish_to: none
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: '>=2.17.0 <3.0.0'
   flutter: ^3.0.0
 
 flutter:
@@ -16,15 +15,18 @@ flutter_icons:
   image_path: assets/icon/logo.png
   android: true
   adaptive_icon_foreground: assets/icon/logo.png
-  adaptive_icon_background: "#212121"
+  adaptive_icon_background: '#212121'
 
 dependencies:
+  bloc: ^8.0.0
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.0.0
   hive: ^2.2.0
   hive_flutter: ^1.1.0
   intl: ^0.17.0
   json_annotation: ^4.5.0
+  meta: ^1.7.0
   path: ^1.8.0
   path_provider: ^2.0.0
 
