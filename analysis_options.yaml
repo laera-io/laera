@@ -1,20 +1,27 @@
-include: package:lint/analysis_options.yaml
+include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
   exclude:
     - android/**
     - build/**
-    - '*.g.dart'
+    - '**/*.g.dart'
   language:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
   errors:
-    todo: warning
-    dead_code: error
     avoid_print: error
+    dead_code: error
+    parameter_assignments: warning
+    todo: warning
+    unnecessary_null_comparison: warning
 
 linter:
+  # See all available rules at https://dart-lang.github.io/linter/lints/index.html.
   rules:
-    prefer_single_quotes: true
-    avoid_annotating_with_dynamic: true
+    avoid_classes_with_only_static_members: true
+    depend_on_referenced_packages: true
+    # Should be turned on later.
+    public_member_api_docs: false
+    # False positive for StatefulWidget's createState overrides.
+    library_private_types_in_public_api: false

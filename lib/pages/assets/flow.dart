@@ -8,7 +8,7 @@ import 'package:laera/models/word.dart';
 import 'package:laera/widgets/store.dart';
 
 class FlowAssetPage extends StatelessWidget {
-  const FlowAssetPage();
+  const FlowAssetPage({super.key});
 
   static const textScaleFactor = 1.3;
 
@@ -69,7 +69,7 @@ class FlowAssetPage extends StatelessWidget {
 }
 
 class DumpAlert extends StatelessWidget {
-  const DumpAlert({Key? key}) : super(key: key);
+  const DumpAlert({super.key});
 
   Future<String?> show(BuildContext context) async {
     return showDialog<String?>(
@@ -88,8 +88,6 @@ class DumpAlert extends StatelessWidget {
 }
 
 class _DumpAlertForm extends StatelessWidget {
-  _DumpAlertForm({Key? key}) : super(key: key);
-
   static const __textFormWidthFactor = 0.8;
   static const _buttonsIndent = 15.0;
 

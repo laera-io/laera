@@ -8,6 +8,7 @@ class Navbar extends StatefulWidget {
   Navbar({
     required List<NavbarElement> elements,
     this.defaultElementIndex = 0,
+    super.key,
   })  : pages = [for (final e in elements) e.page],
         items = [for (final e in elements) e.item];
 

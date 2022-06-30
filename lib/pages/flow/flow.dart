@@ -12,7 +12,7 @@ import 'package:laera/widgets/swipeable.dart';
 import 'package:laera/widgets/swipeable_target.dart';
 
 class FlowPage extends StatelessWidget {
-  const FlowPage();
+  const FlowPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +27,16 @@ class FlowPage extends StatelessWidget {
             onAccept: <WordCard>(_) {
               context.read<FlowCubit>().accept();
             },
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Theme.of(context).colorScheme.primary.withOpacity(0.0),
+                    Theme.of(context).colorScheme.primary.withOpacity(0),
                     Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   ],
                 ),
               ),
+              child: Container(),
             ),
           ),
           VerticalSwipeableTarget<WordCard>(
@@ -43,17 +44,18 @@ class FlowPage extends StatelessWidget {
             onAccept: <WordCard>(_) {
               context.read<FlowCubit>().reject();
             },
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerRight,
                   end: Alignment.centerLeft,
                   colors: [
-                    Theme.of(context).colorScheme.secondary.withOpacity(0.0),
+                    Theme.of(context).colorScheme.secondary.withOpacity(0),
                     Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                   ],
                 ),
               ),
+              child: Container(),
             ),
           ),
         ],

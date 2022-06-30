@@ -10,6 +10,7 @@ class Swipeable<T, W extends Widget> extends StatefulWidget {
     required this.store,
     required this.builder,
     required this.targets,
+    super.key,
   });
 
   final Store<T> store;

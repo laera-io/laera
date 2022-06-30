@@ -5,8 +5,10 @@
 import 'package:flutter/material.dart';
 
 class Tabbar extends StatelessWidget {
-  Tabbar({required List<TabbarElement> elements})
-      : pages = [for (final e in elements) e.page],
+  Tabbar({
+    required List<TabbarElement> elements,
+    super.key,
+  })  : pages = [for (final e in elements) e.page],
         tabs = [for (final e in elements) Tab(text: e.label)];
 
   final List<Widget> pages;

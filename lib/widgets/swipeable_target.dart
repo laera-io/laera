@@ -10,8 +10,8 @@ class VerticalSwipeableTarget<T extends Widget> extends StatelessWidget {
     required this.alignment,
     required this.onAccept,
     this.widthFactor = 0.4,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final Alignment alignment;
@@ -37,8 +37,8 @@ class SwipeableTarget<T extends Widget> extends StatefulWidget {
   const SwipeableTarget({
     required this.child,
     required this.onAccept,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final void Function<T>(T data) onAccept;

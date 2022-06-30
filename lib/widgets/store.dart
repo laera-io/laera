@@ -29,7 +29,7 @@ class StoreBuilder<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Async(
       future: _storeFuture,
-      builder: (Store<T> store) => builder(store),
+      builder: builder,
     );
   }
 
@@ -112,8 +112,8 @@ class StoreFactory {
   static Future<void> initApp() async {
     await Hive.initFlutter();
     Hive.registerAdapter(WordAdapter());
-    Directory(await _internalAssetsDir).create(recursive: true);
-    Directory(await _externalAssetsDir).create(recursive: true);
+    Directory(await _internalAssetsDir).createSync(recursive: true);
+    Directory(await _externalAssetsDir).createSync(recursive: true);
   }
 
   static StoreBuilder<Word> flowBuilder({
@@ -155,7 +155,7 @@ class StoreFactory {
 
   static Future<List<String>> _list(String dirPath) async {
     final dir = Directory(dirPath);
-    if (!await dir.exists()) {
+    if (!dir.existsSync()) {
       return [];
     }
     return [

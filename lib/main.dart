@@ -17,6 +17,8 @@ Future<void> main() async {
 }
 
 class App extends StatelessWidget {
+  App({super.key});
+
   final colorScheme = ColorScheme.fromSeed(
     brightness: Brightness.dark,
     seedColor: Colors.cyan,

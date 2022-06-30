@@ -7,6 +7,8 @@ import 'package:laera/models/word.dart';
 import 'package:laera/widgets/store.dart';
 
 class AddWordForm extends StatelessWidget {
+  AddWordForm({super.key});
+
   final _formKey = GlobalKey<FormState>();
 
   final _wordText = TextEditingController();

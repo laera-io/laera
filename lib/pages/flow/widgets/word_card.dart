@@ -13,6 +13,7 @@ class WordCard extends StatelessWidget {
     this.aspectRatio = 0.75,
     this.textScale = 1.5,
     this.translateSpaceFactor = 0.1,
+    super.key,
   });
 
   final Word word;

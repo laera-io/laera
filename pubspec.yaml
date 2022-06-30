@@ -37,4 +37,4 @@ dev_dependencies:
     sdk: flutter
   hive_generator: ^1.1.0
   json_serializable: ^6.2.0
-  lint: ^1.8.0
+  very_good_analysis: ^3.0.0

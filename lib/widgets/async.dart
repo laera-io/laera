@@ -10,6 +10,7 @@ class Async<T> extends StatelessWidget {
     required this.builder,
     this.onProgress = const CircularProgressIndicator(),
     this.onError = _onError,
+    super.key,
   });
 
   final Future<T> future;

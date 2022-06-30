@@ -8,7 +8,7 @@ import 'package:laera/pages/assets/internal.dart';
 import 'package:laera/widgets/tabbar.dart';
 
 class AssetsPage extends StatelessWidget {
-  const AssetsPage();
+  const AssetsPage({super.key});
 
   @override
   Widget build(BuildContext context) {

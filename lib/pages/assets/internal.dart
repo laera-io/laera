@@ -8,7 +8,7 @@ import 'package:laera/widgets/emptiable.dart';
 import 'package:laera/widgets/store.dart';
 
 class InternalAssetsPage extends StatelessWidget {
-  const InternalAssetsPage();
+  const InternalAssetsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class InternalAssetsPage extends StatelessWidget {
 }
 
 class _RestoreAlert extends StatelessWidget {
-  const _RestoreAlert(this._assetName, {Key? key}) : super(key: key);
+  const _RestoreAlert(this._assetName);
 
   final String _assetName;
 

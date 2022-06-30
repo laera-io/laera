@@ -9,6 +9,7 @@ class Emptiable<T, I extends Iterable<T>> extends StatelessWidget {
     required this.values,
     required this.builder,
     this.onEmpty = const NoData(),
+    super.key,
   });
 
   final I values;
@@ -25,6 +26,7 @@ class NoData extends StatelessWidget {
   const NoData({
     this.label = 'Nothing here 🥺',
     this.textScaleFactor = 1.5,
+    super.key,
   });
 
   final String label;
